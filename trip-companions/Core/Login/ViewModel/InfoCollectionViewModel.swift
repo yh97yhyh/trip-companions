@@ -9,28 +9,54 @@ import Foundation
 import Combine
 
 class InfoCollectionViewModel: ObservableObject {
-    @Published var nickname: String = ""
-    @Published var age: String = ""
-    @Published var gender: Gender? = nil
-    @Published var mbti: MBTI? = nil
-    @Published var isSmoker: Bool? = nil
-    @Published var isDrinker: Bool? = nil
+    static let shared = InfoCollectionViewModel()
     
-    @Published private(set) var isFormValid: Bool = false
+    @Published var nickname: String = "" {
+        didSet {
+            validateForm()
+        }
+    }
+    @Published var age: String = "" {
+        didSet {
+            validateForm()
+        }
+    }
+    @Published var gender: Gender? = nil {
+        didSet {
+            validateForm()
+        }
+    }
+    @Published var mbti: MBTI? = nil {
+        didSet {
+            validateForm()
+        }
+    }
+    @Published var isSmoker: Bool? = nil {
+        didSet {
+            validateForm()
+        }
+    }
+    @Published var isDrinker: Bool? = nil {
+        didSet {
+            validateForm()
+        }
+    }
+
+    @Published var isFromValid: Bool = false
+
+    private func validateForm() {
+        isFromValid = !nickname.isEmpty &&
+                      !age.isEmpty &&
+                      gender != nil &&
+                      mbti != nil &&
+                      isSmoker != nil &&
+                      isDrinker != nil
+    }
 
     private var cancellables = Set<AnyCancellable>()
 
     init() {
-        Publishers.CombineLatest6($nickname, $age, $gender, $mbti, $isSmoker, $isDrinker)
-            .map { nickname, age, gender, mbti, isSmoker, isDrinker in
-                return !nickname.isEmpty &&
-                       !age.isEmpty &&
-                       gender != nil &&
-                       mbti != nil &&
-                       isSmoker != nil &&
-                       isDrinker != nil
-            }
-            .assign(to: &$isFormValid)
+        
     }
 }
 
