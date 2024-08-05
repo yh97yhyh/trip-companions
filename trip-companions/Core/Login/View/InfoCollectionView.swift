@@ -27,20 +27,23 @@ struct InfoCollectionView: View {
                     Text("나이")
                         .modifier(Title3Modifier())
                     
-                    TextField("이름 입력", text: $viewModel.age)
+                    TextField("나이 입력", text: $viewModel.age)
                         .textFieldStyle(CustomTextFieldStyle())
                 }
                 .padding(.bottom)
                 
                 VStack(alignment: .leading) {
-                    Text("닉네임")
+                    Text("성별")
                         .modifier(Title3Modifier())
                     
                     Picker("성별", selection: $viewModel.gender) {
                         ForEach(Gender.allCases) { gender in
-                            Text(gender.rawValue).tag(gender as Gender?)
+                            Text(gender.rawValue)
+                                .foregroundColor(.black)
+                                .tag(gender as Gender?)
                         }
                     }
+                    .modifier(CustomPickerStyle())
                 }
                 .padding(.bottom)
                 
@@ -50,9 +53,12 @@ struct InfoCollectionView: View {
                     
                     Picker("MBTI", selection: $viewModel.mbti) {
                         ForEach(MBTI.allCases) { mbti in
-                            Text(mbti.rawValue).tag(mbti as MBTI?)
+                            Text(mbti.rawValue)
+                                .foregroundColor(.black)
+                                .tag(mbti as MBTI?)
                         }
                     }
+                    .modifier(CustomPickerStyle())
                 }
                 .padding(.bottom)
                 
@@ -66,14 +72,15 @@ struct InfoCollectionView: View {
                         } label: {
                             Text("Yes")
                         }
-                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isSmoker == true))                        .padding(.trailing, 6)
+                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isSmoker == true))    .padding(.trailing, 6)
                         
                         Button {
                             viewModel.isSmoker = false
                         } label: {
                             Text("No")
                         }
-                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isSmoker == false))                    }
+                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isSmoker == false))
+                    }
                 }
                 .padding(.bottom)
                 
@@ -87,14 +94,15 @@ struct InfoCollectionView: View {
                         } label: {
                             Text("Yes")
                         }
-                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isDrinker == true))                          .padding(.trailing, 6)
+                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isDrinker == true))         .padding(.trailing, 6)
                         
                         Button {
                             viewModel.isDrinker = false
                         } label: {
                             Text("No")
                         }
-                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isDrinker == false))                         }
+                        .buttonStyle(CustomButtonStyle(isSelected: viewModel.isDrinker == false))
+                    }
                 }
                 .padding(.bottom)
                 

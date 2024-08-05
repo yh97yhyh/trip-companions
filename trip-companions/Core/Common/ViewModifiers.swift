@@ -58,3 +58,16 @@ struct CustomButtonStyle2: ButtonStyle {
             .opacity(configuration.isPressed ? 0.8 : 1.0)
     }
 }
+
+struct CustomPickerStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(8)
+//            .foregroundColor(.black)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.gray, lineWidth: 1)
+            )
+    }
+}
