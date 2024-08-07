@@ -9,6 +9,8 @@ target 'trip-companions' do
   pod 'Alamofire'
   pod 'Kingfisher', '~> 7.0'
   pod 'lottie-ios'
+  pod 'KakaoSDK'
+
 
   target 'trip-companionsTests' do
     inherit! :search_paths

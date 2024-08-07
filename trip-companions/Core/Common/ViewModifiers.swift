@@ -44,6 +44,7 @@ struct CustomButtonStyle: ButtonStyle {
             .opacity(configuration.isPressed ? 0.8 : 1.0)
     }
 }
+
 struct CustomButtonStyle2: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label

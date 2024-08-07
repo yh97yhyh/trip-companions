@@ -21,12 +21,12 @@ class InfoCollectionViewModel: ObservableObject {
             validateForm()
         }
     }
-    @Published var gender: Gender? = nil {
+    @Published var gender: Gender = .male {
         didSet {
             validateForm()
         }
     }
-    @Published var mbti: MBTI? = nil {
+    @Published var mbti: MBTI = .intj {
         didSet {
             validateForm()
         }
@@ -46,11 +46,11 @@ class InfoCollectionViewModel: ObservableObject {
 
     private func validateForm() {
         isFromValid = !nickname.isEmpty &&
-                      !age.isEmpty &&
-                      gender != nil &&
-                      mbti != nil &&
-                      isSmoker != nil &&
-                      isDrinker != nil
+                      !age.isEmpty
+//                      gender != nil &&
+//                      mbti != nil
+//                      isSmoker != nil &&
+//                      isDrinker != nil
     }
 
     private var cancellables = Set<AnyCancellable>()

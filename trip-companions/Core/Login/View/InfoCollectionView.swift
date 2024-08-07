@@ -39,10 +39,10 @@ struct InfoCollectionView: View {
                     Picker("성별", selection: $viewModel.gender) {
                         ForEach(Gender.allCases) { gender in
                             Text(gender.rawValue)
-                                .foregroundColor(.black)
-                                .tag(gender as Gender?)
+                                .tag(gender as Gender)
                         }
                     }
+                    .accentColor(.black)
                     .modifier(CustomPickerStyle())
                 }
                 .padding(.bottom)
@@ -54,10 +54,10 @@ struct InfoCollectionView: View {
                     Picker("MBTI", selection: $viewModel.mbti) {
                         ForEach(MBTI.allCases) { mbti in
                             Text(mbti.rawValue)
-                                .foregroundColor(.black)
-                                .tag(mbti as MBTI?)
+                                .tag(mbti as MBTI)
                         }
                     }
+                    .accentColor(.black)
                     .modifier(CustomPickerStyle())
                 }
                 .padding(.bottom)
