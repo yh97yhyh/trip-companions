@@ -42,10 +42,12 @@ class InfoCollectionViewModel: ObservableObject {
         }
     }
 
-    @Published var isFromValid: Bool = false
+    @Published var isComplete: Bool = false
+    @Published var isEditingNickname = false
+    @Published var isEditingAge = false
 
     private func validateForm() {
-        isFromValid = !nickname.isEmpty &&
+        isComplete = !nickname.isEmpty &&
                       !age.isEmpty
 //                      gender != nil &&
 //                      mbti != nil
