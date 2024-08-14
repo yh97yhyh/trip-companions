@@ -61,31 +61,3 @@ class InfoCollectionViewModel: ObservableObject {
         
     }
 }
-
-enum Gender: String, CaseIterable, Identifiable {
-    case male = "남성"
-    case female = "여성"
-    
-    var id: String { rawValue }
-}
-
-enum MBTI: String, CaseIterable, Identifiable {
-    case intj = "INTJ"
-    case intp = "INTP"
-    case entj = "ENTJ"
-    case entp = "ENTP"
-    case infj = "INFJ"
-    case infp = "INFP"
-    case enfj = "ENFJ"
-    case enfp = "ENFP"
-    case istj = "ISTJ"
-    case isfj = "ISFJ"
-    case estj = "ESTJ"
-    case esfj = "ESFJ"
-    case istp = "ISTP"
-    case isfp = "ISFP"
-    case estp = "ESTP"
-    case esfp = "ESFP"
-    
-    var id: String { rawValue }
-}

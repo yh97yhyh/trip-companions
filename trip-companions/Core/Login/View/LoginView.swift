@@ -34,6 +34,8 @@ struct LoginView: View {
             
             Spacer()
         }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

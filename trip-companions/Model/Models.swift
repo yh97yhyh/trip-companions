@@ -7,6 +7,35 @@
 
 import Foundation
 
+enum Gender: String, CaseIterable, Identifiable, Codable, Hashable {
+    case male = "남성"
+    case female = "여성"
+    
+    var id: String { rawValue }
+}
+
+enum MBTI: String, CaseIterable, Identifiable, Codable, Hashable {
+    case intj = "INTJ"
+    case intp = "INTP"
+    case entj = "ENTJ"
+    case entp = "ENTP"
+    case infj = "INFJ"
+    case infp = "INFP"
+    case enfj = "ENFJ"
+    case enfp = "ENFP"
+    case istj = "ISTJ"
+    case isfj = "ISFJ"
+    case estj = "ESTJ"
+    case esfj = "ESFJ"
+    case istp = "ISTP"
+    case isfp = "ISFP"
+    case estp = "ESTP"
+    case esfp = "ESFP"
+    
+    var id: String { rawValue }
+}
+
+
 // MARK: - TripCompanionsCreateRequest
 struct TripCompanionsCreateRequest: Codable {
     let regionId: Int64
@@ -29,30 +58,6 @@ struct EnumPresenter: Codable {
     let desc: String
 }
 
-// MARK: - Members
-struct Members: Codable {
-    let id: Int64
-    let loginId: String
-    let name: String
-    let nickName: String
-    let phoneNumber: String?
-    let email: String?
-    let profileImageUrl: String?
-    let tokenKey: String?
-    let mbti: EnumPresenter
-    let gender: EnumPresenter
-    let isSmoking: Bool
-    let drinkingCapacity: Double?
-    let login: Bool
-    let delete: Bool
-}
-
-// MARK: - Regions
-struct Regions: Codable {
-    let id: Int64
-    let regionName: String
-}
-
 // MARK: - TripCompanionsWithRegionAndMember
 struct TripCompanionsWithRegionAndMember: Codable {
     let id: Int64
@@ -62,8 +67,8 @@ struct TripCompanionsWithRegionAndMember: Codable {
     let contents: String
     let companionMemberCount: Int32
     let startDate: String
-    let region: Regions
-    let member: Members
+    let region: Region
+    let member: Member
 }
 
 // MARK: - MemberInterestsCreateOrUpdateRequest

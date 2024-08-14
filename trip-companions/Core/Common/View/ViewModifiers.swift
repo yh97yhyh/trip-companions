@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Text
 struct Title3Modifier: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -32,7 +33,7 @@ struct AdditionalTextModifier2: ViewModifier {
     }
 }
 
-
+// MARK: - TextField
 struct CustomTextFieldStyle: TextFieldStyle {
     var isEditing: Bool = false
     
@@ -41,7 +42,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
             .font(.subheadline)
             .padding(16)
             .background(isEditing ? Color.white : Color.customGray) // 배경 색상 변경
-            .cornerRadius(5)
+            .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(isEditing ? Color.black : Color.clear, lineWidth: 1) // 테두리 색상 변경
@@ -49,7 +50,8 @@ struct CustomTextFieldStyle: TextFieldStyle {
     }
 }
 
-struct CustomButtonStyle: ButtonStyle {
+// MARK: - Button
+struct WidthMaxSelectButtonStyle: ButtonStyle {
     var isSelected: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
@@ -58,26 +60,38 @@ struct CustomButtonStyle: ButtonStyle {
             .padding(20)
             .frame(maxWidth: .infinity)
             .background(isSelected ? Color.customOrange.opacity(0.1) : Color.customGray)
-            .cornerRadius(5)
+            .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(isSelected ? Color.customOrange : Color.clear, lineWidth: 1)
             )
             .foregroundColor(isSelected ? Color.customOrange : Color.customGray3)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 
-struct CustomPickerStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding(8)
-            .frame(maxWidth: .infinity)
-            .background(Color.customGray)
-            .cornerRadius(5)
+struct SelectButtonStyle: ButtonStyle {
+    var isSelected: Bool = false
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.subheadline)
+            .padding(14)
+            .background(isSelected ? Color.customOrange.opacity(0.1) : Color.customGray)
+            .cornerRadius(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(isSelected ? Color.customOrange : Color.clear, lineWidth: 1)
+            )
+            .foregroundColor(isSelected ? Color.customOrange : Color.customGray3)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 
-struct CustomButtonStyle2: ButtonStyle {
+
+struct CompleButtonStyle: ButtonStyle {
     var isComplete: Bool = false
     
     func makeBody(configuration: Configuration) -> some View {
@@ -91,6 +105,8 @@ struct CustomButtonStyle2: ButtonStyle {
                     .fill(isComplete ? Color.orange : Color.customGray2)
             )
             .foregroundColor(isComplete ? Color.white : Color.customGray3)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 
@@ -102,7 +118,38 @@ struct KakaoButtonStyle: ButtonStyle {
             .padding()
             .padding(.horizontal)
             .background(configuration.isPressed ? Color.yellow.opacity(0.7) : Color.kakaoYellow)
-            .cornerRadius(5) // 모서리 둥글게
+            .cornerRadius(6) // 모서리 둥글게
             .frame(maxWidth: .infinity)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
+struct SearchButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(16)
+            .font(.subheadline)
+            .foregroundColor(Color.customGray3)
+            .frame(maxWidth: .infinity)
+            .background(Color.customGray)
+            .cornerRadius(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.clear, lineWidth: 1)
+            )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
+// MARK: - Picker
+struct CustomPickerStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(8)
+            .frame(maxWidth: .infinity)
+            .background(Color.customGray)
+            .cornerRadius(6)
     }
 }
