@@ -13,24 +13,47 @@ struct TripCompanionCellView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image("defaultThumbnail")
-                    .padding(.horizontal)
+//                if viewModel.thumbnail != nil {
+                // MARK: - Update to KFImage
+                Image("TripCompanionThumbnailTest")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 69, height: 69)
+                    .cornerRadius(10)
+                    .padding(.trailing, 12)
+//                } else {
+//                    Image("defaultThumbnail")
+//                        .resizable()
+//                        .scaledToFit()
+//                        .frame(width: 65, height: 65)
+//                        .padding(4)
+//                        .background(Color.grayF1F1F1)
+//                        .cornerRadius(10)
+//                        .padding(.horizontal, 12)
+//                }
                 
                 VStack(alignment: .leading) {
-                    Text(viewModel.title)
-                    Text(viewModel.text)
+                    Text(viewModel.tripCompanion.title)
+                        .font(.callout)
+                        .fontWeight(.semibold)
+                    Text(viewModel.tripCompanion.contents)
+                        .font(.subheadline)
                         .foregroundColor(.gray767676)
-                    if viewModel.startDate == viewModel.endDate {
+                    if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
                         HStack {
                             Image(systemName: "calendar")
-                            Text(viewModel.toDateText(viewModel.startDate))
+//                                .padding(.trailing, 2)
+                            Text(viewModel.toDateText(viewModel.tripCompanion.startDate))
                         }
+                        .font(.subheadline)
                         .foregroundColor(.gray767676)
                     } else {
                         HStack {
                             Image(systemName: "calendar")
-                            Text("\(viewModel.toDateText(viewModel.startDate) ) ~ \(viewModel.toDateText(viewModel.endDate) )")
+//                                .padding(.trailing, 2)
+                            Text("\(viewModel.toDateText(viewModel.tripCompanion.startDate) ) ~ \(viewModel.toDateText(viewModel.tripCompanion.endDate) )")
                         }
+                        .font(.subheadline)
                         .foregroundColor(.gray767676)
                     }
                     

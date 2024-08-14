@@ -9,18 +9,20 @@ import Foundation
 import UIKit
 
 class TripCompanionCellViewModel: ObservableObject {
+    @Published var tripCompanion: TripCompanionsWithRegionAndMember
     @Published var thumbnail: UIImage? = nil
-    @Published var title: String = ""
-    @Published var text: String = ""
-    @Published var startDate: Date = Date()
-    @Published var endDate: Date = Date()
+//    @Published var title: String = ""
+//    @Published var contents: String = ""
+//    @Published var startDate: Date = Date()
+//    @Published var endDate: Date = Date()
     
-    init(thumbnail: UIImage?, title: String, text: String, startDate: Date, endDate: Date) {
+    init(tripCompanion: TripCompanionsWithRegionAndMember, thumbnail: UIImage?) {
+        self.tripCompanion = tripCompanion
         self.thumbnail = thumbnail
-        self.title = title
-        self.text = text
-        self.startDate = startDate
-        self.endDate = endDate
+//        self.title = title
+//        self.contents = contents
+//        self.startDate = startDate
+//        self.endDate = endDate
     }
     
     func toDateText(_ date: Date) -> String {
@@ -32,5 +34,5 @@ class TripCompanionCellViewModel: ObservableObject {
 }
 
 extension TripCompanionCellViewModel {
-    static let MOCK_VIEW_MODEL = TripCompanionCellViewModel(thumbnail: nil, title: "오늘 부산 앞바다 야경", text: "오늘 광안리에서 만나실 분!", startDate: Date(), endDate: Date())
+    static let MOCK_VIEW_MODEL = TripCompanionCellViewModel(tripCompanion: TripCompanionsWithRegionAndMember.MOCK_TRIP_COMPANIONS[0], thumbnail: nil)
 }

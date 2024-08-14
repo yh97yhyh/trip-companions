@@ -24,3 +24,7 @@ class SearchViewModel: ObservableObject {
         self.detail = detail
     }
 }
+
+extension SearchViewModel {
+    static let MOCK_VIEW_MODEL = SearchViewModel(regionName: "", date: Date(), detail: "")
+}

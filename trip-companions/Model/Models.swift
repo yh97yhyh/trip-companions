@@ -58,19 +58,6 @@ struct EnumPresenter: Codable {
     let desc: String
 }
 
-// MARK: - TripCompanionsWithRegionAndMember
-struct TripCompanionsWithRegionAndMember: Codable {
-    let id: Int64
-    let tripCompanionsStatus: EnumPresenter
-    let transport: EnumPresenter
-    let tripCompanionsOption: EnumPresenter
-    let contents: String
-    let companionMemberCount: Int32
-    let startDate: String
-    let region: Region
-    let member: Member
-}
-
 // MARK: - MemberInterestsCreateOrUpdateRequest
 struct MemberInterestsCreateOrUpdateRequest: Codable {
     let nickName: String

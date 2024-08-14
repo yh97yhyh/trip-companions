@@ -10,8 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-//            MainTabView()
-            InfoCollectionView()
+            MainTabView()
+                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//            InfoCollectionView()
 //            SearchView()
         }
     }

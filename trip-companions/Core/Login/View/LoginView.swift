@@ -15,6 +15,9 @@ struct LoginView: View {
             Spacer()
             
             Image("kakaoLoginLogo")
+                .resizable()
+//                .scaledToFit()
+                .frame(width: 180, height: 180)
             
             Spacer()
             

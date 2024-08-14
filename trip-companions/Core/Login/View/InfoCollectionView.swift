@@ -66,6 +66,7 @@ struct InfoCollectionView: View {
                                 .modifier(AdditionalTextModifier())
                         }
                         
+                        // MARK: - Update to use Cusotm PickerView
                         Picker("성별", selection: $viewModel.gender) {
                             ForEach(Gender.allCases) { gender in
                                 Text(gender.rawValue)
@@ -87,6 +88,7 @@ struct InfoCollectionView: View {
                                 .modifier(AdditionalTextModifier())
                         }
                         
+                        // MARK: - Update to use Cusotm PickerView
                         Picker("MBTI", selection: $viewModel.mbti) {
                             ForEach(MBTI.allCases) { mbti in
                                 Text(mbti.rawValue)

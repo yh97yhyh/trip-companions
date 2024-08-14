@@ -8,25 +8,30 @@
 import SwiftUI
 
 struct SearchView: View {
-    @State var regionName: String = ""
-    @State var date: Date = Date()
-    @State var isMale: Bool? = nil
-    @State var isDrinker: Bool? = nil
-    @State var isSmoker: Bool? = nil
-    @State var detail: String = ""
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @StateObject var viewModel: SearchViewModel
+//    @State var regionName: String = ""
+//    @State var date: Date = Date()
+//    @State var isMale: Bool? = nil
+//    @State var isDrinker: Bool? = nil
+//    @State var isSmoker: Bool? = nil
+//    @State var detail: String = ""
     
     var body: some View {
         VStack {
+            NavigationTitleView()
+            
             ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
+                        // MARK: - Update to add Image(systemName: "magnifyingglass")
                         Text("여기는 어떠신가요?")
                             .font(.title2)
                             .fontWeight(.semibold)
                         Spacer()
                     }
                     
-                    TextField("지역명을 입력하세요", text: $regionName)
+                    TextField("지역명을 입력하세요", text: $viewModel.regionName)
                         .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                 }
                 .padding(.bottom, 24)
@@ -39,13 +44,13 @@ struct SearchView: View {
                         Spacer()
                     }
                     
+                    // MARK: - Update to select date
                     Button {
                         
                     } label: {
                         HStack {
                             Text("날짜를 입력하세요")
                             Spacer()
-//                            Image(systemName: "magnifyingglass")
                         }
                     }
                     .buttonStyle(SearchButtonStyle())
@@ -63,52 +68,52 @@ struct SearchView: View {
                     
                     HStack {
                         Button {
-                            isMale = isMale == true ? nil : true
+                            viewModel.isMale = viewModel.isMale == true ? nil : true
                         } label: {
                             Text("남성")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isMale == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isMale == true))
                         
                         Button {
-                            isMale = isMale == false ? nil : false
+                            viewModel.isMale = viewModel.isMale == false ? nil : false
                         } label: {
                             Text("여성")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isMale == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isMale == false))
                         Spacer()
                     }
                     
                     HStack {
                         Button {
-                            isDrinker = isDrinker == true ? nil : true
+                            viewModel.isDrinker = viewModel.isDrinker == true ? nil : true
                         } label: {
                             Text("음주")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isDrinker == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isDrinker == true))
                         
                         Button {
-                            isDrinker = isDrinker == false ? nil : false
+                            viewModel.isDrinker = viewModel.isDrinker == false ? nil : false
                         } label: {
                             Text("논알콜")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isDrinker == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isDrinker == false))
                         Spacer()
                     }
                     
                     HStack {
                         Button {
-                            isSmoker = isSmoker == true ? nil : true
+                            viewModel.isSmoker = viewModel.isSmoker == true ? nil : true
                         } label: {
                             Text("흡연")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isSmoker == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSmoker == true))
                         
                         Button {
-                            isSmoker = isSmoker == false ? nil : false
+                            viewModel.isSmoker = viewModel.isSmoker == false ? nil : false
                         } label: {
                             Text("비흡연")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: isSmoker == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSmoker == false))
                         Spacer()
                     }
                 }
@@ -116,18 +121,19 @@ struct SearchView: View {
                 
                 VStack {
                     HStack {
+                        // MARK: - Update to add Image(systemName: "magnifyingglass")
                         Text("세부 조건")
                             .font(.title2)
                             .fontWeight(.semibold)
                         Spacer()
                     }
                     
-                    TextField("조건 입력", text: $detail)
+                    TextField("조건 입력", text: $viewModel.detail)
                         .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                 }
             }
             .padding(.top)
-            .padding(.horizontal)
+//            .padding(.horizontal)
             
             Button {
                 
@@ -136,14 +142,16 @@ struct SearchView: View {
             }
             .buttonStyle(CompleButtonStyle(isComplete: true))
             .padding(.top)
-            .padding(.horizontal)
+//            .padding(.horizontal)
             
         }
+        .padding(.horizontal)
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    SearchView()
+    SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

@@ -10,5 +10,13 @@ import Alamofire
 import Combine
 
 class MyPageViewModel: ObservableObject {
+    @Published var member: Member
     
+    init(member: Member) {
+        self.member = member
+    }
+}
+
+extension MyPageViewModel {
+    static let MOCK_VIEW_MODEL = MyPageViewModel(member: Member.MOCK_MEMBER1)
 }

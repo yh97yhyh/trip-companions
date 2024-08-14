@@ -33,6 +33,16 @@ struct AdditionalTextModifier2: ViewModifier {
     }
 }
 
+struct FeatureTextModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.orangeF49321)
+            .padding(4)
+            .background(Color.orangeFFF3E5)
+            .cornerRadius(5)
+    }
+}
+
 // MARK: - TextField
 struct CustomTextFieldStyle: TextFieldStyle {
     var isEditing: Bool = false
@@ -90,7 +100,6 @@ struct SelectButtonStyle: ButtonStyle {
     }
 }
 
-
 struct CompleButtonStyle: ButtonStyle {
     var isComplete: Bool = false
     
@@ -138,6 +147,23 @@ struct SearchButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(Color.clear, lineWidth: 1)
             )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
+struct TripSearchButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(16)
+            .foregroundColor(Color.grayA2A2A2)
+            .frame(maxWidth: .infinity)
+            .background(Color.grayF5F6F8)
+            .cornerRadius(25)
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 25)
+//                    .stroke(Color.clear, lineWidth: 1)
+//            )
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }

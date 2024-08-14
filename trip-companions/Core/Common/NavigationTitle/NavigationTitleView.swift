@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct NavigationTitleView: View {
-//    var title = ""
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         HStack {
-            
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "chevron.backward")
+                    .imageScale(.large)
+                    .foregroundColor(.black)
+            }
+            Spacer()
         }
     }
 }
