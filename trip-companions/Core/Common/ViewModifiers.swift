@@ -17,7 +17,7 @@ struct Title2TextModifier: ViewModifier {
     }
 }
 
-struct AdditionalTextModifier: ViewModifier {
+struct AdditionalEssentialTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.orangeF49321)
@@ -25,7 +25,7 @@ struct AdditionalTextModifier: ViewModifier {
     }
 }
 
-struct AdditionalTextModifier2: ViewModifier {
+struct AdditionalOptionalTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.grayA2A2A2)
@@ -34,6 +34,16 @@ struct AdditionalTextModifier2: ViewModifier {
 }
 
 struct FeatureTextModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.orangeF49321)
+            .padding(4)
+            .background(Color.orangeFFF3E5)
+            .cornerRadius(5)
+    }
+}
+
+struct FeatureTextModifier2: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.orangeF49321)
@@ -111,9 +121,28 @@ struct CompleButtonStyle: ButtonStyle {
             .foregroundColor(.white)
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(isComplete ? Color.orange : Color.grayE9E9E9)
+                    .fill(isComplete ? Color.orangeF49321 : Color.grayE9E9E9)
             )
             .foregroundColor(isComplete ? Color.white : Color.grayA2A2A2)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
+struct CompleButtonStyle2: ButtonStyle {
+    var isComplete: Bool = false
+    
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(16)
+            .fontWeight(.semibold)
+            .frame(maxWidth: .infinity)
+            .foregroundColor(.orangeF49321 )
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(isComplete ? Color.orangeF49321 : Color.grayE9E9E9)
+            )
+            .foregroundColor(isComplete ? Color.orangeF49321 : Color.grayA2A2A2)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }

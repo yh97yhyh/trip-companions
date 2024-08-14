@@ -24,7 +24,7 @@ struct SearchView: View {
             ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
-                        // MARK: - Update to add Image(systemName: "magnifyingglass")
+                        // MARK: - Add Image(systemName: "magnifyingglass")
                         Text("여기는 어떠신가요?")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -39,15 +39,12 @@ struct SearchView: View {
                 VStack {
                     HStack {
                         Text("날짜 입력")
-                            .modifier(Title2TextModifier())
+                            .font(.title3)
                         
                         Spacer()
                     }
                     
-                    // MARK: - Update to select date
-                    Button {
-                        
-                    } label: {
+                    NavigationLink(destination: CustomDatePickerView()) {
                         HStack {
                             Text("날짜를 입력하세요")
                             Spacer()
@@ -61,8 +58,8 @@ struct SearchView: View {
                 VStack {
                     HStack {
                         Text("당신의 동행은?")
-                            .modifier(Title2TextModifier())
-                        
+                            .font(.title3)
+
                         Spacer()
                     }
                     
@@ -121,7 +118,7 @@ struct SearchView: View {
                 
                 VStack {
                     HStack {
-                        // MARK: - Update to add Image(systemName: "magnifyingglass")
+                        // MARK: - Add Image(systemName: "magnifyingglass")
                         Text("세부 조건")
                             .font(.title2)
                             .fontWeight(.semibold)
@@ -130,6 +127,8 @@ struct SearchView: View {
                     
                     TextField("조건 입력", text: $viewModel.detail)
                         .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                    
+                    // MARK: - Add options
                 }
             }
             .padding(.top)
@@ -141,11 +140,9 @@ struct SearchView: View {
                 Text("검색 결과 보기")
             }
             .buttonStyle(CompleButtonStyle(isComplete: true))
-            .padding(.top)
-//            .padding(.horizontal)
             
         }
-        .padding(.horizontal)
+        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }

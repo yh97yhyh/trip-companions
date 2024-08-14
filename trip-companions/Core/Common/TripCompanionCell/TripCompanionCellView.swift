@@ -33,12 +33,21 @@ struct TripCompanionCellView: View {
 //                }
                 
                 VStack(alignment: .leading) {
-                    Text(viewModel.tripCompanion.title)
-                        .font(.callout)
-                        .fontWeight(.semibold)
-                    Text(viewModel.tripCompanion.contents)
-                        .font(.subheadline)
-                        .foregroundColor(.gray767676)
+                    HStack {
+                        Text(viewModel.tripCompanion.title)
+                            .font(.callout)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
+                    HStack {
+                        Text(viewModel.tripCompanion.contents)
+                            .font(.subheadline)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                            .foregroundColor(.gray767676)
+                        Spacer()
+                    }
                     if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
                         HStack {
                             Image(systemName: "calendar")
@@ -58,6 +67,8 @@ struct TripCompanionCellView: View {
                     }
                     
                 }
+                
+                Spacer()
             }
         }
     }

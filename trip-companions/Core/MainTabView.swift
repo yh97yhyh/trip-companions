@@ -27,7 +27,7 @@ struct MainTabView: View {
                             Text("홈")
                         }
                         .tag(0)
-                    DomesticCompanionView()
+                    DomesticCompanionView(viewModel: DomesticCompanionViewModel.MOCK_VIEW_MODEL)
                         .onAppear {
                             selectedIndex = 1
                         }
@@ -55,6 +55,7 @@ struct MainTabView: View {
                         }
                         .tag(3)
                 }
+                .accentColor(.black)
             }
         }
     }

@@ -19,7 +19,6 @@ struct InfoCollectionView: View {
                         .fontWeight(.semibold)
                     Spacer()
                 }
-                .padding(.horizontal)
                 .padding(.bottom, 32)
                 
                 VStack(alignment: .leading) {
@@ -28,7 +27,7 @@ struct InfoCollectionView: View {
                             Text("닉네임")
                                 .modifier(Title2TextModifier())
                             Text ("(필수)")
-                                .modifier(AdditionalTextModifier())
+                                .modifier(AdditionalEssentialTextModifier())
                         }
                         
                         TextField("이름 입력", text: $viewModel.nickname)
@@ -45,7 +44,7 @@ struct InfoCollectionView: View {
                             Text("나이")
                                 .modifier(Title2TextModifier())
                             Text ("(필수)")
-                                .modifier(AdditionalTextModifier())
+                                .modifier(AdditionalEssentialTextModifier())
                         }
                         
                         TextField("나이 입력", text: $viewModel.age)
@@ -63,7 +62,7 @@ struct InfoCollectionView: View {
                             Text("성별")
                                 .modifier(Title2TextModifier())
                             Text ("(필수)")
-                                .modifier(AdditionalTextModifier())
+                                .modifier(AdditionalEssentialTextModifier())
                         }
                         
                         // MARK: - Update to use Cusotm PickerView
@@ -85,7 +84,7 @@ struct InfoCollectionView: View {
                             Text("MBTI")
                                 .modifier(Title2TextModifier())
                             Text ("(필수)")
-                                .modifier(AdditionalTextModifier())
+                                .modifier(AdditionalEssentialTextModifier())
                         }
                         
                         // MARK: - Update to use Cusotm PickerView
@@ -105,7 +104,7 @@ struct InfoCollectionView: View {
                             Text("흡연 여부")
                                 .modifier(Title2TextModifier())
                             Text("(선택)")
-                                .modifier(AdditionalTextModifier2())
+                                .modifier(AdditionalOptionalTextModifier())
                         }
                         
                         HStack {
@@ -132,7 +131,7 @@ struct InfoCollectionView: View {
                             Text("음주 여부")
                                 .modifier(Title2TextModifier())
                             Text("(선택)")
-                                .modifier(AdditionalTextModifier2())
+                                .modifier(AdditionalOptionalTextModifier())
                         }
                         
                         HStack {
@@ -154,8 +153,8 @@ struct InfoCollectionView: View {
                     .padding(.bottom)
                 }
                 //            .padding(.top)
-                .padding(.horizontal)
             }
+            .padding()
             
             Button {
                 
@@ -164,7 +163,6 @@ struct InfoCollectionView: View {
             }
             .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
             .disabled(!viewModel.isComplete)
-            .padding(.top)
             .padding(.horizontal)
         }
         .navigationBarHidden(true)

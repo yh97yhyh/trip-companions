@@ -36,7 +36,7 @@ struct ProfileHeaderView: View {
                     Text("\(viewModel.member.nickName), \(viewModel.member.age)")
                         .font(.title3)
                         .fontWeight(.semibold)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 8)
                     
                     HStack {
                         Text(viewModel.toTextIsSmoking())

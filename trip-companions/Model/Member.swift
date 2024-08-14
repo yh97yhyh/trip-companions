@@ -11,7 +11,7 @@ struct Member: Identifiable, Codable, Hashable {
     let id: Int64
     let loginId: String
     let name: String
-    let age: Int // test
+    let age: Int // temp
     let nickName: String
     let phoneNumber: String
     let email: String

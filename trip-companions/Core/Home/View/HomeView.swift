@@ -41,9 +41,10 @@ struct HomeView: View {
                         }
                         
                         ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                            // MARK: - Update to NavigationLink
-                            TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion, thumbnail: nil))
-                                .padding(.vertical, 12)
+                            NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                                TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion, thumbnail: nil))
+                                    .padding(.vertical, 12)
+                            }
                             Divider()
                         }
                     }
@@ -60,7 +61,7 @@ struct HomeView: View {
             }
             
         }
-        .padding(.horizontal)
+        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
