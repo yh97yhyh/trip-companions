@@ -12,6 +12,7 @@ struct ContentView: View {
         VStack {
 //            MainTabView()
             InfoCollectionView()
+//            SearchView()
         }
     }
 }

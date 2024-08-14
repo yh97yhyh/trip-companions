@@ -34,7 +34,7 @@ struct SearchView: View {
                 VStack {
                     HStack {
                         Text("날짜 입력")
-                            .modifier(Title3Modifier())
+                            .modifier(Title2TextModifier())
                         
                         Spacer()
                     }
@@ -56,7 +56,7 @@ struct SearchView: View {
                 VStack {
                     HStack {
                         Text("당신의 동행은?")
-                            .modifier(Title3Modifier())
+                            .modifier(Title2TextModifier())
                         
                         Spacer()
                     }

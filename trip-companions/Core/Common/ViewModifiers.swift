@@ -8,10 +8,10 @@
 import SwiftUI
 
 // MARK: - Text
-struct Title3Modifier: ViewModifier {
+struct Title2TextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title3)
+            .font(.title2)
 //            .fontWeight(.semibold)
             .padding(.bottom, 5)
     }
@@ -20,7 +20,7 @@ struct Title3Modifier: ViewModifier {
 struct AdditionalTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.customOrange)
+            .foregroundColor(.orangeF49321)
             .padding(.bottom, 5)
     }
 }
@@ -28,7 +28,7 @@ struct AdditionalTextModifier: ViewModifier {
 struct AdditionalTextModifier2: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.customGray3)
+            .foregroundColor(.grayA2A2A2)
             .padding(.bottom, 5)
     }
 }
@@ -41,11 +41,11 @@ struct CustomTextFieldStyle: TextFieldStyle {
         configuration
             .font(.subheadline)
             .padding(16)
-            .background(isEditing ? Color.white : Color.customGray) // 배경 색상 변경
+            .background(isEditing ? Color.white : Color.grayF5F6F8)
             .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(isEditing ? Color.black : Color.clear, lineWidth: 1) // 테두리 색상 변경
+                    .stroke(isEditing ? Color.black : Color.clear, lineWidth: 1)
             )
     }
 }
@@ -59,13 +59,13 @@ struct WidthMaxSelectButtonStyle: ButtonStyle {
             .font(.subheadline)
             .padding(20)
             .frame(maxWidth: .infinity)
-            .background(isSelected ? Color.customOrange.opacity(0.1) : Color.customGray)
+            .background(isSelected ? Color.orangeF49321.opacity(0.1) : Color.grayF5F6F8)
             .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(isSelected ? Color.customOrange : Color.clear, lineWidth: 1)
+                    .stroke(isSelected ? Color.orangeF49321 : Color.clear, lineWidth: 1)
             )
-            .foregroundColor(isSelected ? Color.customOrange : Color.customGray3)
+            .foregroundColor(isSelected ? Color.orangeF49321 : Color.grayA2A2A2)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }
@@ -78,13 +78,13 @@ struct SelectButtonStyle: ButtonStyle {
         configuration.label
             .font(.subheadline)
             .padding(14)
-            .background(isSelected ? Color.customOrange.opacity(0.1) : Color.customGray)
+            .background(isSelected ? Color.orangeF49321.opacity(0.1) : Color.grayF5F6F8)
             .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(isSelected ? Color.customOrange : Color.clear, lineWidth: 1)
+                    .stroke(isSelected ? Color.orangeF49321 : Color.clear, lineWidth: 1)
             )
-            .foregroundColor(isSelected ? Color.customOrange : Color.customGray3)
+            .foregroundColor(isSelected ? Color.orangeF49321 : Color.grayA2A2A2)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }
@@ -102,9 +102,9 @@ struct CompleButtonStyle: ButtonStyle {
             .foregroundColor(.white)
             .background(
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(isComplete ? Color.orange : Color.customGray2)
+                    .fill(isComplete ? Color.orange : Color.grayE9E9E9)
             )
-            .foregroundColor(isComplete ? Color.white : Color.customGray3)
+            .foregroundColor(isComplete ? Color.white : Color.grayA2A2A2)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }
@@ -117,7 +117,7 @@ struct KakaoButtonStyle: ButtonStyle {
             .foregroundColor(.black)
             .padding()
             .padding(.horizontal)
-            .background(configuration.isPressed ? Color.yellow.opacity(0.7) : Color.kakaoYellow)
+            .background(configuration.isPressed ? Color.yellowFEE500.opacity(0.7) : Color.yellowFEE500)
             .cornerRadius(6) // 모서리 둥글게
             .frame(maxWidth: .infinity)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
@@ -130,9 +130,9 @@ struct SearchButtonStyle: ButtonStyle {
         configuration.label
             .padding(16)
             .font(.subheadline)
-            .foregroundColor(Color.customGray3)
+            .foregroundColor(Color.grayA2A2A2)
             .frame(maxWidth: .infinity)
-            .background(Color.customGray)
+            .background(Color.grayF5F6F8)
             .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 5)
@@ -149,7 +149,7 @@ struct CustomPickerStyle: ViewModifier {
         content
             .padding(8)
             .frame(maxWidth: .infinity)
-            .background(Color.customGray)
+            .background(Color.grayF5F6F8)
             .cornerRadius(6)
     }
 }

@@ -26,7 +26,7 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("닉네임")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text ("(필수)")
                                 .modifier(AdditionalTextModifier())
                         }
@@ -43,7 +43,7 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("나이")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text ("(필수)")
                                 .modifier(AdditionalTextModifier())
                         }
@@ -61,7 +61,7 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("성별")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text ("(필수)")
                                 .modifier(AdditionalTextModifier())
                         }
@@ -82,7 +82,7 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("MBTI")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text ("(필수)")
                                 .modifier(AdditionalTextModifier())
                         }
@@ -101,21 +101,21 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("흡연 여부")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text("(선택)")
                                 .modifier(AdditionalTextModifier2())
                         }
                         
                         HStack {
                             Button {
-                                viewModel.isSmoker = true
+                                viewModel.isSmoker = viewModel.isSmoker == true ? nil : true
                             } label: {
                                 Text("Yes")
                             }
                             .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoker == true))
                             
                             Button {
-                                viewModel.isSmoker = false
+                                viewModel.isSmoker = viewModel.isSmoker == false ? nil : false
                             } label: {
                                 Text("No")
                             }
@@ -128,21 +128,21 @@ struct InfoCollectionView: View {
                     VStack(alignment: .leading) {
                         HStack(spacing: 4) {
                             Text("음주 여부")
-                                .modifier(Title3Modifier())
+                                .modifier(Title2TextModifier())
                             Text("(선택)")
                                 .modifier(AdditionalTextModifier2())
                         }
                         
                         HStack {
                             Button {
-                                viewModel.isDrinker = true
+                                viewModel.isDrinker = viewModel.isDrinker == true ? nil : true
                             } label: {
                                 Text("Yes")
                             }
                             .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinker == true))
                             
                             Button {
-                                viewModel.isDrinker = false
+                                viewModel.isDrinker = viewModel.isDrinker == false ? nil : false
                             } label: {
                                 Text("No")
                             }

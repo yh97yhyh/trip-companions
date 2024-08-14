@@ -14,7 +14,7 @@ struct LoginView: View {
         VStack {
             Spacer()
             
-            Image("logo")
+            Image("kakaoLoginLogo")
             
             Spacer()
             
