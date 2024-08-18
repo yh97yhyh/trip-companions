@@ -10,7 +10,7 @@ import SwiftUI
 struct InfoCollectionView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
-    
+        
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {

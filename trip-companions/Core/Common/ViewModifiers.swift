@@ -70,6 +70,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
     }
 }
 
+
 // MARK: - Button
 struct WidthMaxSelectButtonStyle: ButtonStyle {
     var isSelected: Bool = false
@@ -168,7 +169,7 @@ struct SearchButtonStyle: ButtonStyle {
         configuration.label
             .padding(16)
             .font(.subheadline)
-            .foregroundColor(Color.grayA2A2A2)
+            .foregroundColor(Color.primary.opacity(0.25))
             .frame(maxWidth: .infinity)
             .background(Color.grayF5F6F8)
             .cornerRadius(6)

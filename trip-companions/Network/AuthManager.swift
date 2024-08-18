@@ -15,7 +15,8 @@ class AuthManager {
     static let shared = AuthManager()
     
     init() {
-        KakaoSDK.initSDK(appKey: "{KAKAO_API_KEY}")
+        let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
+        KakaoSDK.initSDK(appKey: KakaoApiKey)
     }
     
     func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {

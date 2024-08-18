@@ -9,46 +9,114 @@ import SwiftUI
 
 struct CustomDatePickerView: View {
     @Environment(\.dismiss) private var dismiss
-    @State var startDate = Date()
-    @State var endDate = Date()
-
+    @Binding var startDate: Date
+    @Binding var endDate: Date
+    @State var showingStartDatePicker = true
+    @State var showingEndDatePicker = false
+    
     var body: some View {
         VStack {
-            HStack {
-                Text("날짜 입력")
-                    .font(.title)
-                    .fontWeight(.semibold)
-                Spacer()
-                Button {
-                    dismiss()
-                } label: {
-                    Image(systemName: "xmark")
-                        .imageScale(.large)
-                        .foregroundColor(.gray999999)
+            ScrollView(showsIndicators: false) {
+                HStack {
+                    Text("날짜 입력")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .imageScale(.large)
+                            .foregroundColor(.gray999999)
+                    }
                 }
-            }
-            .padding(.bottom)
-            
-            Divider()
                 .padding(.bottom)
-            
-            // MARK: - Add DatePicker
-            
-            Spacer()
+                
+                Divider()
+                    .padding(.bottom)
+                
+                // MARK: - Add DatePicker
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("시작 날짜")
+                        Spacer()
+                        Text(startDate.toDateText())
+                            .font(.headline)
+                            .modifier(FeatureTextModifier())
+                    }
+                    .onTapGesture {
+                        showingStartDatePicker.toggle()
+                        showingEndDatePicker = false
+                    }
+                    
+                    if showingStartDatePicker {
+                        DatePicker("시작 날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .tint(Color.orangeF49321)
+                    }
+                }
+                .padding(.bottom)
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("끝 날짜")
+                        Spacer()
+                        Text(endDate.toDateText())
+                            .font(.headline)
+                            .modifier(FeatureTextModifier())
+                    }
+                    .onTapGesture {
+                        showingEndDatePicker.toggle()
+                        showingStartDatePicker = false
+                    }
+                    
+                    if showingEndDatePicker {
+                        DatePicker("끝 날짜를 선택해주세요", selection: $endDate, in: startDate..., displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .tint(Color.orangeF49321)
+                            .onChange(of: endDate) { newEndDate in
+                                if newEndDate < startDate {
+                                    endDate = startDate
+                                }
+                            }
+                        
+                    }
+                }
+                .padding(.bottom)
+            }
+            .padding()
             
             Button {
-                
+                dismiss()
             } label: {
                 Text("날짜 선택 완료")
             }
             .buttonStyle(CompleButtonStyle(isComplete: true))
+            .padding(.horizontal)
         }
-        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
 }
 
-#Preview {
-    CustomDatePickerView()
+struct CustomDatePickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+    }
+    
+    struct PreviewWrapper: View {
+        @State private var startDate = Date()
+        @State private var endDate = Date()
+        
+        var body: some View {
+            CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+        }
+    }
 }
+
+//#Preview {
+//    @State var startDate = Date()
+//    @State var endDate = Date()
+//
+//    CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+//}

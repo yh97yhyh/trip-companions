@@ -1,75 +1,80 @@
 //
-//  SearchView.swift
+//  WriteTripCompanionView.swift
 //  trip-companions
 //
-//  Created by 영현 on 8/14/24.
+//  Created by 영현 on 8/18/24.
 //
 
 import SwiftUI
 
-struct SearchView: View {
-    @EnvironmentObject var myPageViewModel: MyPageViewModel
-    @StateObject var viewModel: SearchViewModel
+struct WriteTripCompanionView: View {
+    @StateObject var viewModel: WriteTripCompanionViewModel
     @Environment(\.dismiss) private var dismiss
     
     @State private var showingDatePicker = false
     
+//    init(viewModel: WriteTripCompanionViewModel) {
+//        _viewModel = StateObject(wrappedValue: viewModel)
+//        UITextView.appearance().backgroundColor = .clear
+//    }
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             NavigationTitleView()
                 .padding(.horizontal)
-            
             ScrollView(showsIndicators: false) {
-                VStack {
-                    HStack {
-                        // MARK: - Add Image(systemName: "magnifyingglass")
-                        Text("여기는 어떠신가요?")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    
-                    TextField("지역명을 입력하세요", text: $viewModel.regionName)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                HStack {
+                    Text("동행 등록")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                    Spacer()
                 }
-                .padding(.bottom, 24)
-
-                VStack {
+                .padding(.bottom)
+                
+                HStack {
                     HStack {
-                        Text("날짜 입력")
-                            .font(.title3)
-                        
-                        Spacer()
+                        Image(systemName: "location")
+                        Text("지역")
+                            .font(.callout)
                     }
-                    
-//                    NavigationLink(destination: CustomDatePickerView()) {
-//                        HStack {
-//                            Text("날짜를 입력하세요")
-//                            Spacer()
-//                        }
-//                    }
-//                    .buttonStyle(SearchButtonStyle())
-                    
-                    Button {
-                        showingDatePicker = true
-                    } label: {
+                    .padding(.trailing, 56)
+                    Spacer()
+                    //MARK: - 지역 검색
+                    NavigationLink(destination: Text("동읍면찾기")) {
                         HStack {
-                            if viewModel.startDate == Date.defaultDate() && viewModel.endDate == Date.defaultDate() {
-                                Text("날짜를 입력하세요")
-                            } else {
-                                Text("\(viewModel.startDate.toDateText()) ~ \(viewModel.endDate.toDateText())")
-                                    .foregroundColor(.black)
-                            }
+                            Text("동.읍.면 찾기")
                             Spacer()
                         }
                     }
-                    .sheet(isPresented: $showingDatePicker) {
-                        CustomDatePickerView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
-                    }
                     .buttonStyle(SearchButtonStyle())
                 }
-                .padding(.bottom, 24)
-
+                
+                Button {
+                    showingDatePicker = true
+                } label: {
+                    HStack {
+                        if viewModel.startDate == Date.defaultDate() && viewModel.endDate == Date.defaultDate() {
+                            Text("날짜를 입력하세요")
+                        } else {
+                            Text("\(viewModel.startDate.toDateText()) ~ \(viewModel.endDate.toDateText())")
+                                .foregroundColor(.black)
+                        }
+                        
+                        Spacer()
+                    }
+                }
+                .sheet(isPresented: $showingDatePicker) {
+                    CustomDatePickerView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
+                }
+                .buttonStyle(SearchButtonStyle())
+                
+                TextField("모집 인원", text: $viewModel.region)
+                    .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                    .keyboardType(.numberPad)
+                
+                ContentsTextEditor(viewModel: viewModel)
+                    .padding(.bottom)
+                
                 VStack {
                     HStack {
                         Text("당신의 동행은?")
@@ -128,14 +133,12 @@ struct SearchView: View {
                         Spacer()
                     }
                 }
-                .padding(.bottom, 24)
+                .padding(.bottom)
                 
                 VStack {
                     HStack {
-                        // MARK: - Add Image(systemName: "magnifyingglass")
                         Text("세부 조건")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                            .font(.title3)
                         Spacer()
                     }
                     
@@ -144,25 +147,49 @@ struct SearchView: View {
                     
                     // MARK: - Add options
                 }
+                
             }
-            .padding(.top)
-            .padding(.horizontal)
+            .padding()
             
             Button {
                 dismiss()
             } label: {
-                Text("검색 결과 보기")
+                Text("등록하기")
             }
             .buttonStyle(CompleButtonStyle(isComplete: true))
             .padding(.horizontal)
-            
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        
+    }
+}
+
+struct ContentsTextEditor: View {
+    @StateObject var viewModel: WriteTripCompanionViewModel
+    
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            TextEditor(text: $viewModel.contents)
+                .font(.subheadline)
+                .padding(16)
+                .frame(height: 150)
+                .background(Color.grayF5F6F8)
+                .cornerRadius(6)
+                .scrollContentBackground(.hidden)
+            
+            if viewModel.contents.isEmpty {
+                Text("상세 내용을 입력하세요")
+                    .font(.subheadline)
+                    .foregroundColor(Color.primary.opacity(0.25))
+//                    .lineSpacing(10)
+                    .padding(.top, 20)
+                    .padding(.leading, 19)
+            }
+        }
     }
 }
 
 #Preview {
-    SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL)
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+    WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)
 }

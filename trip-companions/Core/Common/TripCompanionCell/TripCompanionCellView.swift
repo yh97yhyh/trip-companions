@@ -52,7 +52,7 @@ struct TripCompanionCellView: View {
                         HStack {
                             Image(systemName: "calendar")
 //                                .padding(.trailing, 2)
-                            Text(viewModel.toDateText(viewModel.tripCompanion.startDate))
+                            Text(viewModel.tripCompanion.startDate.toDateText())
                         }
                         .font(.subheadline)
                         .foregroundColor(.gray767676)
@@ -60,7 +60,7 @@ struct TripCompanionCellView: View {
                         HStack {
                             Image(systemName: "calendar")
 //                                .padding(.trailing, 2)
-                            Text("\(viewModel.toDateText(viewModel.tripCompanion.startDate) ) ~ \(viewModel.toDateText(viewModel.tripCompanion.endDate) )")
+                            Text("\(viewModel.tripCompanion.startDate.toDateText()) ) ~ \(viewModel.tripCompanion.endDate.toDateText())")
                         }
                         .font(.subheadline)
                         .foregroundColor(.gray767676)

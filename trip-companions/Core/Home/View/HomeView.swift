@@ -70,18 +70,26 @@ struct HomeView: View {
 struct AddButtonView: View {
     var body: some View {
         VStack {
-            // MARK: - Update to NavigationLink
-            Button {
-                
-            } label: {
+            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)) {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .foregroundColor(.white)
                     .padding(24)
                     .background(Color.orangeF49321)
                     .clipShape(Circle())
-                
             }
+//            // MARK: - Update to NavigationLink
+//            Button {
+//                
+//            } label: {
+//                Image(systemName: "plus")
+//                    .imageScale(.large)
+//                    .foregroundColor(.white)
+//                    .padding(24)
+//                    .background(Color.orangeF49321)
+//                    .clipShape(Circle())
+//                
+//            }
         }
     }
 }

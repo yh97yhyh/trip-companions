@@ -25,12 +25,6 @@ class TripCompanionCellViewModel: ObservableObject {
 //        self.endDate = endDate
     }
     
-    func toDateText(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy.MM.dd"
-        let formattedDate = dateFormatter.string(from: date)
-        return formattedDate
-    }
 }
 
 extension TripCompanionCellViewModel {
