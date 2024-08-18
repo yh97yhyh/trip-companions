@@ -172,10 +172,10 @@ struct SearchButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(Color.grayF5F6F8)
             .cornerRadius(6)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.clear, lineWidth: 1)
-            )
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 5)
+//                    .stroke(Color.clear, lineWidth: 1)
+//            )
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }

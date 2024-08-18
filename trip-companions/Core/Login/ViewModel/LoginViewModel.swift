@@ -9,8 +9,8 @@ import Foundation
 import Combine
 
 class LoginViewModel: ObservableObject {
-    @Published var isLoggedIn: Bool = false
-    @Published var isNewUser: Bool = false
+//    @Published var isLoggedIn: Bool = false
+//    @Published var isNewUser: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -20,14 +20,14 @@ class LoginViewModel: ObservableObject {
     
     private func checkLoginStatus() {
         if let _ = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
-            self.isLoggedIn = true
+//            self.isLoggedIn = true
         } else {
-            self.isLoggedIn = false
+//            self.isLoggedIn = false
         }
     }
     
     func login() {
-        AuthManager.shared.loginWithKakao()
+        AuthManager.shared.loginWithKakaoTalk()
             .receive(on: DispatchQueue.main) // UI Update?
             .sink { completion in
                 switch completion {
@@ -37,16 +37,20 @@ class LoginViewModel: ObservableObject {
                     print("로그인 실패: \(error)")
                 }
             } receiveValue: { [weak self] success, isNewUser in
-                self?.isLoggedIn = success
-                self?.isNewUser = isNewUser
+//                self?.isLoggedIn = success
+//                self?.isNewUser = isNewUser
             }.store(in: &cancellables)
     }
     
     func logout() {
         AuthManager.shared.logout()
         
-        self.isLoggedIn = false
-        self.isNewUser = false
+//        self.isLoggedIn = false
+//        self.isNewUser = false
     }
     
+}
+
+extension LoginViewModel {
+    static let MOCK_VIEW_MODEL = LoginViewModel()
 }

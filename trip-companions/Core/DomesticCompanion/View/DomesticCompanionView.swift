@@ -52,7 +52,7 @@ struct DomesticCompanionView: View {
                 }
             }
         }
-        .padding(.horizontal)
+        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }

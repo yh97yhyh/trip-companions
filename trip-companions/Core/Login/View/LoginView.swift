@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 
 struct LoginView: View {
+    @StateObject var viewModel: LoginViewModel
+    
     var body: some View {
         VStack {
             Spacer()
@@ -22,18 +25,33 @@ struct LoginView: View {
             Spacer()
             
             Button {
-                
-            } label: {
-                HStack {
-                    Image(systemName: "message.fill")
-                    Spacer()
-                    Text("카카오 로그인")
-                        .font(.callout)
-                    Spacer()
+                if UserApi.isKakaoTalkLoginAvailable() {
+                    // MARK: - 카카오톡 로그인
+                    
+                } else {
+                    // MARK: - 카카오 계정 로그인
                 }
+            } label: {
+                Image("kakao_login_large_wide")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: UIScreen.main.bounds.width * 0.9)
             }
-            .buttonStyle(KakaoButtonStyle())
             .padding(.horizontal)
+            
+//            Button {
+//                
+//            } label: {
+//                HStack {
+//                    Image(systemName: "message.fill")
+//                    Spacer()
+//                    Text("카카오 로그인")
+//                        .font(.callout)
+//                    Spacer()
+//                }
+//            }
+//            .buttonStyle(KakaoButtonStyle())
+//            .padding(.horizontal)
             
             Spacer()
         }
@@ -43,5 +61,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
 }

@@ -14,9 +14,29 @@ import KakaoSDKUser
 class AuthManager {
     static let shared = AuthManager()
     
-    func loginWithKakao() -> AnyPublisher<(Bool, Bool), Error> {
+    func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {
         Future { promise in
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in
+                if let error = error {
+                    promise(.failure(error))
+                    return
+                }
+                
+                guard let oauthToken = oauthToken else {
+                    promise(.success((false, false)))
+                    return
+                }
+                
+                UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
+                self.fetchUserInfo(promise: promise)
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func loginWithKakaoAccount() -> AnyPublisher<(Bool, Bool), Error> {
+        Future { promise in
+            UserApi.shared.loginWithKakaoAccount { oauthToken, error in
                 if let error = error {
                     promise(.failure(error))
                     return
