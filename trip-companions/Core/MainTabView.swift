@@ -63,4 +63,5 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

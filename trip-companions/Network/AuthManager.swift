@@ -14,6 +14,10 @@ import KakaoSDKUser
 class AuthManager {
     static let shared = AuthManager()
     
+    init() {
+        KakaoSDK.initSDK(appKey: "{KAKAO_API_KEY}")
+    }
+    
     func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {
         Future { promise in
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in

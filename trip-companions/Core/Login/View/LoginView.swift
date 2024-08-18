@@ -11,6 +11,7 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 struct LoginView: View {
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: LoginViewModel
     
     var body: some View {
@@ -25,12 +26,7 @@ struct LoginView: View {
             Spacer()
             
             Button {
-                if UserApi.isKakaoTalkLoginAvailable() {
-                    // MARK: - 카카오톡 로그인
-                    
-                } else {
-                    // MARK: - 카카오 계정 로그인
-                }
+                viewModel.login()
             } label: {
                 Image("kakao_login_large_wide")
                     .resizable()
@@ -62,4 +58,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

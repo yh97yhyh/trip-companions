@@ -8,7 +8,9 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>kakao${KAKAO_API_KEY}</string>
+			</array>
 		</dict>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>

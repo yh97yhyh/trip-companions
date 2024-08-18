@@ -7,6 +7,9 @@
 
 import Foundation
 import Combine
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 class LoginViewModel: ObservableObject {
 //    @Published var isLoggedIn: Bool = false
@@ -27,27 +30,36 @@ class LoginViewModel: ObservableObject {
     }
     
     func login() {
-        AuthManager.shared.loginWithKakaoTalk()
-            .receive(on: DispatchQueue.main) // UI Update?
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("로그인 실패: \(error)")
-                }
-            } receiveValue: { [weak self] success, isNewUser in
-//                self?.isLoggedIn = success
-//                self?.isNewUser = isNewUser
-            }.store(in: &cancellables)
-    }
-    
-    func logout() {
-        AuthManager.shared.logout()
-        
-//        self.isLoggedIn = false
-//        self.isNewUser = false
-    }
+        if UserApi.isKakaoTalkLoginAvailable() {
+            AuthManager.shared.loginWithKakaoTalk()
+                .receive(on: DispatchQueue.main) // UI Update?
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print("로그인 실패: \(error)")
+                    }
+                } receiveValue: { [weak self] success, isNewUser in
+    //                self?.isLoggedIn = success
+    //                self?.isNewUser = isNewUser
+                }.store(in: &cancellables)
+        } else {
+            AuthManager.shared.loginWithKakaoAccount()
+                .receive(on: DispatchQueue.main) // UI Update?
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        print("로그인 실패: \(error)")
+                    }
+                } receiveValue: { [weak self] success, isNewUser in
+    //                self?.isLoggedIn = success
+    //                self?.isNewUser = isNewUser
+                }.store(in: &cancellables)
+        }
+    }    
     
 }
 

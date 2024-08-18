@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InfoCollectionView: View {
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
     
     var body: some View {
@@ -172,4 +173,5 @@ struct InfoCollectionView: View {
 
 #Preview {
     InfoCollectionView()
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }
