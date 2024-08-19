@@ -17,12 +17,14 @@ class AuthManager {
     init() {
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
+        renewToken()
     }
     
     func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {
         Future { promise in
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in
                 if let error = error {
+                    print("Failed to login with kakaotalk : \(error.localizedDescription)")
                     promise(.failure(error))
                     return
                 }
@@ -33,7 +35,20 @@ class AuthManager {
                 }
                 
                 UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
-                self.fetchUserInfo(promise: promise)
+                self.fetchUserInfo { result in
+                    switch result {
+                    case .success(let (isLoggedIn, isNewUser)):
+                        if isNewUser {
+                            print("Succeed to etch user Info - New User!")
+                        } else {
+                            print("Succeed to etch user Info!")
+                        }
+                        promise(.success((isLoggedIn, isNewUser)))
+                    case .failure(let error):
+                        print("Failed to fetch user info : \(error.localizedDescription)")
+                        promise(.failure(error))
+                    }
+                }
             }
         }
         .eraseToAnyPublisher()
@@ -43,6 +58,7 @@ class AuthManager {
         Future { promise in
             UserApi.shared.loginWithKakaoAccount { oauthToken, error in
                 if let error = error {
+                    print("Failed to login with kakaoaccount : \(error.localizedDescription)")
                     promise(.failure(error))
                     return
                 }
@@ -53,7 +69,20 @@ class AuthManager {
                 }
                 
                 UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
-                self.fetchUserInfo(promise: promise)
+                self.fetchUserInfo { result in
+                    switch result {
+                    case .success(let (isLoggedIn, isNewUser)):
+                        if isNewUser {
+                            print("Succeed to etch user Info - New User!")
+                        } else {
+                            print("Succeed to etch user Info!")
+                        }
+                        promise(.success((isLoggedIn, isNewUser)))
+                    case .failure(let error):
+                        print("Failed to fetch user info : \(error.localizedDescription)")
+                        promise(.failure(error))
+                    }
+                }
             }
         }
         .eraseToAnyPublisher()
@@ -82,5 +111,9 @@ class AuthManager {
                 promise(.success((true, isNewUser)))
             }
         }
+    }
+    
+    func renewToken() {
+        AuthApi.shared.refreshToken(completion: {_,_ in })
     }
 }
