@@ -12,6 +12,15 @@ enum Gender: String, CaseIterable, Identifiable, Codable, Hashable {
     case female = "여성"
     
     var id: String { rawValue }
+    
+    func toKey() -> String {
+        switch self {
+        case .male:
+            return "MALE"
+        case .female:
+            return "FEMALE"
+        }
+    }
 }
 
 enum MBTI: String, CaseIterable, Identifiable, Codable, Hashable {

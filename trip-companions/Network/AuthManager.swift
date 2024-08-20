@@ -11,13 +11,20 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 
-class AuthManager {
+class AuthManager: ObservableObject {
+    @Published var showingInfoCollectionView: Bool = false
+    @Published var isLoggedIn: Bool = false
+    @Published var currentMember: Member?
+    @Published var memberId: Int? = nil
+    @Published var loginId: String? = nil
+    
     static let shared = AuthManager()
     
     init() {
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
-        renewToken()
+//        renewToken()
+        checkLoginStatus()
     }
     
     func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {
@@ -39,9 +46,10 @@ class AuthManager {
                     switch result {
                     case .success(let (isLoggedIn, isNewUser)):
                         if isNewUser {
-                            print("Succeed to etch user Info - New User!")
+                            self.showingInfoCollectionView = true
+                            print("Succeed to fetch user Info - New User!")
                         } else {
-                            print("Succeed to etch user Info!")
+                            print("Succeed to fetch user Info!")
                         }
                         promise(.success((isLoggedIn, isNewUser)))
                     case .failure(let error):
@@ -73,9 +81,11 @@ class AuthManager {
                     switch result {
                     case .success(let (isLoggedIn, isNewUser)):
                         if isNewUser {
-                            print("Succeed to etch user Info - New User!")
+//                            self.showingInfoCollectionView = true
+                            print("Succeed to fetch user Info - New User!")
                         } else {
-                            print("Succeed to etch user Info!")
+                            self.showingInfoCollectionView = true
+                            print("Succeed to fetch user Info!")
                         }
                         promise(.success((isLoggedIn, isNewUser)))
                     case .failure(let error):
@@ -107,13 +117,26 @@ class AuthManager {
             }
             
             if let user = user {
+                let id = user.id
                 let isNewUser = user.kakaoAccount?.email == nil
                 promise(.success((true, isNewUser)))
             }
         }
     }
     
-    func renewToken() {
+    private func saveUser() {
+        isLoggedIn = true
+    }
+    
+    private func checkLoginStatus() {
+        if let _ = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
+            self.isLoggedIn = true
+        } else {
+            self.isLoggedIn = false
+        }
+    }
+    
+    private func renewToken() {
         AuthApi.shared.refreshToken(completion: {_,_ in })
     }
 }

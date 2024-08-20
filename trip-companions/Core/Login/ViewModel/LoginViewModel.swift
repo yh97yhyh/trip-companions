@@ -12,22 +12,8 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 class LoginViewModel: ObservableObject {
-//    @Published var isLoggedIn: Bool = false
-//    @Published var isNewUser: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
-    
-    init() {
-        checkLoginStatus()
-    }
-    
-    private func checkLoginStatus() {
-        if let _ = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
-//            self.isLoggedIn = true
-        } else {
-//            self.isLoggedIn = false
-        }
-    }
     
     func login() {
         if UserApi.isKakaoTalkLoginAvailable() {
@@ -41,8 +27,8 @@ class LoginViewModel: ObservableObject {
                         print("로그인 실패: \(error)")
                     }
                 } receiveValue: { [weak self] success, isNewUser in
-    //                self?.isLoggedIn = success
-    //                self?.isNewUser = isNewUser
+//                    self?.isLoggedIn = success
+//                    self?.isNewUser = isNewUser
                 }.store(in: &cancellables)
         } else {
             AuthManager.shared.loginWithKakaoAccount()
@@ -55,8 +41,8 @@ class LoginViewModel: ObservableObject {
                         print("로그인 실패: \(error)")
                     }
                 } receiveValue: { [weak self] success, isNewUser in
-    //                self?.isLoggedIn = success
-    //                self?.isNewUser = isNewUser
+//                    self?.isLoggedIn = success
+//                    self?.isNewUser = isNewUser
                 }.store(in: &cancellables)
         }
     }    

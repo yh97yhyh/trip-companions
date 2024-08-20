@@ -31,23 +31,8 @@ struct LoginView: View {
                 Image("kakao_login_large_wide")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-//                    .frame(width: UIScreen.main.bounds.width * 0.9)
             }
             .padding(.horizontal)
-            
-//            Button {
-//                
-//            } label: {
-//                HStack {
-//                    Image(systemName: "message.fill")
-//                    Spacer()
-//                    Text("카카오 로그인")
-//                        .font(.callout)
-//                    Spacer()
-//                }
-//            }
-//            .buttonStyle(KakaoButtonStyle())
-//            .padding(.horizontal)
             
             Spacer()
         }

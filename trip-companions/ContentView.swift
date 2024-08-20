@@ -8,16 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         VStack {
+            if authManager.isLoggedIn {
+                MainTabView()
+                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+            } else if authManager.showingInfoCollectionView {
+                InfoCollectionView()
+                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+            } else {
+                LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+            }
+            
 //            MainTabView()
 //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-            LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
-                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//            LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+//                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthManager.shared)
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct InfoCollectionView: View {
+    @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
         
@@ -110,18 +111,18 @@ struct InfoCollectionView: View {
                         
                         HStack {
                             Button {
-                                viewModel.isSmoker = viewModel.isSmoker == true ? nil : true
+                                viewModel.isSmoking = viewModel.isSmoking == true ? nil : true
                             } label: {
                                 Text("Yes")
                             }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoker == true))
+                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == true))
                             
                             Button {
-                                viewModel.isSmoker = viewModel.isSmoker == false ? nil : false
+                                viewModel.isSmoking = viewModel.isSmoking == false ? nil : false
                             } label: {
                                 Text("No")
                             }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoker == false))
+                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == false))
                             
                         }
                     }
@@ -137,18 +138,18 @@ struct InfoCollectionView: View {
                         
                         HStack {
                             Button {
-                                viewModel.isDrinker = viewModel.isDrinker == true ? nil : true
+                                viewModel.isDrinking = viewModel.isDrinking == true ? nil : true
                             } label: {
                                 Text("Yes")
                             }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinker == true))
+                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == true))
                             
                             Button {
-                                viewModel.isDrinker = viewModel.isDrinker == false ? nil : false
+                                viewModel.isDrinking = viewModel.isDrinking == false ? nil : false
                             } label: {
                                 Text("No")
                             }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinker == false))
+                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == false))
                         }
                     }
                     .padding(.bottom)
@@ -158,7 +159,7 @@ struct InfoCollectionView: View {
             .padding()
             
             Button {
-                
+                authManager.showingInfoCollectionView = false
             } label: {
                 Text("완료")
             }
@@ -173,5 +174,6 @@ struct InfoCollectionView: View {
 
 #Preview {
     InfoCollectionView()
+        .environmentObject(AuthManager.shared)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }
