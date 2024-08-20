@@ -58,24 +58,31 @@ class InfoCollectionViewModel: ObservableObject {
         
     }
     
-    func updateMemberProfile() {
+    func updateMemberProfile(_ memberId: Int64, _ loginId: String, _ token: String) {
+        let authorization = AuthorizationDetails(memberId: memberId, loginId: loginId)
+
         let parameters: Parameters = [
             "nickName": nickname,
             "age": age,
-            "gender": gender,
-            "mbti": mbti,
+            "gender": gender.rawValue,
+            "mbti": mbti.rawValue,
             "isSmoking": isSmoking != nil ? isSmoking : nil,
             "isDrinking": isDrinking != nil ? isDrinking : nil
         ]
         
-        NetworkManager<Member>.request(route: .updateMemberProfile(parameters))
-            .sink { _ in
-                
+        NetworkManager<Member>.request(route: .updateMemberProfile(parameters, authorization: authorization, toekn: token))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request updateMemberProfile!")
+                case .failure(let error):
+                    print("Failed to request updateMemberProfile.. \(error.localizedDescription)")
+                }
             } receiveValue: { [weak self] member in
-                print("Succeed to update member profile!")
+                print("Succeed to update member profile! : \(member)")
+                self?.clear()
             }.store(in: &cancellables)
         
-        clear()
     }
     
     private func clear() {

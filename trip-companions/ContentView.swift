@@ -12,10 +12,10 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            if authManager.isLoggedIn {
+            if authManager.currentMember != nil && authManager.isLoggedIn {
                 MainTabView()
                     .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-            } else if authManager.showingInfoCollectionView {
+            } else if authManager.currentMember == nil {
                 InfoCollectionView()
                     .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
             } else {

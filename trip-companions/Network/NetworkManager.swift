@@ -12,7 +12,7 @@ import Combine
 enum APIRouter: URLRequestConvertible {
     case fetchTripCompanions(Parameters)
     case createTripCompanion(Parameters)
-    case updateMemberProfile(Parameters)
+    case updateMemberProfile(Parameters, authorization: AuthorizationDetails, toekn: String)
     case fetchKakaoOAuthCode(Parameters)
     
     var method: HTTPMethod {
@@ -41,7 +41,10 @@ enum APIRouter: URLRequestConvertible {
     
     var parameters: Parameters? {
         switch self {
-        case .fetchTripCompanions(let parameters), .createTripCompanion(let parameters), .updateMemberProfile(let parameters), .fetchKakaoOAuthCode(let parameters):
+        case .fetchTripCompanions(let parameters),
+                .createTripCompanion(let parameters),
+                .updateMemberProfile(let parameters, _, _),
+                .fetchKakaoOAuthCode(let parameters):
             return parameters
         }
     }
@@ -52,7 +55,22 @@ enum APIRouter: URLRequestConvertible {
         
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        
+        switch self {
+        case .updateMemberProfile(let parameters, let authorization, let token):
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            var urlComponents = URLComponents(string: url.appendingPathComponent(path).absoluteString)!
+            let queryItems = [
+                URLQueryItem(name: "memberId", value: "\(authorization.memberId)"),
+                URLQueryItem(name: "loginId", value: authorization.loginId)
+            ]
+            urlComponents.queryItems = queryItems
+            urlRequest.url = urlComponents.url
+            
+            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
+        default:
+            urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        }
         
         return urlRequest
     }
@@ -65,6 +83,9 @@ final class NetworkManager<T: Codable> {
             .publishDecodable(type: T.self)
             .tryMap { response -> T in
                 guard let value = response.value else {
+                    if let error = response.error {
+                        throw NetworkError.error(err: error.localizedDescription)
+                    }
                     throw NetworkError.error(err: "Decoding error")
                 }
                 return value

@@ -159,7 +159,9 @@ struct InfoCollectionView: View {
             .padding()
             
             Button {
-                authManager.showingInfoCollectionView = false
+                if authManager.memberId != nil && authManager.loginId != nil && authManager.token != nil {
+                    viewModel.updateMemberProfile(authManager.memberId!, authManager.loginId!, authManager.token!)
+                }
             } label: {
                 Text("완료")
             }

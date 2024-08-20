@@ -12,18 +12,18 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 class AuthManager: ObservableObject {
-    @Published var showingInfoCollectionView: Bool = false
     @Published var isLoggedIn: Bool = false
-    @Published var currentMember: Member?
-    @Published var memberId: Int? = nil
+    @Published var currentMember: Member? = nil
+    @Published var memberId: Int64? = nil
     @Published var loginId: String? = nil
+    @Published var token: String? = nil
     
     static let shared = AuthManager()
     
     init() {
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
-//        renewToken()
+        //        renewToken()
         checkLoginStatus()
     }
     
@@ -42,18 +42,15 @@ class AuthManager: ObservableObject {
                 }
                 
                 UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
+                
                 self.fetchUserInfo { result in
                     switch result {
-                    case .success(let (isLoggedIn, isNewUser)):
-                        if isNewUser {
-                            self.showingInfoCollectionView = true
-                            print("Succeed to fetch user Info - New User!")
-                        } else {
-                            print("Succeed to fetch user Info!")
-                        }
-                        promise(.success((isLoggedIn, isNewUser)))
+                    case .success(let user):
+                        self.isLoggedIn = true
+                        self.memberId = user.id
+                        self.loginId = user.email
+                        self.token = oauthToken.accessToken
                     case .failure(let error):
-                        print("Failed to fetch user info : \(error.localizedDescription)")
                         promise(.failure(error))
                     }
                 }
@@ -77,19 +74,15 @@ class AuthManager: ObservableObject {
                 }
                 
                 UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
+                
                 self.fetchUserInfo { result in
                     switch result {
-                    case .success(let (isLoggedIn, isNewUser)):
-                        if isNewUser {
-//                            self.showingInfoCollectionView = true
-                            print("Succeed to fetch user Info - New User!")
-                        } else {
-                            self.showingInfoCollectionView = true
-                            print("Succeed to fetch user Info!")
-                        }
-                        promise(.success((isLoggedIn, isNewUser)))
+                    case .success(let user):
+                        self.isLoggedIn = true
+                        self.memberId = user.id
+                        self.loginId = user.email
+                        self.token = oauthToken.accessToken
                     case .failure(let error):
-                        print("Failed to fetch user info : \(error.localizedDescription)")
                         promise(.failure(error))
                     }
                 }
@@ -101,26 +94,29 @@ class AuthManager: ObservableObject {
     func logout() {
         UserApi.shared.logout { error in
             if let error = error {
-                print("failed to logout! \(error)")
+                print("Failed to logout! \(error)")
             } else {
                 UserDefaults.standard.removeObject(forKey: "kakaoAccessToken")
-                print("succeed to login!")
+                print("Succeed to logout!")
             }
         }
     }
     
-    private func fetchUserInfo(promise: @escaping (Result<(Bool, Bool), Error>) -> Void) {
-        UserApi.shared.me { (user, error) in
+    func fetchUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
+        UserApi.shared.me { user, error in
             if let error = error {
-                promise(.failure(error))
+                print("Failed to fetch user info: \(error.localizedDescription)")
+                completion(.failure(error))
                 return
             }
             
-            if let user = user {
-                let id = user.id
-                let isNewUser = user.kakaoAccount?.email == nil
-                promise(.success((true, isNewUser)))
+            guard let user = user else {
+                completion(.failure(NSError(domain: "AuthManagerError", code: -1, userInfo: [NSLocalizedDescriptionKey: "User information not found"])))
+                return
             }
+            
+            let user1 = User(id: user.id!, email: user.kakaoAccount?.email ?? "No email")
+            completion(.success(user1))
         }
     }
     
@@ -129,8 +125,19 @@ class AuthManager: ObservableObject {
     }
     
     private func checkLoginStatus() {
-        if let _ = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
+        if let token = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
             self.isLoggedIn = true
+            fetchUserInfo { result in
+                switch result {
+                case .success(let user):
+                    self.memberId = user.id
+                    self.loginId = user.email
+                    self.token = token
+                case .failure(let error):
+                    print("Failed to fetch user info after login check: \(error.localizedDescription)")
+                    self.isLoggedIn = false
+                }
+            }
         } else {
             self.isLoggedIn = false
         }
@@ -139,4 +146,9 @@ class AuthManager: ObservableObject {
     private func renewToken() {
         AuthApi.shared.refreshToken(completion: {_,_ in })
     }
+}
+
+struct User {
+    let id: Int64
+    let email : String
 }
