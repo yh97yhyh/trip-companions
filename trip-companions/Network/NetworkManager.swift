@@ -20,9 +20,9 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .fetchTripCompanions, .fetchKakaoOAuthCode:
             return .get
-        case .createTripCompanion:
+        case .createTripCompanion, .postSignIn:
             return .post
-        case .updateMemberProfile, .postSignIn:
+        case .updateMemberProfile:
             return .patch
         }
     }
@@ -65,6 +65,23 @@ enum APIRouter: URLRequestConvertible {
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
             urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
+        }
+        
+        // Print request details
+        print("====URLRequest=====")
+        print("URL: \(urlRequest.url?.absoluteString ?? "No URL")")
+        print("Method: \(urlRequest.httpMethod ?? "No Method")")
+        print("Headers: \(urlRequest.allHTTPHeaderFields ?? [:])")
+        
+        // Convert httpBody to a readable string
+        if let httpBody = urlRequest.httpBody {
+            if let bodyString = String(data: httpBody, encoding: .utf8) {
+                print("Body: \(bodyString)")
+            } else {
+                print("Body: Unable to decode data")
+            }
+        } else {
+            print("Body: No body data")
         }
         
         return urlRequest

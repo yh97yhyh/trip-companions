@@ -8,5 +8,5 @@
 import Foundation
 
 class API {
-    static let baseUrlString = "http://52.78.245.140:8080/"
+    static let baseUrlString = "http://52.78.245.140:8080"
 }
