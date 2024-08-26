@@ -8,13 +8,13 @@
 import Foundation
 
 class TripCompanionDetailViewModel: ObservableObject {
-    @Published var tripCompanion: TripCompanionsWithRegionAndMember
+    @Published var tripCompanion: TripCompanion
 
-    init(tripCompanion: TripCompanionsWithRegionAndMember) {
+    init(tripCompanion: TripCompanion) {
         self.tripCompanion = tripCompanion
     }
 }
 
 extension TripCompanionDetailViewModel{
-    static let MOCK_VIEW_MODEL = TripCompanionDetailViewModel(tripCompanion: TripCompanionsWithRegionAndMember.MOCK_TRIP_COMPANION2)
+    static let MOCK_VIEW_MODEL = TripCompanionDetailViewModel(tripCompanion: TripCompanion.MOCK_TRIP_COMPANION2)
 }

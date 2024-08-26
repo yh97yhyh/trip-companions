@@ -6,27 +6,30 @@
 //
 
 import Foundation
+import Alamofire
 import Combine
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
 
 class AuthManager: ObservableObject {
+    static let shared = AuthManager()
+    
     @Published var isLoggedIn: Bool = false
+    @Published var hasUserInfo: Bool? = nil
     @Published var currentMember: Member? = nil
-    @Published var memberId: Int64? = nil
-    @Published var loginId: String? = nil
     @Published var token: String? = nil
     
-    static let shared = AuthManager()
+    private var cancellables = Set<AnyCancellable>()
+    
     
     init() {
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
-        //        renewToken()
         checkLoginStatus()
     }
     
+    // MARK: - Kakao
     func loginWithKakaoTalk() -> AnyPublisher<(Bool, Bool), Error> {
         Future { promise in
             UserApi.shared.loginWithKakaoTalk { oauthToken, error in
@@ -41,19 +44,17 @@ class AuthManager: ObservableObject {
                     return
                 }
                 
-                UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
-                
-                self.fetchUserInfo { result in
-                    switch result {
-                    case .success(let user):
-                        self.isLoggedIn = true
-                        self.memberId = user.id
-                        self.loginId = user.email
-                        self.token = oauthToken.accessToken
-                    case .failure(let error):
-                        promise(.failure(error))
-                    }
-                }
+//                self.fetchUserInfo { result in
+//                    switch result {
+//                    case .success(let id):
+//                        self.getToken(oauthToken.accessToken, id)
+//                        let user = User(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: self.token!)
+//                        self.saveUserToUserDefaults(user)
+//                        self.isLoggedIn = true
+//                    case .failure(let error):
+//                        promise(.failure(error))
+//                    }
+//                }
             }
         }
         .eraseToAnyPublisher()
@@ -73,15 +74,19 @@ class AuthManager: ObservableObject {
                     return
                 }
                 
-                UserDefaults.standard.set(oauthToken.accessToken, forKey: "kakaoAccessToken")
-                
                 self.fetchUserInfo { result in
                     switch result {
-                    case .success(let user):
-                        self.isLoggedIn = true
-                        self.memberId = user.id
-                        self.loginId = user.email
-                        self.token = oauthToken.accessToken
+                    case .success(let id):
+                        self.getToken(oauthToken.accessToken, id) { success in
+                            if success, let token = self.token {
+                                let user = User(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
+                                self.saveUserToUserDefaults(user)
+                                self.isLoggedIn = true
+                                promise(.success((true, true)))
+                            } else {
+                                promise(.success((false, false)))
+                            }
+                        }
                     case .failure(let error):
                         promise(.failure(error))
                     }
@@ -94,15 +99,15 @@ class AuthManager: ObservableObject {
     func logout() {
         UserApi.shared.logout { error in
             if let error = error {
-                print("Failed to logout! \(error)")
+                print("Failed to logout.. \(error)")
             } else {
-                UserDefaults.standard.removeObject(forKey: "kakaoAccessToken")
+                UserDefaults.standard.removeObject(forKey: "loggedInUser")
                 print("Succeed to logout!")
             }
         }
     }
     
-    func fetchUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
+    func fetchUserInfo(completion: @escaping (Result<String, Error>) -> Void) {
         UserApi.shared.me { user, error in
             if let error = error {
                 print("Failed to fetch user info: \(error.localizedDescription)")
@@ -115,29 +120,16 @@ class AuthManager: ObservableObject {
                 return
             }
             
-            let user1 = User(id: user.id!, email: user.kakaoAccount?.email ?? "No email")
-            completion(.success(user1))
+            let id = String(user.id!)
+            completion(.success(id))
         }
     }
     
-    private func saveUser() {
-        isLoggedIn = true
-    }
-    
     private func checkLoginStatus() {
-        if let token = UserDefaults.standard.string(forKey: "kakaoAccessToken") {
+        if let user = loadUserFromUserDefaults() {
+            self.token = user.token
             self.isLoggedIn = true
-            fetchUserInfo { result in
-                switch result {
-                case .success(let user):
-                    self.memberId = user.id
-                    self.loginId = user.email
-                    self.token = token
-                case .failure(let error):
-                    print("Failed to fetch user info after login check: \(error.localizedDescription)")
-                    self.isLoggedIn = false
-                }
-            }
+            print("Succeed to check Login Status! \(user.token)")
         } else {
             self.isLoggedIn = false
         }
@@ -146,9 +138,51 @@ class AuthManager: ObservableObject {
     private func renewToken() {
         AuthApi.shared.refreshToken(completion: {_,_ in })
     }
+    
+    // MARK: - Server
+    private func getToken(_ kakaoToken: String, _ id: String, completion: @escaping (Bool) -> Void) {
+        let parameters: Parameters = [
+            "kakaoAccessToken": kakaoToken,
+            "kakaoSocialId": id
+        ]
+        
+        NetworkManager<TokenInfo>.request(route: .postSignIn(parameters))
+            .sink { completionStatus in
+                switch completionStatus {
+                case .finished:
+                    print("Succeed to request sign-in!")
+                    completion(true)
+                case .failure(let error):
+                    print("Failed to request sign-in.. \(error.localizedDescription)")
+                    completion(false)
+                }
+            } receiveValue: { tokenInfo in
+                self.token = tokenInfo.token
+            }.store(in: &cancellables)
+    }
+    
+    // MARK: - UserDefaults
+    private func saveUserToUserDefaults(_ user: User) {
+        let encoder = JSONEncoder()
+        if let encodedUser = try? encoder.encode(user) {
+            UserDefaults.standard.set(encodedUser, forKey: "loggedInUser")
+        }
+    }
+    
+    func loadUserFromUserDefaults() -> User? {
+        if let savedUserData = UserDefaults.standard.object(forKey: "loggedInUser") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedUser = try? decoder.decode(User.self, from: savedUserData) {
+                return loadedUser
+            }
+        }
+        return nil
+    }
+    
 }
 
-struct User {
-    let id: Int64
-    let email : String
+struct User: Codable {
+    let kakaoSocialId: String
+    let kakaoAccessToken: String
+    let token: String
 }

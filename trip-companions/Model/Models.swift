@@ -55,11 +55,11 @@ struct TripCompanionsCreateRequest: Codable {
     let categoriesId: [Int64]?
 }
 
-// MARK: - AuthorizationDetails
-struct AuthorizationDetails: Codable {
-    let memberId: Int64
-    let loginId: String
-}
+//// MARK: - AuthorizationDetails
+//struct AuthorizationDetails: Codable {
+//    let memberId: Int64
+//    let loginId: String
+//}
 
 // MARK: - EnumPresenter
 struct EnumPresenter: Codable {
@@ -67,19 +67,9 @@ struct EnumPresenter: Codable {
     let desc: String
 }
 
-// MARK: - MemberInterestsCreateOrUpdateRequest
-struct MemberInterestsCreateOrUpdateRequest: Codable {
-    let nickName: String
-    let age: Int32
-    let gender: String // "MALE" or "FEMALE" enum 값으로 처리 가능
-    let mbti: String // "INTP", "ISTP" 등
-    let isSmoking: Bool
-    let drinkingCapacity: Double
-}
-
 // MARK: - PagingResponseTripCompanionsWithRegionAndMember
 struct PagingResponseTripCompanionsWithRegionAndMember: Codable {
     let totalElements: Int64
     let totalPage: Int32
-    let data: [TripCompanionsWithRegionAndMember]
+    let data: [TripCompanion]
 }

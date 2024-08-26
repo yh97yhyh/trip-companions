@@ -39,11 +39,15 @@ struct ProfileHeaderView: View {
                         .padding(.bottom, 8)
                     
                     HStack {
-                        Text(viewModel.toTextIsSmoking())
-                            .modifier(FeatureTextModifier())
+                        if viewModel.member.isSmoking != nil {
+                            Text(viewModel.toTextIsSmoking())
+                                .modifier(FeatureTextModifier())
+                        }
                         
-                        Text(viewModel.toTextIsDrinking())
-                            .modifier(FeatureTextModifier())
+                        if viewModel.member.isDrinking != nil {
+                            Text(viewModel.toTextIsDrinking())
+                                .modifier(FeatureTextModifier())
+                        }
                         
                         Text(viewModel.member.mbti.rawValue)
                             .modifier(FeatureTextModifier())

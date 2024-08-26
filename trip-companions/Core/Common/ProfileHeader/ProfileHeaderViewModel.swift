@@ -17,11 +17,11 @@ class ProfileHeaderViewModel: ObservableObject {
     }
     
     func toTextIsDrinking() -> String {
-        return member.isDrinking ? "음주" : "논알콜"
+        return member.isDrinking! ? "음주" : "논알콜"
     }
     
     func toTextIsSmoking() -> String {
-        return member.isSmoking ? "흡연" : "비흡연"
+        return member.isSmoking! ? "흡연" : "비흡연"
     }
 }
 

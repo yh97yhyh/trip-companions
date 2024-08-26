@@ -8,10 +8,10 @@
 import Foundation
 
 class DomesticCompanionViewModel: ObservableObject {
-    @Published var tripCompanions: [TripCompanionsWithRegionAndMember]
+    @Published var tripCompanions: [TripCompanion]
     @Published var filters: [String] = []
     
-    init(tripCompanions: [TripCompanionsWithRegionAndMember]) {
+    init(tripCompanions: [TripCompanion]) {
         self.tripCompanions = tripCompanions
     }
     
@@ -22,5 +22,5 @@ class DomesticCompanionViewModel: ObservableObject {
 }
 
 extension DomesticCompanionViewModel {
-    static let MOCK_VIEW_MODEL: DomesticCompanionViewModel = DomesticCompanionViewModel(tripCompanions: TripCompanionsWithRegionAndMember.MOCK_TRIP_COMPANIONS)
+    static let MOCK_VIEW_MODEL: DomesticCompanionViewModel = DomesticCompanionViewModel(tripCompanions: TripCompanion.MOCK_TRIP_COMPANIONS)
 }

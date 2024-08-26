@@ -8,13 +8,13 @@
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    @Published var tripCompanions: [TripCompanionsWithRegionAndMember]
+    @Published var tripCompanions: [TripCompanion]
     
-    init(tripCompanions: [TripCompanionsWithRegionAndMember]) {
+    init(tripCompanions: [TripCompanion]) {
         self.tripCompanions = tripCompanions
     }
 }
 
 extension HomeViewModel {
-    static let MOCK_VIEW_MODEL: HomeViewModel = HomeViewModel(tripCompanions: TripCompanionsWithRegionAndMember.MOCK_TRIP_COMPANIONS)
+    static let MOCK_VIEW_MODEL: HomeViewModel = HomeViewModel(tripCompanions: TripCompanion.MOCK_TRIP_COMPANIONS)
 }

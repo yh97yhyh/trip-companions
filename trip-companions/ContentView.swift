@@ -15,7 +15,7 @@ struct ContentView: View {
             if authManager.currentMember != nil && authManager.isLoggedIn {
                 MainTabView()
                     .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-            } else if authManager.currentMember == nil {
+            } else if authManager.currentMember == nil && authManager.isLoggedIn == true {
                 InfoCollectionView()
                     .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
             } else {

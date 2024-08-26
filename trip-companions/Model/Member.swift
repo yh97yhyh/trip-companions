@@ -15,26 +15,26 @@ struct Member: Identifiable, Codable, Hashable {
     let nickName: String
     let phoneNumber: String
     let email: String
-    var profileImageUrl: String? = nil
+    var profileImageUrl: String?
     let tokenKey: String
     let mbti: MBTI
     let gender: Gender
-    let isSmoking: Bool
-    let isDrinking: Bool
+    let isSmoking: Bool?
+    let isDrinking: Bool?
     let login: Bool
     let delete: Bool
 }
 
-struct MemberSimple: Identifiable, Codable, Hashable {
-    let id: Int
-    let email: String
-    let nickName: String
-    let age: Int
-    let gender: String
-    let mbti: String
-    let isSmoking: Bool?
-    let isDrinking: Bool?
-}
+//struct MemberSimple: Identifiable, Codable, Hashable {
+//    let id: Int
+//    let email: String
+//    let nickName: String
+//    let age: Int
+//    let gender: String
+//    let mbti: String
+//    let isSmoking: Bool?
+//    let isDrinking: Bool?
+//}
 
 extension Member {
     static let MOCK_MEMBER1: Member = .init(id: 0, loginId: "member1", age: 25, name: "김소피", nickName: "Sophie", phoneNumber: "010-1234-1234", email: "member1@test.com", tokenKey: "test", mbti: .enfp, gender: .female, isSmoking: true, isDrinking: true, login: true, delete: false)

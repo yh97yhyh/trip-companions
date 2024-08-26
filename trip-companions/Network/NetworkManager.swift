@@ -12,8 +12,9 @@ import Combine
 enum APIRouter: URLRequestConvertible {
     case fetchTripCompanions(Parameters)
     case createTripCompanion(Parameters)
-    case updateMemberProfile(Parameters, authorization: AuthorizationDetails, toekn: String)
+    case updateMemberProfile(Parameters, toekn: String)
     case fetchKakaoOAuthCode(Parameters)
+    case postSignIn(Parameters)
     
     var method: HTTPMethod {
         switch self {
@@ -21,7 +22,7 @@ enum APIRouter: URLRequestConvertible {
             return .get
         case .createTripCompanion:
             return .post
-        case .updateMemberProfile:
+        case .updateMemberProfile, .postSignIn:
             return .patch
         }
     }
@@ -36,6 +37,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/members/profile"
         case .fetchKakaoOAuthCode:
             return "/oauth2/code/kakao"
+        case .postSignIn:
+            return "/oauth2/kakao/sign-in"
         }
     }
     
@@ -43,8 +46,9 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .fetchTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
-                .updateMemberProfile(let parameters, _, _),
-                .fetchKakaoOAuthCode(let parameters):
+                .updateMemberProfile(let parameters, _),
+                .fetchKakaoOAuthCode(let parameters),
+                .postSignIn(let parameters):
             return parameters
         }
     }
@@ -56,20 +60,11 @@ enum APIRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        switch self {
-        case .updateMemberProfile(let parameters, let authorization, let token):
-            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-            var urlComponents = URLComponents(string: url.appendingPathComponent(path).absoluteString)!
-            let queryItems = [
-                URLQueryItem(name: "memberId", value: "\(authorization.memberId)"),
-                URLQueryItem(name: "loginId", value: authorization.loginId)
-            ]
-            urlComponents.queryItems = queryItems
-            urlRequest.url = urlComponents.url
-            
-            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
-        default:
+        switch method {
+        case .get:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
+        default:
+            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
         }
         
         return urlRequest
@@ -84,6 +79,7 @@ final class NetworkManager<T: Codable> {
             .tryMap { response -> T in
                 guard let value = response.value else {
                     if let error = response.error {
+                        print("Failed to request.. \(error.localizedDescription)")
                         throw NetworkError.error(err: error.localizedDescription)
                     }
                     throw NetworkError.error(err: "Decoding error")

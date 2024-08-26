@@ -58,9 +58,7 @@ class InfoCollectionViewModel: ObservableObject {
         
     }
     
-    func updateMemberProfile(_ memberId: Int64, _ loginId: String, _ token: String) {
-        let authorization = AuthorizationDetails(memberId: memberId, loginId: loginId)
-
+    func updateMemberProfile(token: String) {
         let parameters: Parameters = [
             "nickName": nickname,
             "age": age,
@@ -70,7 +68,7 @@ class InfoCollectionViewModel: ObservableObject {
             "isDrinking": isDrinking != nil ? isDrinking : nil
         ]
         
-        NetworkManager<Member>.request(route: .updateMemberProfile(parameters, authorization: authorization, toekn: token))
+        NetworkManager<Member>.request(route: .updateMemberProfile(parameters, toekn: token))
             .sink { completion in
                 switch completion {
                 case .finished:

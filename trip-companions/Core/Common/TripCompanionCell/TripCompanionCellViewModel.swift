@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 
 class TripCompanionCellViewModel: ObservableObject {
-    @Published var tripCompanion: TripCompanionsWithRegionAndMember
+    @Published var tripCompanion: TripCompanion
     @Published var thumbnail: UIImage? = nil
 //    @Published var title: String = ""
 //    @Published var contents: String = ""
 //    @Published var startDate: Date = Date()
 //    @Published var endDate: Date = Date()
     
-    init(tripCompanion: TripCompanionsWithRegionAndMember, thumbnail: UIImage?) {
+    init(tripCompanion: TripCompanion, thumbnail: UIImage?) {
         self.tripCompanion = tripCompanion
         self.thumbnail = thumbnail
 //        self.title = title
@@ -28,5 +28,5 @@ class TripCompanionCellViewModel: ObservableObject {
 }
 
 extension TripCompanionCellViewModel {
-    static let MOCK_VIEW_MODEL = TripCompanionCellViewModel(tripCompanion: TripCompanionsWithRegionAndMember.MOCK_TRIP_COMPANIONS[0], thumbnail: nil)
+    static let MOCK_VIEW_MODEL = TripCompanionCellViewModel(tripCompanion: TripCompanion.MOCK_TRIP_COMPANIONS[0], thumbnail: nil)
 }
