@@ -33,8 +33,8 @@ class SearchViewModel: ObservableObject {
 
     private func validateForm() {
         isComplete = !regionName.isEmpty &&
-        startDate != Date.defaultDate() &&
-        endDate != Date.defaultDate()
+        (startDate != Date.defaultDate() ||
+        endDate != Date.defaultDate())
     }
 
     init(regionName: String, startDate: Date, endDate: Date, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {

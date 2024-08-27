@@ -8,5 +8,13 @@
 import Foundation
 
 class MyPostsViewModel: ObservableObject {
-    @Published var isConnectedKakao: Bool = true
+    @Published var myPosts: [TripCompanion] = []
+    
+    init(myPosts: [TripCompanion] = []) {
+        self.myPosts = myPosts
+    }
+}
+
+extension MyPostsViewModel {
+    static let MOCK_VIEW_MODEL = MyPostsViewModel(myPosts: TripCompanion.MOCK_TRIP_COMPANIONS)
 }

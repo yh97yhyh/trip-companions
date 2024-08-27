@@ -213,11 +213,11 @@ struct TripSearchButtonStyle: ButtonStyle {
     }
 }
 
-struct MyAccountButtonStyle: ButtonStyle {
+struct MyPageButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundColor(.gray767676)
-            .padding(12)
+            .padding(8)
             .background(
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(.gray767676, lineWidth: 1)

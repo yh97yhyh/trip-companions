@@ -46,7 +46,7 @@ struct MyPageView: View {
             Divider()
                 .padding(.bottom)
             
-            NavigationLink(destination: MyPostsView()) {
+            NavigationLink(destination: MyPostsView(viewModel: MyPostsViewModel.MOCK_VIEW_MODEL)) {
                 Text("내 게시글 관리")
             }
             

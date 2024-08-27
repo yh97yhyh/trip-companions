@@ -8,6 +8,7 @@
 import Foundation
 
 class MyAccountViewModel: ObservableObject {
+    @Published var isConnectedKakao: Bool = true
     
     func toNumberFormat(_ number: String) -> String {
         guard number.count == 11 else {

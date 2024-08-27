@@ -42,8 +42,8 @@ class WriteTripCompanionViewModel: ObservableObject {
 
     private func validateForm() {
         isComplete = !region.isEmpty &&
-        startDate != Date.defaultDate() &&
-        endDate != Date.defaultDate() &&
+        (startDate != Date.defaultDate() ||
+        endDate != Date.defaultDate()) &&
         !personal.isEmpty &&
         !contents.isEmpty
     }

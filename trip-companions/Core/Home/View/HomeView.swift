@@ -55,7 +55,7 @@ struct HomeView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    AddButtonView()
+                    HomeAddButtonView()
                         .padding(.bottom, 32)
                 }
             }
@@ -67,7 +67,7 @@ struct HomeView: View {
     }
 }
 
-struct AddButtonView: View {
+struct HomeAddButtonView: View {
     var body: some View {
         VStack {
             NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)) {
@@ -78,18 +78,6 @@ struct AddButtonView: View {
                     .background(Color.orangeF49321)
                     .clipShape(Circle())
             }
-//            // MARK: - Update to NavigationLink
-//            Button {
-//                
-//            } label: {
-//                Image(systemName: "plus")
-//                    .imageScale(.large)
-//                    .foregroundColor(.white)
-//                    .padding(24)
-//                    .background(Color.orangeF49321)
-//                    .clipShape(Circle())
-//                
-//            }
         }
     }
 }

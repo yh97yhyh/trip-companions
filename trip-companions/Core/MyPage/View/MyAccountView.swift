@@ -36,7 +36,7 @@ struct MyAccountView: View {
                     } label: {
                         Text("연동 해제")
                     }
-                    .buttonStyle(MyAccountButtonStyle())
+                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()
@@ -60,7 +60,7 @@ struct MyAccountView: View {
                     } label: {
                         Text("변경")
                     }
-                    .buttonStyle(MyAccountButtonStyle())
+                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()
@@ -84,7 +84,7 @@ struct MyAccountView: View {
                     } label: {
                         Text("변경")
                     }
-                    .buttonStyle(MyAccountButtonStyle())
+                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()
