@@ -12,17 +12,35 @@ struct InfoCollectionView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @EnvironmentObject var genderAndMbtiViewModel: GenderAndMbtiViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
+    var isEditMode: Bool
+    @Environment(\.dismiss) private var dismiss
+    
+//    init(isEditMode: Bool) {
+//        self.isEditMode = isEditMode
+//        if isEditMode {
+//            viewModel.nickname = myPageViewModel.member.nickName ?? ""
+//            viewModel.mbti = myPageViewModel.member.mbti ?? MBTI.MOCK_MBTIS[0]
+//            viewModel.isSmoking = myPageViewModel.member.isSmoking ?? nil
+//            viewModel.isDrinking = myPageViewModel.member.isDrinking ?? nil
+//        }
+//    }
         
     var body: some View {
         VStack {
+            if isEditMode {
+                NavigationTitleView(title: "프로필 관리")
+                    .padding(.horizontal)
+            }
             ScrollView(showsIndicators: false) {
-                HStack {
-                    Text("프로필")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                    Spacer()
+                if !isEditMode {
+                    HStack {
+                        Text("프로필")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                        Spacer()
+                    }
+                    .padding(.bottom, 32)
                 }
-                .padding(.bottom, 32)
                 
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
@@ -57,6 +75,7 @@ struct InfoCollectionView: View {
                                 viewModel.isEditingAge = true
                                 viewModel.isEditingNickname = false
                             }
+                            .disabled(true)
                     }
                     .padding(.bottom)
                     
@@ -79,6 +98,7 @@ struct InfoCollectionView: View {
                         .labelsHidden()
                         .frame(alignment: .leading)
                         .modifier(CustomPickerStyle())
+                        .disabled(true)
                     }
                     .padding(.bottom)
                     
@@ -86,8 +106,8 @@ struct InfoCollectionView: View {
                         HStack(spacing: 4) {
                             Text("MBTI")
                                 .modifier(Title2TextModifier())
-                            Text ("(필수)")
-                                .modifier(AdditionalEssentialTextModifier())
+                            Text("(선택)")
+                                .modifier(AdditionalOptionalTextModifier())
                         }
                         
                         // MARK: - Update to use Cusotm PickerView
@@ -162,6 +182,8 @@ struct InfoCollectionView: View {
             Button {
                 viewModel.updateMemberProfile { member in
                     authManager.currentMember = member
+                    myPageViewModel.member = member
+                    dismiss()
                 }
             } label: {
                 Text("완료")
@@ -172,11 +194,19 @@ struct InfoCollectionView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            if isEditMode {
+                viewModel.nickname = myPageViewModel.member.nickName ?? ""
+                viewModel.mbti = myPageViewModel.member.mbti ?? MBTI.MOCK_MBTIS[0]
+                viewModel.isSmoking = myPageViewModel.member.isSmoking ?? nil
+                viewModel.isDrinking = myPageViewModel.member.isDrinking ?? nil
+            }
+        }
     }
 }
 
 #Preview {
-    InfoCollectionView()
+    InfoCollectionView(isEditMode: false)
         .environmentObject(AuthManager.shared)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
         .environmentObject(GenderAndMbtiViewModel())

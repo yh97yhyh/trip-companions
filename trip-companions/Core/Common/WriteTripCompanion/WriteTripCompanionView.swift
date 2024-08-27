@@ -22,6 +22,7 @@ struct WriteTripCompanionView: View {
         VStack(alignment: .leading) {
             NavigationTitleView(title: "동행등록")
                 .padding(.horizontal)
+            
             ScrollView(showsIndicators: false) {
 //                HStack {
 //                    Text("동행 등록")

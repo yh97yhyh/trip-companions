@@ -52,22 +52,22 @@ struct ProfileHeaderView: View {
                     HStack {
                         if myPageViewModel.member.isSmoking != nil {
                             Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
-                                .modifier(FeatureTextModifier())
+                                .modifier(ProfileFeatureTextModifier())
                         }
                         
                         if myPageViewModel.member.isDrinking != nil {
                             Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
-                                .modifier(FeatureTextModifier())
+                                .modifier(ProfileFeatureTextModifier())
                         }
                         
                         
                         if myPageViewModel.member.mbti != nil {
                             Text(myPageViewModel.member.mbti!.desc)
-                                .modifier(FeatureTextModifier())
+                                .modifier(ProfileFeatureTextModifier())
                         }
                         
                         Text(myPageViewModel.member.gender.desc)
-                            .modifier(FeatureTextModifier())
+                            .modifier(ProfileFeatureTextModifier())
                     }
                 }
                 

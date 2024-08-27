@@ -33,7 +33,7 @@ struct AdditionalOptionalTextModifier: ViewModifier {
     }
 }
 
-struct FeatureTextModifier: ViewModifier {
+struct ProfileFeatureTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.orangeF49321)
@@ -43,13 +43,27 @@ struct FeatureTextModifier: ViewModifier {
     }
 }
 
-struct FeatureTextModifier2: ViewModifier {
+struct FeatureTextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .foregroundColor(.orangeF49321)
-            .padding(4)
-            .background(Color.orangeFFF3E5)
-            .cornerRadius(5)
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.orangeF49321, lineWidth: 1)
+            )
+    }
+}
+
+struct FeatureTextModifier2: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.gray767676)
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.gray767676, lineWidth: 1)
+            )
     }
 }
 
@@ -196,6 +210,18 @@ struct TripSearchButtonStyle: ButtonStyle {
 //            )
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
+struct MyAccountButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.gray767676)
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.gray767676, lineWidth: 1)
+            )
     }
 }
 

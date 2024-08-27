@@ -44,7 +44,7 @@ class WriteTripCompanionViewModel: ObservableObject {
         isComplete = !region.isEmpty &&
         startDate != Date.defaultDate() &&
         endDate != Date.defaultDate() &&
-        personal != nil &&
+        !personal.isEmpty &&
         !contents.isEmpty
     }
     
@@ -60,6 +60,9 @@ class WriteTripCompanionViewModel: ObservableObject {
         self.isSmoker = isSmoker
     }
     
+    private func clear() {
+        
+    }
 }
 
 extension WriteTripCompanionViewModel {

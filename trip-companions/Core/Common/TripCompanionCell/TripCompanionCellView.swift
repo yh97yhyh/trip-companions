@@ -13,26 +13,55 @@ struct TripCompanionCellView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-//                if viewModel.thumbnail != nil {
                 // MARK: - Update to KFImage
-                Image("TripCompanionThumbnailTest")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 69, height: 69)
-                    .cornerRadius(10)
-                    .padding(.trailing, 12)
-//                } else {
-//                    Image("defaultThumbnail")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 65, height: 65)
-//                        .padding(4)
-//                        .background(Color.grayF1F1F1)
-//                        .cornerRadius(10)
-//                        .padding(.horizontal, 12)
-//                }
+                VStack {
+                    Image("TripCompanionThumbnailTest")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 70, height: 70)
+                        .cornerRadius(10)
+                        .padding(.trailing, 12)
+                    
+                    Spacer()
+                }
                 
                 VStack(alignment: .leading) {
+                    HStack {
+                        if viewModel.tripCompanion.member.mbti != nil {
+                            Text(viewModel.tripCompanion.member.mbti!.desc)
+                                .font(.footnote)
+                                .modifier(ProfileFeatureTextModifier())
+                        }
+                        
+                        Text(viewModel.tripCompanion.member.gender.desc)
+                            .font(.footnote)
+                            .modifier(ProfileFeatureTextModifier())
+                        
+                        if let isDrinking = viewModel.tripCompanion.member.isDrinking {
+                            if isDrinking {
+                                Text("음주")
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            } else {
+                                Text("논알콜")
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                        }
+                        
+                        if let isSmoking = viewModel.tripCompanion.member.isSmoking {
+                            if isSmoking {
+                                Text("흡연")
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            } else {
+                                Text("비흡연")
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                        }
+                    }
+                    
                     HStack {
                         Text(viewModel.tripCompanion.title)
                             .font(.callout)
@@ -40,18 +69,19 @@ struct TripCompanionCellView: View {
                             .foregroundColor(.black)
                         Spacer()
                     }
+
                     HStack {
-                        Text(viewModel.tripCompanion.contents)
+                        Text(viewModel.tripCompanion.region.regionName)
                             .font(.subheadline)
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
                             .foregroundColor(.gray767676)
                         Spacer()
                     }
+
                     if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
                         HStack {
                             Image(systemName: "calendar")
-//                                .padding(.trailing, 2)
                             Text(viewModel.tripCompanion.startDate.toDateText())
                         }
                         .font(.subheadline)
@@ -59,7 +89,6 @@ struct TripCompanionCellView: View {
                     } else {
                         HStack {
                             Image(systemName: "calendar")
-//                                .padding(.trailing, 2)
                             Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
                         }
                         .font(.subheadline)

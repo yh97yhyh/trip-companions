@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @EnvironmentObject var myPageViewModel: MyPageViewModel
+//    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @EnvironmentObject var authManager: AuthManager
     @State private var selectedIndex = 0
     
     var body: some View {
@@ -63,5 +64,5 @@ struct MainTabView: View {
 
 #Preview {
     MainTabView()
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(AuthManager.shared)
 }

@@ -54,6 +54,13 @@ class InfoCollectionViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     
+//    init(nickname: String, mbti: MBTI, isSmoking: Bool? = nil, isDrinking: Bool? = nil) {
+//        self.nickname = nickname
+//        self.mbti = mbti
+//        self.isSmoking = isSmoking
+//        self.isDrinking = isDrinking
+//    }
+    
     func updateMemberProfile(completion: @escaping (Member) -> Void) {
         let parameters: Parameters = [
             "nickName": nickname,
@@ -79,15 +86,4 @@ class InfoCollectionViewModel: ObservableObject {
         
     }
     
-    private func clear() {
-        nickname = ""
-        age = ""
-//        gender =
-//        mbti = .intp
-        isSmoking = nil
-        isDrinking = nil
-        isComplete = false
-        isEditingNickname = false
-        isEditingAge = false
-    }
 }

@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MyPageView: View {
+//    @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
-    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,30 +22,35 @@ struct MyPageView: View {
             .padding(.vertical)
             
             ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: false))
-                .padding(.bottom)
+                .padding(.bottom, 56)
             
             VStack(alignment: .leading) {
                 Text("계정 설정")
                     .foregroundColor(.grayA2A2A2)
                     .padding(.bottom)
                 
-                Text("프로필 관리")
-//                    .fontWeight(.semibold)
-                    .padding(.bottom)
                 
-                Text("계정 확인")
-//                    .fontWeight(.semibold)
-                    .padding(.bottom)
+                NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
+                    Text("프로필 관리")
+                        .foregroundColor(.black)
+                }
+                .padding(.bottom)
+                
+                NavigationLink(destination: MyAccountView(viewModel: MyAccountViewModel())) {
+                    Text("계정 확인")
+                        .foregroundColor(.black)
+                }
+                .padding(.bottom)
             }
             
             Divider()
                 .padding(.bottom)
             
-            Text("내 게시글 관리")
+            NavigationLink(destination: MyPostsView()) {
+                Text("내 게시글 관리")
+            }
             
-            
-            
-
+        
             Spacer()
         }
         .padding(.horizontal)
@@ -54,6 +59,6 @@ struct MyPageView: View {
 
 #Preview {
     MyPageView()
-        .environmentObject(AuthManager.shared)
+//        .environmentObject(AuthManager.shared)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

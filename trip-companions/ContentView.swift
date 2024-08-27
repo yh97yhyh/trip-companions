@@ -17,7 +17,7 @@ struct ContentView: View {
                     .environmentObject(getMyPageViewModel())
                     .environmentObject(getGenderAndMbtiViewModel())
             } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
-                InfoCollectionView()
+                InfoCollectionView(isEditMode: false)
                     .environmentObject(getMyPageViewModel())
                     .environmentObject(getGenderAndMbtiViewModel())
             } else {

@@ -42,7 +42,7 @@ struct CustomDatePickerView: View {
                         Spacer()
                         Text(startDate.toDateText())
                             .font(.headline)
-                            .modifier(FeatureTextModifier())
+                            .modifier(ProfileFeatureTextModifier())
                     }
                     .onTapGesture {
                         showingStartDatePicker.toggle()
@@ -63,7 +63,7 @@ struct CustomDatePickerView: View {
                         Spacer()
                         Text(endDate.toDateText())
                             .font(.headline)
-                            .modifier(FeatureTextModifier())
+                            .modifier(ProfileFeatureTextModifier())
                     }
                     .onTapGesture {
                         showingEndDatePicker.toggle()
