@@ -22,12 +22,12 @@ class InfoCollectionViewModel: ObservableObject {
             validateForm()
         }
     }
-    @Published var gender: Gender = .male {
+    @Published var gender: Gender = Gender.MOCK_GENDERS[0] {
         didSet {
             validateForm()
         }
     }
-    @Published var mbti: MBTI = .intj {
+    @Published var mbti: MBTI = MBTI.MOCK_MBTIS[0]  {
         didSet {
             validateForm()
         }
@@ -53,22 +53,18 @@ class InfoCollectionViewModel: ObservableObject {
     }
 
     private var cancellables = Set<AnyCancellable>()
-
-    init() {
-        
-    }
     
     func updateMemberProfile(token: String) {
         let parameters: Parameters = [
             "nickName": nickname,
             "age": age,
-            "gender": gender.rawValue,
-            "mbti": mbti.rawValue,
+            "gender": gender.desc,
+            "mbti": mbti.desc,
             "isSmoking": isSmoking != nil ? isSmoking : nil,
             "isDrinking": isDrinking != nil ? isDrinking : nil
         ]
         
-        NetworkManager<Member>.request(route: .updateMemberProfile(parameters, toekn: token))
+        NetworkManager<Member>.request(route: .updateMemberProfile(parameters))
             .sink { completion in
                 switch completion {
                 case .finished:
@@ -86,8 +82,8 @@ class InfoCollectionViewModel: ObservableObject {
     private func clear() {
         nickname = ""
         age = ""
-        gender = .male
-        mbti = .intj
+//        gender =
+//        mbti = .intp
         isSmoking = nil
         isDrinking = nil
         isComplete = false

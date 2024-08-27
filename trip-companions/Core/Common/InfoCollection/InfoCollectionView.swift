@@ -10,13 +10,14 @@ import SwiftUI
 struct InfoCollectionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @EnvironmentObject var genderAndMbtiViewModel: GenderAndMbtiViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
         
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
                 HStack {
-                    Text("Profile")
+                    Text("프로필")
                         .font(.title)
                         .fontWeight(.semibold)
                     Spacer()
@@ -69,8 +70,8 @@ struct InfoCollectionView: View {
                         
                         // MARK: - Update to use Cusotm PickerView
                         Picker("성별", selection: $viewModel.gender) {
-                            ForEach(Gender.allCases) { gender in
-                                Text(gender.rawValue)
+                            ForEach(genderAndMbtiViewModel.genders, id: \.code) { gender in
+                                Text(gender.desc)
                                     .tag(gender as Gender)
                             }
                         }
@@ -91,8 +92,8 @@ struct InfoCollectionView: View {
                         
                         // MARK: - Update to use Cusotm PickerView
                         Picker("MBTI", selection: $viewModel.mbti) {
-                            ForEach(MBTI.allCases) { mbti in
-                                Text(mbti.rawValue)
+                            ForEach(genderAndMbtiViewModel.mbtis, id: \.code) { mbti in
+                                Text(mbti.desc)
                                     .tag(mbti as MBTI)
                             }
                         }
@@ -178,4 +179,5 @@ struct InfoCollectionView: View {
     InfoCollectionView()
         .environmentObject(AuthManager.shared)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(GenderAndMbtiViewModel())
 }

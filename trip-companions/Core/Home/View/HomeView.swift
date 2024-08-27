@@ -22,7 +22,7 @@ struct HomeView: View {
                     .padding(.bottom)
                 
                 ScrollView(showsIndicators: false) {
-                    NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL)) {
+                    NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")) {
                         HStack {
                             Text("어디로 가시나요?")
                             Spacer()

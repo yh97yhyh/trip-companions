@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NavigationTitleView: View {
     @Environment(\.dismiss) private var dismiss
+    var title: String
     
     var body: some View {
         HStack {
@@ -20,10 +21,15 @@ struct NavigationTitleView: View {
                     .foregroundColor(.black)
             }
             Spacer()
+            
+            Text(title)
+                .font(.title3)
+            
+            Spacer()
         }
     }
 }
 
 #Preview {
-    NavigationTitleView()
+    NavigationTitleView(title: "테스트")
 }

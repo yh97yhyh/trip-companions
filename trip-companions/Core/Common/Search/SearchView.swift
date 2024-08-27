@@ -13,10 +13,11 @@ struct SearchView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var showingDatePicker = false
+    var title: String
     
     var body: some View {
         VStack {
-            NavigationTitleView()
+            NavigationTitleView(title: title)
                 .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
@@ -79,6 +80,23 @@ struct SearchView: View {
                     
                     HStack {
                         Button {
+                            viewModel.isSameMbti = viewModel.isSameMbti == true ? nil : true
+                        } label: {
+                            Text("나와 같은 MBTI")
+                        }
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == true))
+                        
+                        Button {
+                            viewModel.isSameMbti = viewModel.isSameMbti == false ? nil : false
+                        } label: {
+                            Text("다른 MBTI도 좋아요")
+                        }
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == false))
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Button {
                             viewModel.isMale = viewModel.isMale == true ? nil : true
                         } label: {
                             Text("남성")
@@ -130,20 +148,6 @@ struct SearchView: View {
                 }
                 .padding(.bottom, 24)
                 
-                VStack {
-                    HStack {
-                        // MARK: - Add Image(systemName: "magnifyingglass")
-                        Text("세부 조건")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    
-                    TextField("조건 입력", text: $viewModel.detail)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
-                    
-                    // MARK: - Add options
-                }
             }
             .padding(.top)
             .padding(.horizontal)
@@ -153,7 +157,7 @@ struct SearchView: View {
             } label: {
                 Text("검색 결과 보기")
             }
-            .buttonStyle(CompleButtonStyle(isComplete: true))
+            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
             .padding(.horizontal)
             
         }
@@ -163,6 +167,6 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL)
+    SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

@@ -49,10 +49,13 @@ struct ProfileHeaderView: View {
                                 .modifier(FeatureTextModifier())
                         }
                         
-                        Text(viewModel.member.mbti.rawValue)
-                            .modifier(FeatureTextModifier())
                         
-                        Text(viewModel.member.gender.rawValue)
+                        if viewModel.member.mbti != nil {
+                            Text(viewModel.member.mbti!.desc)
+                                .modifier(FeatureTextModifier())
+                        }
+                        
+                        Text(viewModel.member.gender.desc)
                             .modifier(FeatureTextModifier())
                     }
                 }

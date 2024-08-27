@@ -7,44 +7,6 @@
 
 import Foundation
 
-enum Gender: String, CaseIterable, Identifiable, Codable, Hashable {
-    case male = "남성"
-    case female = "여성"
-    
-    var id: String { rawValue }
-    
-    func toKey() -> String {
-        switch self {
-        case .male:
-            return "MALE"
-        case .female:
-            return "FEMALE"
-        }
-    }
-}
-
-enum MBTI: String, CaseIterable, Identifiable, Codable, Hashable {
-    case intj = "INTJ"
-    case intp = "INTP"
-    case entj = "ENTJ"
-    case entp = "ENTP"
-    case infj = "INFJ"
-    case infp = "INFP"
-    case enfj = "ENFJ"
-    case enfp = "ENFP"
-    case istj = "ISTJ"
-    case isfj = "ISFJ"
-    case estj = "ESTJ"
-    case esfj = "ESFJ"
-    case istp = "ISTP"
-    case isfp = "ISFP"
-    case estp = "ESTP"
-    case esfp = "ESFP"
-    
-    var id: String { rawValue }
-}
-
-
 // MARK: - TripCompanionsCreateRequest
 struct TripCompanionsCreateRequest: Codable {
     let regionId: Int64

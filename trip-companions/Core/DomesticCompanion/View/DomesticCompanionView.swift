@@ -22,7 +22,7 @@ struct DomesticCompanionView: View {
             
             HStack {
                 HStack {
-                    NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL)) {
+                    NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "필터")) {
                         Image(systemName: "slider.horizontal.3")
                         Text("필터")
                     }

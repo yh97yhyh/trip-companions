@@ -19,7 +19,7 @@ struct CustomDatePickerView: View {
             ScrollView(showsIndicators: false) {
                 HStack {
                     Text("날짜 입력")
-                        .font(.title)
+                        .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
                     Button {

@@ -10,15 +10,19 @@ import Alamofire
 import Combine
 
 enum APIRouter: URLRequestConvertible {
-    case fetchTripCompanions(Parameters)
-    case createTripCompanion(Parameters)
-    case updateMemberProfile(Parameters, toekn: String)
     case fetchKakaoOAuthCode(Parameters)
     case postSignIn(Parameters)
     
+    case fetchTripCompanions(Parameters)
+    case createTripCompanion(Parameters)
+    
+    case updateMemberProfile(Parameters)
+    case getMemberProfile
+    case getGenderAndMbti
+    
     var method: HTTPMethod {
         switch self {
-        case .fetchTripCompanions, .fetchKakaoOAuthCode:
+        case .fetchKakaoOAuthCode, .fetchTripCompanions, .getMemberProfile, .getGenderAndMbti :
             return .get
         case .createTripCompanion, .postSignIn:
             return .post
@@ -29,16 +33,20 @@ enum APIRouter: URLRequestConvertible {
     
     var path: String {
         switch self {
+        case .fetchKakaoOAuthCode:
+            return "/oauth2/code/kakao"
+        case .postSignIn:
+            return "/oauth2/kakao/sign-in"
         case .fetchTripCompanions:
             return "/api/v1/trip-companions"
         case .createTripCompanion:
             return "/api/v1/trip-companions"
         case .updateMemberProfile:
-            return "/api/v1/members/profile"
-        case .fetchKakaoOAuthCode:
-            return "/oauth2/code/kakao"
-        case .postSignIn:
-            return "/oauth2/kakao/sign-in"
+            return "profile"
+        case .getMemberProfile:
+            return "/api/v1/members/my"
+        case .getGenderAndMbti:
+            return "/api/v1/members/filter-info"
         }
     }
     
@@ -46,10 +54,12 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .fetchTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
-                .updateMemberProfile(let parameters, _),
+                .updateMemberProfile(let parameters),
                 .fetchKakaoOAuthCode(let parameters),
                 .postSignIn(let parameters):
             return parameters
+        case .getMemberProfile, .getGenderAndMbti:
+            return Parameters()
         }
     }
     
@@ -60,28 +70,17 @@ enum APIRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
+        if case .postSignIn(let parameters) = self {
+            
+        } else {
+            urlRequest.setValue("Bearer \(AuthManager.shared.token!)", forHTTPHeaderField: "Authorization")
+        }
+        
         switch method {
         case .get:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
             urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
-        }
-        
-        // Print request details
-        print("====URLRequest=====")
-        print("URL: \(urlRequest.url?.absoluteString ?? "No URL")")
-        print("Method: \(urlRequest.httpMethod ?? "No Method")")
-        print("Headers: \(urlRequest.allHTTPHeaderFields ?? [:])")
-        
-        // Convert httpBody to a readable string
-        if let httpBody = urlRequest.httpBody {
-            if let bodyString = String(data: httpBody, encoding: .utf8) {
-                print("Body: \(bodyString)")
-            } else {
-                print("Body: Unable to decode data")
-            }
-        } else {
-            print("Body: No body data")
         }
         
         return urlRequest

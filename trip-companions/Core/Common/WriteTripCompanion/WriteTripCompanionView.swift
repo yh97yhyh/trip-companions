@@ -20,16 +20,16 @@ struct WriteTripCompanionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationTitleView()
+            NavigationTitleView(title: "동행등록")
                 .padding(.horizontal)
             ScrollView(showsIndicators: false) {
-                HStack {
-                    Text("동행 등록")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                    Spacer()
-                }
-                .padding(.bottom)
+//                HStack {
+//                    Text("동행 등록")
+//                        .font(.title)
+//                        .fontWeight(.semibold)
+//                    Spacer()
+//                }
+//                .padding(.bottom)
                 
                 HStack {
                     HStack {
@@ -40,13 +40,15 @@ struct WriteTripCompanionView: View {
                     .padding(.trailing, 56)
                     Spacer()
                     //MARK: - 지역 검색
-                    NavigationLink(destination: Text("동읍면찾기")) {
-                        HStack {
-                            Text("동.읍.면 찾기")
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(SearchButtonStyle())
+                    TextField("지역 찾기", text: $viewModel.region)
+                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+//                    NavigationLink(destination: Text("지역 찾기")) {
+//                        HStack {
+//                            Text("지역 찾기")
+//                            Spacer()
+//                        }
+//                    }
+//                    .buttonStyle(SearchButtonStyle())
                 }
                 
                 Button {
@@ -68,7 +70,7 @@ struct WriteTripCompanionView: View {
                 }
                 .buttonStyle(SearchButtonStyle())
                 
-                TextField("모집 인원", text: $viewModel.region)
+                TextField("모집 인원", text: $viewModel.personal)
                     .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                     .keyboardType(.numberPad)
                 
@@ -79,6 +81,23 @@ struct WriteTripCompanionView: View {
                     HStack {
                         Text("당신의 동행은?")
                             .font(.title3)
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Button {
+                            viewModel.isSameMbti = viewModel.isSameMbti == true ? nil : true
+                        } label: {
+                            Text("나와 같은 MBTI")
+                        }
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == true))
+                        
+                        Button {
+                            viewModel.isSameMbti = viewModel.isSameMbti == false ? nil : false
+                        } label: {
+                            Text("다른 MBTI도 좋아요")
+                        }
+                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == false))
                         Spacer()
                     }
                     
@@ -135,19 +154,6 @@ struct WriteTripCompanionView: View {
                 }
                 .padding(.bottom)
                 
-                VStack {
-                    HStack {
-                        Text("세부 조건")
-                            .font(.title3)
-                        Spacer()
-                    }
-                    
-                    TextField("조건 입력", text: $viewModel.detail)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
-                    
-                    // MARK: - Add options
-                }
-                
             }
             .padding()
             
@@ -156,7 +162,7 @@ struct WriteTripCompanionView: View {
             } label: {
                 Text("등록하기")
             }
-            .buttonStyle(CompleButtonStyle(isComplete: true))
+            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
             .padding(.horizontal)
         }
         .navigationBarHidden(true)
