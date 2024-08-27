@@ -135,16 +135,35 @@ class AuthManager: ObservableObject {
                 return
             }
             
-//            let id = String(user.id!)
             completion(.success(user))
         }
     }
     
     private func checkLoginStatus() {
-        if let user = loadUserFromUserDefaults() {
-            self.token = user.token
-            self.isLoggedIn = true
-            print("Succeed to check Login Status! \(user)")
+        if let userInfo = loadUserFromUserDefaults() {
+            self.fetchUserInfo { result in
+                switch result {
+                case .success(let user):
+                    let id = String(user.id!)
+                    self.signIn(userInfo.kakaoAccessToken, id) { success in
+                        if success, let token = self.token {
+                            let user = UserInfo(kakaoSocialId: id, kakaoAccessToken: userInfo.kakaoAccessToken, token: token)
+                            self.saveUserToUserDefaults(user)
+                            self.getMemberInfo(token) { success in
+                                if let curMember = self.currentMember {
+                                    InfoCollectionViewModel.shared.age = String(curMember.age)
+                                    InfoCollectionViewModel.shared.gender = curMember.gender
+                                    self.isLoggedIn = true
+                                    print("Succeed to sign-in! \(userInfo)")
+                                }
+                            }
+                           
+                        }
+                    }
+                case .failure(_):
+                    print("Failed to sign-in..")
+                }
+            }
         } else {
             self.isLoggedIn = false
         }
@@ -181,7 +200,7 @@ class AuthManager: ObservableObject {
             .sink { completionStatus in
                 switch completionStatus {
                 case .finished:
-                    print("Succeed to request member info")
+                    print("Succeed to request member info!")
                     completion(true)
                 case .failure(let error):
                     print("Failed to request member info.. \(error.localizedDescription)")

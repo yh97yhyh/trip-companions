@@ -21,7 +21,7 @@ struct MyPageView: View {
             }
             .padding(.vertical)
             
-            ProfileHeaderView(viewModel: ProfileHeaderViewModel(member: myPageViewModel.member, isShowingProfileUpdateButton: false))
+            ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: false))
                 .padding(.bottom)
             
             VStack(alignment: .leading) {

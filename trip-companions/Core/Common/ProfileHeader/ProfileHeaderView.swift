@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ProfileHeaderView: View {
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: ProfileHeaderViewModel
     
     var body: some View {
@@ -15,12 +17,21 @@ struct ProfileHeaderView: View {
             HStack {
 //                if viewModel.member.profileImageUrl != nil {
                     // MARK: - Update to KFImage
+                if myPageViewModel.member.profileImageUrl != nil {
+                    KFImage(URL(string: myPageViewModel.member.profileImageUrl!))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                        .padding(.trailing, 12)
+                } else {
                     Image("ProfileImageTest")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 64, height: 64)
                         .clipShape(Circle())
                         .padding(.trailing, 12)
+                }
 //                } else {
 //                    Image("defaultThumbnail")
 //                        .resizable()
@@ -33,29 +44,29 @@ struct ProfileHeaderView: View {
 //                }
                 
                 VStack(alignment: .leading) {
-                    Text("\(viewModel.member.nickName), \(viewModel.member.age)")
+                    Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .padding(.bottom, 8)
                     
                     HStack {
-                        if viewModel.member.isSmoking != nil {
-                            Text(viewModel.toTextIsSmoking())
+                        if myPageViewModel.member.isSmoking != nil {
+                            Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
                                 .modifier(FeatureTextModifier())
                         }
                         
-                        if viewModel.member.isDrinking != nil {
-                            Text(viewModel.toTextIsDrinking())
+                        if myPageViewModel.member.isDrinking != nil {
+                            Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
                                 .modifier(FeatureTextModifier())
                         }
                         
                         
-                        if viewModel.member.mbti != nil {
-                            Text(viewModel.member.mbti!.desc)
+                        if myPageViewModel.member.mbti != nil {
+                            Text(myPageViewModel.member.mbti!.desc)
                                 .modifier(FeatureTextModifier())
                         }
                         
-                        Text(viewModel.member.gender.desc)
+                        Text(myPageViewModel.member.gender.desc)
                             .modifier(FeatureTextModifier())
                     }
                 }
@@ -79,4 +90,5 @@ struct ProfileHeaderView: View {
 
 #Preview {
     ProfileHeaderView(viewModel: ProfileHeaderViewModel.MOCK_VIEW_MODEL1)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

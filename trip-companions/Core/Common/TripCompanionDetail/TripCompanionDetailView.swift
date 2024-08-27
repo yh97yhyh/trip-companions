@@ -14,7 +14,7 @@ struct TripCompanionDetailView: View {
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
-                ProfileHeaderView(viewModel: ProfileHeaderViewModel(member: viewModel.tripCompanion.member, isShowingProfileUpdateButton: false))
+                ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: false))
                     .padding(.bottom)
                 
                 Divider()

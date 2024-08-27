@@ -42,7 +42,7 @@ enum APIRouter: URLRequestConvertible {
         case .createTripCompanion:
             return "/api/v1/trip-companions"
         case .updateMemberProfile:
-            return "profile"
+            return "/api/v1/members/profile"
         case .getMemberProfile:
             return "/api/v1/members/my"
         case .getGenderAndMbti:

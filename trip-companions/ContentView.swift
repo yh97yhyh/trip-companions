@@ -12,13 +12,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            if authManager.currentMember != nil && authManager.isLoggedIn {
+            if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
                 MainTabView()
-                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+                    .environmentObject(getMyPageViewModel())
                     .environmentObject(getGenderAndMbtiViewModel())
             } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
                 InfoCollectionView()
-                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+                    .environmentObject(getMyPageViewModel())
                     .environmentObject(getGenderAndMbtiViewModel())
             } else {
                 LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
@@ -31,6 +31,14 @@ struct ContentView: View {
 //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
         }
         
+    }
+    
+    func getMyPageViewModel() -> MyPageViewModel {
+        if let currentMember = authManager.currentMember {
+            return MyPageViewModel(member: currentMember)
+        } else {
+            return MyPageViewModel.MOCK_VIEW_MODEL
+        }
     }
     
     func getGenderAndMbtiViewModel() -> GenderAndMbtiViewModel {

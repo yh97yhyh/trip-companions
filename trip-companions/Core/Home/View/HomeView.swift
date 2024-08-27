@@ -14,7 +14,7 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             VStack {
-                ProfileHeaderView(viewModel: ProfileHeaderViewModel(member: .MOCK_MEMBER1, isShowingProfileUpdateButton: true))
+                ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: true))
                     .padding(.bottom)
                 
                 DividerView()

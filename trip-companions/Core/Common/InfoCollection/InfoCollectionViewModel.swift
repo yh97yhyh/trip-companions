@@ -54,10 +54,10 @@ class InfoCollectionViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     
-    func updateMemberProfile(token: String) {
+    func updateMemberProfile(completion: @escaping (Member) -> Void) {
         let parameters: Parameters = [
             "nickName": nickname,
-            "age": age,
+            "age": Int(age)!,
             "gender": gender.desc,
             "mbti": mbti.desc,
             "isSmoking": isSmoking != nil ? isSmoking : nil,
@@ -74,7 +74,7 @@ class InfoCollectionViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] member in
                 print("Succeed to update member profile! : \(member)")
-                self?.clear()
+                completion(member)
             }.store(in: &cancellables)
         
     }
