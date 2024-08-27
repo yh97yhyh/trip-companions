@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TripCompanionDetailView: View {
     @StateObject var viewModel: TripCompanionDetailViewModel
@@ -14,7 +15,7 @@ struct TripCompanionDetailView: View {
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
-                ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: false))
+                WriterHeaderView(viewModel: viewModel)
                     .padding(.bottom)
                 
                 Divider()
@@ -35,8 +36,8 @@ struct TripCompanionDetailView: View {
                             .foregroundColor(.gray767676)
                     }
                 }
-                .padding(.bottom)
-                
+                .padding(.bottom, 32)
+
                 VStack(alignment: .leading) {
                     HStack {
                         Text("여행 계획이에요")
@@ -44,9 +45,32 @@ struct TripCompanionDetailView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    // MARK: - Add options
+                    // MARK: - Add info
+                    HStack {
+                        Text(viewModel.tripCompanion.region.regionName)
+                            .font(.subheadline)
+                            .modifier(FeatureTextModifier())
+                        
+                        if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
+                            HStack {
+                                Text(viewModel.tripCompanion.startDate.toDateText())
+                            }
+                            .font(.subheadline)
+                            .modifier(FeatureTextModifier())
+                        } else {
+                            HStack {
+                                Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
+                            }
+                            .font(.subheadline)
+                            .modifier(FeatureTextModifier())
+                        }
+                        
+                        Text("\(viewModel.tripCompanion.companionMemberCount)명")
+                            .font(.subheadline)
+                            .modifier(FeatureTextModifier2())
+                    }
                 }
-                .padding(.bottom)
+                .padding(.bottom, 32)
                 
                 VStack(alignment: .leading) {
                     HStack {
@@ -55,10 +79,10 @@ struct TripCompanionDetailView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    // MARK: - Add options
+                    // MARK: - Add info
                 }
-                .padding(.bottom)
-                
+                .padding(.bottom, 32)
+
                 HStack {
                     Button {
                         dismiss()
@@ -83,6 +107,62 @@ struct TripCompanionDetailView: View {
     }
 }
 
-#Preview {
-    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL)
+struct WriterHeaderView: View  {
+    @StateObject var viewModel: TripCompanionDetailViewModel
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                if viewModel.tripCompanion.member.profileImageUrl != nil {
+                    KFImage(URL(string: viewModel.tripCompanion.member.profileImageUrl!))
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                        .padding(.trailing, 12)
+                } else {
+                    Image("ProfileImageTest")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                        .padding(.trailing, 12)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text("\(viewModel.tripCompanion.member.nickName!), \(viewModel.tripCompanion.member.age)")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 8)
+                    
+                    HStack {
+                        if viewModel.tripCompanion.member.isSmoking != nil {
+                            Text(viewModel.toTextIsSmoking(viewModel.tripCompanion.member.isSmoking!))
+                                .modifier(ProfileFeatureTextModifier())
+                        }
+                        
+                        if viewModel.tripCompanion.member.isDrinking != nil {
+                            Text(viewModel.toTextIsDrinking(viewModel.tripCompanion.member.isDrinking!))
+                                .modifier(ProfileFeatureTextModifier())
+                        }
+                        
+                        
+                        if viewModel.tripCompanion.member.mbti != nil {
+                            Text(viewModel.tripCompanion.member.mbti!.desc)
+                                .modifier(ProfileFeatureTextModifier())
+                        }
+                        
+                        Text(viewModel.tripCompanion.member.gender.desc)
+                            .modifier(ProfileFeatureTextModifier())
+                    }
+                }
+                
+                Spacer()
+            }
+        }
+    }
 }
+
+//#Preview {
+//    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL)
+//}

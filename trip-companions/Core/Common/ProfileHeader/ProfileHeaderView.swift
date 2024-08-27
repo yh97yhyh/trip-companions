@@ -15,8 +15,6 @@ struct ProfileHeaderView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-//                if viewModel.member.profileImageUrl != nil {
-                    // MARK: - Update to KFImage
                 if myPageViewModel.member.profileImageUrl != nil {
                     KFImage(URL(string: myPageViewModel.member.profileImageUrl!))
                         .resizable()
@@ -32,16 +30,6 @@ struct ProfileHeaderView: View {
                         .clipShape(Circle())
                         .padding(.trailing, 12)
                 }
-//                } else {
-//                    Image("defaultThumbnail")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width: 60, height: 60)
-//                        .padding(4)
-//                        .background(Color.grayF1F1F1)
-//                        .clipShape(Circle())
-//                        .padding(.trailing, 12)
-//                }
                 
                 VStack(alignment: .leading) {
                     Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")

@@ -13,6 +13,14 @@ class TripCompanionDetailViewModel: ObservableObject {
     init(tripCompanion: TripCompanion) {
         self.tripCompanion = tripCompanion
     }
+    
+    func toTextIsDrinking(_ isDrinking: Bool) -> String {
+        return isDrinking ? "음주" : "논알콜"
+    }
+    
+    func toTextIsSmoking(_ isSmoking: Bool) -> String {
+        return isSmoking ? "흡연" : "비흡연"
+    }
 }
 
 extension TripCompanionDetailViewModel{
