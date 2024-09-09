@@ -37,15 +37,15 @@ struct MainTabView: View {
                             Text("국내 동행")
                         }
                         .tag(1)
-                    OverseaCompanionView()
-                        .onAppear {
-                            selectedIndex = 2
-                        }
-                        .tabItem {
-                            Image(systemName: "person.2")
-                            Text("해외 동행")
-                        }
-                        .tag(2)
+//                    OverseaCompanionView()
+//                        .onAppear {
+//                            selectedIndex = 2
+//                        }
+//                        .tabItem {
+//                            Image(systemName: "person.2")
+//                            Text("해외 동행")
+//                        }
+//                        .tag(2)
                     MyPageView()
                         .onAppear {
                             selectedIndex = 3

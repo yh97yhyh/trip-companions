@@ -51,8 +51,8 @@ class AuthManager: ObservableObject {
                         let id = String(user.id!)
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let user = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
-                                self.saveUserToUserDefaults(user)
+                                let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
+                                self.saveUserToUserDefaults(userInfo)
                                 self.isLoggedIn = true
                                 promise(.success((true, true)))
                             } else {
@@ -88,12 +88,12 @@ class AuthManager: ObservableObject {
                         let id = String(user.id!)
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let user = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
-                                self.saveUserToUserDefaults(user)
+                                let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
+                                self.saveUserToUserDefaults(userInfo)
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
                                         InfoCollectionViewModel.shared.age = String(curMember.age)
-                                        InfoCollectionViewModel.shared.gender = curMember.gender
+//                                        InfoCollectionViewModel.shared.gender = curMember.gender
                                         self.isLoggedIn = true
                                     }
                                 }
@@ -147,12 +147,12 @@ class AuthManager: ObservableObject {
                     let id = String(user.id!)
                     self.signIn(userInfo.kakaoAccessToken, id) { success in
                         if success, let token = self.token {
-                            let user = UserInfo(kakaoSocialId: id, kakaoAccessToken: userInfo.kakaoAccessToken, token: token)
-                            self.saveUserToUserDefaults(user)
+                            let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: userInfo.kakaoAccessToken, token: token)
+                            self.saveUserToUserDefaults(userInfo)
                             self.getMemberInfo(token) { success in
                                 if let curMember = self.currentMember {
                                     InfoCollectionViewModel.shared.age = String(curMember.age)
-                                    InfoCollectionViewModel.shared.gender = curMember.gender
+//                                    InfoCollectionViewModel.shared.gender = curMember.gender
                                     self.isLoggedIn = true
                                     print("Succeed to sign-in! \(userInfo)")
                                 }

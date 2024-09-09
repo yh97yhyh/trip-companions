@@ -54,8 +54,10 @@ struct ProfileHeaderView: View {
                                 .modifier(ProfileFeatureTextModifier())
                         }
                         
-                        Text(myPageViewModel.member.gender.desc)
-                            .modifier(ProfileFeatureTextModifier())
+                        if let gender = myPageViewModel.member.gender {
+                            Text(gender.desc)
+                                .modifier(ProfileFeatureTextModifier())
+                        }
                     }
                 }
                 

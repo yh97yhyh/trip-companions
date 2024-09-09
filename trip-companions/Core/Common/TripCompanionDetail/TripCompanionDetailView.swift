@@ -152,8 +152,10 @@ struct WriterHeaderView: View  {
                                 .modifier(ProfileFeatureTextModifier())
                         }
                         
-                        Text(viewModel.tripCompanion.member.gender.desc)
-                            .modifier(ProfileFeatureTextModifier())
+                        if let gender = viewModel.tripCompanion.member.gender {
+                            Text(gender.desc)
+                                .modifier(ProfileFeatureTextModifier())
+                        }
                     }
                 }
                 

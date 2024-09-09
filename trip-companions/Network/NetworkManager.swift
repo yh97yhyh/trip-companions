@@ -95,10 +95,10 @@ final class NetworkManager<T: Codable> {
             .tryMap { response -> T in
                 guard let value = response.value else {
                     if let error = response.error {
-                        print("Failed to request.. \(error.localizedDescription)")
+                        print("Failed to request \(route).. \(error.localizedDescription)")
                         throw NetworkError.error(err: error.localizedDescription)
                     }
-                    throw NetworkError.error(err: "Decoding error")
+                    throw NetworkError.error(err: "Decodin error")
                 }
                 return value
             }

@@ -21,9 +21,11 @@ struct MyTripCompanionCellView: View {
                                 .modifier(ProfileFeatureTextModifier())
                         }
                         
-                        Text(viewModel.tripCompanion.member.gender.desc)
-                            .font(.footnote)
-                            .modifier(ProfileFeatureTextModifier())
+                        if let gender = viewModel.tripCompanion.member.gender {
+                            Text(gender.desc)
+                                .font(.footnote)
+                                .modifier(ProfileFeatureTextModifier())
+                        }
                         
                         if let isDrinking = viewModel.tripCompanion.member.isDrinking {
                             if isDrinking {

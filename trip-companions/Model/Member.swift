@@ -18,7 +18,7 @@ struct Member: Identifiable, Codable, Hashable {
     var profileImageUrl: String?
     let tokenKey: String
     let mbti: MBTI?
-    let gender: Gender
+    let gender: Gender?
     let isSmoking: Bool?
     let isDrinking: Bool?
     let isLogin: Bool

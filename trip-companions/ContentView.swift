@@ -9,26 +9,38 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var authManager: AuthManager
+    @State var showingMainView = false
     
     var body: some View {
         VStack {
-            if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
-                MainTabView()
-                    .environmentObject(getMyPageViewModel())
-                    .environmentObject(getGenderAndMbtiViewModel())
-            } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
-                InfoCollectionView(isEditMode: false)
-                    .environmentObject(getMyPageViewModel())
-                    .environmentObject(getGenderAndMbtiViewModel())
+            if showingMainView {
+                if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
+                    MainTabView()
+                        .environmentObject(getMyPageViewModel())
+                        .environmentObject(getGenderAndMbtiViewModel())
+                } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
+                    InfoCollectionView(isEditMode: false)
+                        .environmentObject(getMyPageViewModel())
+                        .environmentObject(getGenderAndMbtiViewModel())
+                } else {
+                    LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+                        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+                }
+                
+                //            MainTabView()
+                //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+                //            LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+                //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
             } else {
-                LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
-                    .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+                SplashView()
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            withAnimation {
+                                showingMainView = true
+                            }
+                        }
+                    }
             }
-            
-//            MainTabView()
-//                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-//            LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
-//                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
         }
         
     }

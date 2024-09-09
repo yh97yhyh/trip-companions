@@ -98,7 +98,7 @@ struct InfoCollectionView: View {
                         .labelsHidden()
                         .frame(alignment: .leading)
                         .modifier(CustomPickerStyle())
-                        .disabled(true)
+//                        .disabled(true)
                     }
                     .padding(.bottom)
                     
