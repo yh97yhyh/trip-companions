@@ -154,3 +154,4 @@ GoogleService-Info.plist
 *.xcconfig
 *.xcuserstate
 Secrets.plist
+*.plist
