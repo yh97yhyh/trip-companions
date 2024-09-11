@@ -10,5 +10,5 @@ import Foundation
 struct TripCompanionResponse: Codable, Hashable {
     let totalElements: Int
     let totalPage: Int
-    let data: [Region]
+    let data: [TripCompanion]
 }

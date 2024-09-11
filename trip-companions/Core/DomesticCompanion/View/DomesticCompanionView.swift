@@ -23,7 +23,7 @@ struct DomesticCompanionView: View {
                 
                 HStack {
                     HStack {
-                        NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "필터")) {
+                        NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "필터")) {
                             Image(systemName: "slider.horizontal.3")
                             Text("필터")
                         }
@@ -72,7 +72,7 @@ struct DomesticCompanionView: View {
 struct DomesticAddButtonView: View {
     var body: some View {
         VStack {
-            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)) {
+            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.shared)) {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .foregroundColor(.white)

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CustomDatePickerView: View {
     @Environment(\.dismiss) private var dismiss
-    @Binding var startDate: Date
+    @Binding var startDate: Date?
+    @State var date: Date = Date()
     //    @Binding var endDate: Date
     //    @State var showingStartDatePicker = true
     //    @State var showingEndDatePicker = false
@@ -54,7 +55,7 @@ struct CustomDatePickerView: View {
                     //                            .datePickerStyle(GraphicalDatePickerStyle())
                     //                            .tint(Color.orangeF49321)
                     //                    }
-                    DatePicker("날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                    DatePicker("날짜를 선택해주세요", selection: $date, displayedComponents: .date)
                         .datePickerStyle(GraphicalDatePickerStyle())
                         .tint(Color.orangeF49321)
                 }
@@ -90,6 +91,7 @@ struct CustomDatePickerView: View {
             .padding()
             
             Button {
+                startDate = date
                 dismiss()
             } label: {
                 Text("날짜 선택 완료")
@@ -102,26 +104,23 @@ struct CustomDatePickerView: View {
     }
 }
 
-struct CustomDatePickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewWrapper()
-    }
-    
-    struct PreviewWrapper: View {
-        @State private var startDate = Date()
-        //        @State private var endDate = Date()
-        
-        var body: some View {
-            //            CustomDatePickerView(startDate: $startDate, endDate: $endDate)
-            CustomDatePickerView(startDate: $startDate)
-            
-        }
-    }
-}
+//struct CustomDatePickerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PreviewWrapper()
+//    }
+//    
+//    struct PreviewWrapper: View {
+//        @State private var startDate = Date()
+//        //        @State private var endDate = Date()
+//        
+//        var body: some View {
+//            //            CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+//            CustomDatePickerView(startDate: $startDate)
+//            
+//        }
+//    }
+//}
 
 //#Preview {
-//    @State var startDate = Date()
-//    @State var endDate = Date()
-//
-//    CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+//    CustomDatePickerView()
 //}

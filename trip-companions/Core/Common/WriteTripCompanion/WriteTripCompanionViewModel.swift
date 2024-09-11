@@ -10,12 +10,14 @@ import Combine
 import Alamofire
 
 class WriteTripCompanionViewModel: ObservableObject {
-    @Published var region: Region? {
+    static let shared = WriteTripCompanionViewModel()
+    
+    @Published var region: Region? = nil {
         didSet {
             validateForm()
         }
     }
-    @Published var startDate = Date.defaultDate() {
+    @Published var startDate: Date? = nil {
         didSet {
             validateForm()
         }
@@ -49,7 +51,7 @@ class WriteTripCompanionViewModel: ObservableObject {
 
     private func validateForm() {
         isComplete = region != nil &&
-        startDate != Date.defaultDate() &&
+        startDate != nil &&
         !personal.isEmpty &&
         !title.isEmpty &&
         !contents.isEmpty
@@ -57,7 +59,7 @@ class WriteTripCompanionViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(region: Region? = Region.MOCK_REGIONS.first!, startDate: Date, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    init(region: Region = Region.MOCK_REGIONS[0], startDate: Date? = nil, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
         self.region = region
         self.startDate = startDate
 //        self.endDate = endDate
@@ -89,7 +91,7 @@ class WriteTripCompanionViewModel: ObservableObject {
         let parameters: Parameters = [
             "title": title,
             "regionId": region!.id,
-            "tripDate": startDate,
+            "tripDate": startDate!.toServerDateText(),
             "companionMemberCount": personal,
             "contents": contents,
             "categoriesId": categoriesId
@@ -110,7 +112,7 @@ class WriteTripCompanionViewModel: ObservableObject {
     
     func clear() {
         self.region = nil
-        self.startDate = .defaultDate()
+        self.startDate = nil
         self.personal = ""
         self.title = ""
         self.contents = ""
@@ -125,5 +127,5 @@ class WriteTripCompanionViewModel: ObservableObject {
 
 
 extension WriteTripCompanionViewModel {
-    static let MOCK_VIEW_MODEL = WriteTripCompanionViewModel(startDate: Date.defaultDate())
+    static let MOCK_VIEW_MODEL = WriteTripCompanionViewModel()
 }

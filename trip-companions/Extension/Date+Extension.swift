@@ -14,6 +14,16 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func toServerDateText() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: self)
+    }
+    
+    func toUnixTimestamp() -> Double {
+        return self.timeIntervalSince1970
+    }
+    
     static func defaultDate() -> Date {
         let calendar = Calendar.current
         

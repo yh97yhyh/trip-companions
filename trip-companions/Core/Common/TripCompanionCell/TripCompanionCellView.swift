@@ -98,7 +98,7 @@ struct TripCompanionCellView: View {
                     
                     HStack {
                         Image(systemName: "calendar")
-                        Text(viewModel.tripCompanion.tripDate.toDateText())
+                        Text(viewModel.tripCompanion.tripDate)
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray767676)

@@ -20,7 +20,7 @@ struct HomeView: View {
                 .padding(.horizontal, -16)
                 .padding(.bottom)
             
-            NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")) {
+            NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "검색")) {
                 HStack {
                     Text("어디로 가시나요?")
                     Spacer()
@@ -72,7 +72,7 @@ struct HomeView: View {
 struct HomeAddButtonView: View {
     var body: some View {
         VStack {
-            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)) {
+            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.shared)) {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .foregroundColor(.white)

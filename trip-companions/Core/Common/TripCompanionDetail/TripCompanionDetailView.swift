@@ -65,7 +65,7 @@ struct TripCompanionDetailView: View {
 //                            .modifier(FeatureTextModifier())
 //                        }
                         HStack {
-                            Text(viewModel.tripCompanion.tripDate.toDateText())
+                            Text(viewModel.tripCompanion.tripDate)
                         }
                         .font(.subheadline)
                         .modifier(FeatureTextModifier())

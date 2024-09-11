@@ -68,10 +68,10 @@ struct SearchView: View {
                         showingDatePicker = true
                     } label: {
                         HStack {
-                            if viewModel.startDate == Date.defaultDate() {
+                            if viewModel.startDate == nil {
                                 Text("날짜를 입력하세요")
                             } else {
-                                Text("\(viewModel.startDate.toDateText())")
+                                Text("\(viewModel.startDate!.toDateText())")
                                     .foregroundColor(.black)
                             }
                             Spacer()
@@ -166,16 +166,20 @@ struct SearchView: View {
             .padding(.horizontal)
             
             Button {
+                viewModel.fetchTripUnion()
                 dismiss()
             } label: {
                 Text("검색 결과 보기")
             }
-            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+            .buttonStyle(CompleButtonStyle(isComplete: true))
             .padding(.horizontal)
             
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onDisappear {
+            viewModel.clear()
+        }
     }
 }
 

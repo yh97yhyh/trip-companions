@@ -89,7 +89,7 @@ struct HomeTripCompanionCellView: View {
                 .foregroundColor(.gray767676)
                 .padding(.bottom, 4)
             
-            Text(viewModel.tripCompanion.tripDate.toDateText())
+            Text(viewModel.tripCompanion.tripDate)
                 .font(.subheadline)
                 .foregroundColor(.gray767676)
         }

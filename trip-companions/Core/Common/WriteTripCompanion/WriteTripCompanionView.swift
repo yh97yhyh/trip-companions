@@ -70,10 +70,10 @@ struct WriteTripCompanionView: View {
                     showingDatePicker = true
                 } label: {
                     HStack {
-                        if viewModel.startDate == Date.defaultDate() {
+                        if viewModel.startDate == nil {
                             Text("날짜를 입력하세요")
                         } else {
-                            Text("\(viewModel.startDate.toDateText())")
+                            Text("\(viewModel.startDate!.toDateText())")
                                 .foregroundColor(.black)
                         }
                         
