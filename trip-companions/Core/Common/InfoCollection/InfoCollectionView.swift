@@ -10,7 +10,7 @@ import SwiftUI
 struct InfoCollectionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
-    @EnvironmentObject var genderAndMbtiViewModel: GenderAndMbtiViewModel
+    @EnvironmentObject var genderAndMbtiViewModel: MetaDataViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
     var isEditMode: Bool
     @Environment(\.dismiss) private var dismiss
@@ -209,5 +209,5 @@ struct InfoCollectionView: View {
     InfoCollectionView(isEditMode: false)
         .environmentObject(AuthManager.shared)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-        .environmentObject(GenderAndMbtiViewModel())
+        .environmentObject(MetaDataViewModel())
 }

@@ -15,19 +15,24 @@ enum APIRouter: URLRequestConvertible {
     
     case fetchTripCompanions(Parameters)
     case createTripCompanion(Parameters)
+    case updateTripCompanion(Parameters)
+    case deleteTripCompanion(postId: Int)
     
     case updateMemberProfile(Parameters)
     case getMemberProfile
     case getGenderAndMbti
+    case getMetaData
     
     var method: HTTPMethod {
         switch self {
-        case .fetchKakaoOAuthCode, .fetchTripCompanions, .getMemberProfile, .getGenderAndMbti :
+        case .fetchKakaoOAuthCode, .fetchTripCompanions, .getMemberProfile, .getGenderAndMbti, .getMetaData :
             return .get
         case .createTripCompanion, .postSignIn:
             return .post
-        case .updateMemberProfile:
+        case .updateTripCompanion, .updateMemberProfile:
             return .patch
+        case .deleteTripCompanion:
+            return .delete
         }
     }
     
@@ -41,12 +46,18 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/trip-companions"
         case .createTripCompanion:
             return "/api/v1/trip-companions"
+        case .updateTripCompanion:
+            return "/api/v1/trip-companions"
+        case .deleteTripCompanion(let postId):
+            return "/api/v1/trip-companions/\(postId)"
         case .updateMemberProfile:
             return "/api/v1/members/profile"
         case .getMemberProfile:
             return "/api/v1/members/my"
         case .getGenderAndMbti:
             return "/api/v1/members/filter-info"
+        case .getMetaData:
+            return "/public/v1/meta"
         }
     }
     
@@ -54,11 +65,12 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .fetchTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
+                .updateTripCompanion(let parameters),
                 .updateMemberProfile(let parameters),
                 .fetchKakaoOAuthCode(let parameters),
                 .postSignIn(let parameters):
             return parameters
-        case .getMemberProfile, .getGenderAndMbti:
+        case .getMemberProfile, .deleteTripCompanion, .getGenderAndMbti, .getMetaData:
             return Parameters()
         }
     }

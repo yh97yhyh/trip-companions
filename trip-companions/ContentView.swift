@@ -13,34 +13,32 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            if showingMainView {
-                if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
-                    MainTabView()
-                        .environmentObject(getMyPageViewModel())
-                        .environmentObject(getGenderAndMbtiViewModel())
-                } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
-                    InfoCollectionView(isEditMode: false)
-                        .environmentObject(getMyPageViewModel())
-                        .environmentObject(getGenderAndMbtiViewModel())
-                } else {
-                    LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
-                        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-                }
-                
-                //            MainTabView()
-                //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-                //            LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
-                //                .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-            } else {
-                SplashView()
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            withAnimation {
-                                showingMainView = true
-                            }
-                        }
-                    }
-            }
+//            if showingMainView {
+//                if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
+//                    MainTabView()
+//                        .environmentObject(getMyPageViewModel())
+//                        .environmentObject(getGenderAndMbtiViewModel())
+//                } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
+//                    InfoCollectionView(isEditMode: false)
+//                        .environmentObject(getMyPageViewModel())
+//                        .environmentObject(getGenderAndMbtiViewModel())
+//                } else {
+//                    LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
+//                        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//                }
+//            } else {
+//                SplashView()
+//                    .onAppear {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//                            withAnimation {
+//                                showingMainView = true
+//                            }
+//                        }
+//                    }
+//            }
+            MainTabView()
+                .environmentObject(getMyPageViewModel())
+                .environmentObject(getGenderAndMbtiViewModel())
         }
         
     }
@@ -53,8 +51,8 @@ struct ContentView: View {
         }
     }
     
-    func getGenderAndMbtiViewModel() -> GenderAndMbtiViewModel {
-        return GenderAndMbtiViewModel()
+    func getGenderAndMbtiViewModel() -> MetaDataViewModel {
+        return MetaDataViewModel()
     }
 }
 

@@ -51,19 +51,24 @@ struct TripCompanionDetailView: View {
                             .font(.subheadline)
                             .modifier(FeatureTextModifier())
                         
-                        if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
-                            HStack {
-                                Text(viewModel.tripCompanion.startDate.toDateText())
-                            }
-                            .font(.subheadline)
-                            .modifier(FeatureTextModifier())
-                        } else {
-                            HStack {
-                                Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
-                            }
-                            .font(.subheadline)
-                            .modifier(FeatureTextModifier())
+//                        if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
+//                            HStack {
+//                                Text(viewModel.tripCompanion.startDate.toDateText())
+//                            }
+//                            .font(.subheadline)
+//                            .modifier(FeatureTextModifier())
+//                        } else {
+//                            HStack {
+//                                Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
+//                            }
+//                            .font(.subheadline)
+//                            .modifier(FeatureTextModifier())
+//                        }
+                        HStack {
+                            Text(viewModel.tripCompanion.startDate.toDateText())
                         }
+                        .font(.subheadline)
+                        .modifier(FeatureTextModifier())
                         
                         Text("\(viewModel.tripCompanion.companionMemberCount)명")
                             .font(.subheadline)

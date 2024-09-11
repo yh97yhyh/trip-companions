@@ -10,6 +10,9 @@ target 'trip-companions' do
   pod 'Kingfisher', '~> 7.0'
   pod 'lottie-ios'
   pod 'KakaoSDK'
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseCrashlytics'
+  pod 'FirebasePerformance'
 
 
   target 'trip-companionsTests' do

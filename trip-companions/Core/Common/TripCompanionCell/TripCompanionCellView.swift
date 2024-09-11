@@ -80,22 +80,29 @@ struct TripCompanionCellView: View {
                             .foregroundColor(.gray767676)
                         Spacer()
                     }
-
-                    if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text(viewModel.tripCompanion.startDate.toDateText())
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(.gray767676)
-                    } else {
-                        HStack {
-                            Image(systemName: "calendar")
-                            Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
-                        }
-                        .font(.subheadline)
-                        .foregroundColor(.gray767676)
+                    
+                    HStack {
+                        Image(systemName: "calendar")
+                        Text(viewModel.tripCompanion.startDate.toDateText())
                     }
+                    .font(.subheadline)
+                    .foregroundColor(.gray767676)
+
+//                    if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
+//                        HStack {
+//                            Image(systemName: "calendar")
+//                            Text(viewModel.tripCompanion.startDate.toDateText())
+//                        }
+//                        .font(.subheadline)
+//                        .foregroundColor(.gray767676)
+//                    } else {
+//                        HStack {
+//                            Image(systemName: "calendar")
+//                            Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
+//                        }
+//                        .font(.subheadline)
+//                        .foregroundColor(.gray767676)
+//                    }
                     
                 }
                 
