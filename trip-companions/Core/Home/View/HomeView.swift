@@ -12,54 +12,56 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     
     var body: some View {
-        ZStack {
-            VStack {
-                ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: true))
-                    .padding(.bottom)
-                
-                DividerView()
-                    .padding(.horizontal, -16)
-                    .padding(.bottom)
-                
-                ScrollView(showsIndicators: false) {
-                    NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")) {
-                        HStack {
-                            Text("어디로 가시나요?")
-                            Spacer()
-                            Image(systemName: "magnifyingglass")
-                        }
-                    }
-                    .buttonStyle(TripSearchButtonStyle())
-                    .padding(.bottom)
-                    
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("여기는 어떠신가요?")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                            Spacer()
-                        }
-                        
-                        ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                            NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                    .padding(.vertical, 12)
-                            }
-                            Divider()
-                        }
-                    }
-                }
-            }
+        VStack {
+            ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: true))
+                .padding(.bottom)
             
-            VStack {
-                Spacer()
+            DividerView()
+                .padding(.horizontal, -16)
+                .padding(.bottom)
+            
+            NavigationLink(destination: SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")) {
                 HStack {
+                    Text("어디로 가시나요?")
                     Spacer()
-                    HomeAddButtonView()
-                        .padding(.bottom, 32)
+                    Image(systemName: "magnifyingglass")
                 }
             }
+            .buttonStyle(TripSearchButtonStyle())
+            .padding(.bottom)
             
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("여기는 어떠신가요?")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                    Spacer()
+                }
+            }
+            .padding(.bottom)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                        NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                            HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                .padding()
+                                .background(.white)
+                                .cornerRadius(10)
+                                .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
+                                .padding(.trailing, 2)
+                        }
+                    }
+                }
+                .padding(4)
+            }
+            Spacer()
+            
+            HStack {
+                Spacer()
+                HomeAddButtonView()
+                    .padding(.bottom, 32)
+            }
         }
         .padding()
         .navigationBarHidden(true)

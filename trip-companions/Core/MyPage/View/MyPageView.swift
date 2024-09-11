@@ -22,6 +22,10 @@ struct MyPageView: View {
             .padding(.vertical)
             
             ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: false))
+                .padding()
+                .background(.white)
+                .cornerRadius(10)
+                .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
                 .padding(.bottom, 56)
             
             VStack(alignment: .leading) {

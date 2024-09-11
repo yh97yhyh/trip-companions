@@ -16,8 +16,8 @@ struct MyTripCompanionCellView: View {
             HStack {
                 VStack(alignment: .leading) {
                     HStack {
-                        if viewModel.tripCompanion.member.mbti != nil {
-                            Text(viewModel.tripCompanion.member.mbti!.desc)
+                        if let mbti = viewModel.tripCompanion.member.mbti {
+                            Text(mbti.desc)
                                 .font(.footnote)
                                 .modifier(ProfileFeatureTextModifier())
                         }
@@ -128,7 +128,7 @@ struct MyTripCompanionCellView: View {
                     } else {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
-                                .fill(.grayA2A2A2.opacity(0.3))
+                                .fill(.grayA2A2A2.opacity(0.1))
                                 .frame(width: 70, height: 70)
                             Image("defaultThumbnail")
                                 .resizable()

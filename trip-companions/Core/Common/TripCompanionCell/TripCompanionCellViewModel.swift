@@ -10,17 +10,9 @@ import UIKit
 
 class TripCompanionCellViewModel: ObservableObject {
     @Published var tripCompanion: TripCompanion
-//    @Published var title: String = ""
-//    @Published var contents: String = ""
-//    @Published var startDate: Date = Date()
-//    @Published var endDate: Date = Date()
     
     init(tripCompanion: TripCompanion) {
         self.tripCompanion = tripCompanion
-//        self.title = title
-//        self.contents = contents
-//        self.startDate = startDate
-//        self.endDate = endDate
     }
     
 }
