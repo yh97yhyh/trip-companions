@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct TripCompanionCellView: View {
     @StateObject var viewModel: TripCompanionCellViewModel
@@ -15,12 +16,21 @@ struct TripCompanionCellView: View {
             HStack {
                 // MARK: - Update to KFImage
                 VStack {
-                    Image("TripCompanionThumbnailTest")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 70, height: 70)
-                        .cornerRadius(10)
-                        .padding(.trailing, 12)
+                    if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
+                        KFImage(URL(string: imageUrl))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
+                            .cornerRadius(10)
+                            .padding(.trailing, 12)
+                    } else {
+                        Image("TripCompanionThumbnailTest")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
+                            .cornerRadius(10)
+                            .padding(.trailing, 12)
+                    }
                     
                     Spacer()
                 }
@@ -83,7 +93,7 @@ struct TripCompanionCellView: View {
                     
                     HStack {
                         Image(systemName: "calendar")
-                        Text(viewModel.tripCompanion.startDate.toDateText())
+                        Text(viewModel.tripCompanion.tripDate.toDateText())
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray767676)

@@ -41,8 +41,22 @@ struct WriteTripCompanionView: View {
                     .padding(.trailing, 56)
                     Spacer()
                     //MARK: - 지역 검색
-                    TextField("지역 찾기", text: $viewModel.region)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            if viewModel.region == nil {
+                                Text("지역 찾기")
+                            } else {
+                                Text(viewModel.region!.regionName)
+                                    .foregroundColor(.black)
+                            }
+                            Spacer()
+                        }
+                    }
+                    .buttonStyle(SearchButtonStyle())
+//                    TextField("지역 찾기", text: $viewModel.region)
+//                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
 //                    NavigationLink(destination: Text("지역 찾기")) {
 //                        HStack {
 //                            Text("지역 찾기")
@@ -56,10 +70,10 @@ struct WriteTripCompanionView: View {
                     showingDatePicker = true
                 } label: {
                     HStack {
-                        if viewModel.startDate == Date.defaultDate() && viewModel.endDate == Date.defaultDate() {
+                        if viewModel.startDate == Date.defaultDate() {
                             Text("날짜를 입력하세요")
                         } else {
-                            Text("\(viewModel.startDate.toDateText()) ~ \(viewModel.endDate.toDateText())")
+                            Text("\(viewModel.startDate.toDateText())")
                                 .foregroundColor(.black)
                         }
                         
@@ -67,13 +81,16 @@ struct WriteTripCompanionView: View {
                     }
                 }
                 .sheet(isPresented: $showingDatePicker) {
-                    CustomDatePickerView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
+                    CustomDatePickerView(startDate: $viewModel.startDate)
                 }
                 .buttonStyle(SearchButtonStyle())
                 
                 TextField("모집 인원", text: $viewModel.personal)
                     .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                     .keyboardType(.numberPad)
+                
+                TextField("제목", text: $viewModel.title)
+                    .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                 
                 ContentsTextEditor(viewModel: viewModel)
                     .padding(.bottom)
@@ -159,6 +176,7 @@ struct WriteTripCompanionView: View {
             .padding()
             
             Button {
+                viewModel.createTripCompanion()
                 dismiss()
             } label: {
                 Text("등록하기")
@@ -168,6 +186,9 @@ struct WriteTripCompanionView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onDisappear {
+            viewModel.clear()
+        }
         
     }
 }

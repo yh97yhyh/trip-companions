@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MyTripCompanionCellView: View {
     @StateObject var viewModel: MyTripCompanionCellViewModel
@@ -86,10 +87,30 @@ struct MyTripCompanionCellView: View {
 //                    }
                     HStack {
                         Image(systemName: "calendar")
-                        Text(viewModel.tripCompanion.startDate.toDateText())
+                        Text(viewModel.tripCompanion.tripDate.toDateText())
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray767676)
+                    
+                    HStack {
+                        Button {
+                            
+                        } label: {
+                            Text("수정")
+                                .font(.subheadline)
+                        }
+                        .buttonStyle(MyPageButtonStyle())
+                        
+                        Button {
+                            
+                        } label: {
+                            Text("삭제")
+                                .font(.subheadline)
+                        }
+                        .buttonStyle(MyPageButtonStyle())
+                        
+                        Spacer()
+                    }
                     
                 }
                 
@@ -97,12 +118,21 @@ struct MyTripCompanionCellView: View {
                 
                 // MARK: - Update to KFImage
                 VStack {
-                    Image("TripCompanionThumbnailTest")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 70, height: 70)
-                        .cornerRadius(10)
-                        .padding(.trailing, 12)
+                    if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
+                        KFImage(URL(string: imageUrl))
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
+                            .cornerRadius(10)
+                            .padding(.trailing, 12)
+                    } else {
+                        Image("TripCompanionThumbnailTest")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
+                            .cornerRadius(10)
+                            .padding(.trailing, 12)
+                    }
                     
                     Spacer()
                 }

@@ -65,7 +65,7 @@ struct TripCompanionDetailView: View {
 //                            .modifier(FeatureTextModifier())
 //                        }
                         HStack {
-                            Text(viewModel.tripCompanion.startDate.toDateText())
+                            Text(viewModel.tripCompanion.tripDate.toDateText())
                         }
                         .font(.subheadline)
                         .modifier(FeatureTextModifier())
@@ -118,8 +118,8 @@ struct WriterHeaderView: View  {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if viewModel.tripCompanion.member.profileImageUrl != nil {
-                    KFImage(URL(string: viewModel.tripCompanion.member.profileImageUrl!))
+                if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
+                    KFImage(URL(string: imageUrl))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 64, height: 64)

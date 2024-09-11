@@ -8,7 +8,7 @@
 import Foundation
 
 class SearchViewModel: ObservableObject {
-    @Published var regionName: String = "" {
+    @Published var region: Region? {
         didSet {
             validateForm()
         }
@@ -18,11 +18,11 @@ class SearchViewModel: ObservableObject {
             validateForm()
         }
     }
-    @Published var endDate: Date {
-        didSet {
-            validateForm()
-        }
-    }
+//    @Published var endDate: Date {
+//        didSet {
+//            validateForm()
+//        }
+//    }
     @Published var isSameMbti: Bool? = nil
     @Published var isMale: Bool? = nil
     @Published var isDrinker: Bool? = nil
@@ -32,15 +32,13 @@ class SearchViewModel: ObservableObject {
     @Published var isComplete: Bool = false
 
     private func validateForm() {
-        isComplete = !regionName.isEmpty &&
-        (startDate != Date.defaultDate() ||
-        endDate != Date.defaultDate())
+        isComplete = region != nil &&
+        startDate != Date.defaultDate()
     }
 
-    init(regionName: String, startDate: Date, endDate: Date, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
-        self.regionName = regionName
+    init(region: Region? = nil, startDate: Date, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+        self.region = region
         self.startDate = startDate
-        self.endDate = endDate
         self.isSameMbti = isSameMbti
         self.isMale = isMale
         self.isDrinker = isDrinker
@@ -49,9 +47,8 @@ class SearchViewModel: ObservableObject {
     }
     
     func clear() {
-        regionName = ""
+        region = nil
         startDate = Date.defaultDate()
-        endDate = Date.defaultDate()
         isSameMbti = nil
         isMale = nil
         isDrinker = nil
@@ -60,5 +57,5 @@ class SearchViewModel: ObservableObject {
 }
 
 extension SearchViewModel {
-    static let MOCK_VIEW_MODEL = SearchViewModel(regionName: "", startDate: Date.defaultDate(), endDate: Date.defaultDate())
+    static let MOCK_VIEW_MODEL = SearchViewModel(startDate: Date.defaultDate())
 }

@@ -33,27 +33,27 @@ struct MyPostsView: View {
                 ForEach(viewModel.myPosts, id: \.self) { tripCompanion in
                     // MARK: - Update MyCompanionCellView
                     VStack {
-                        MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel(tripCompanion: tripCompanion, thumbnail: nil))
+                        MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel(tripCompanion: tripCompanion))
                             .padding(.vertical, 12)
-                        HStack {
-                            Button {
-                                
-                            } label: {
-                                Text("수정")
-                                    .font(.subheadline)
-                            }
-                            .buttonStyle(MyPageButtonStyle())
-                            
-                            Button {
-                                
-                            } label: {
-                                Text("삭제")
-                                    .font(.subheadline)
-                            }
-                            .buttonStyle(MyPageButtonStyle())
-                            
-                            Spacer()
-                        }
+//                        HStack {
+//                            Button {
+//                                
+//                            } label: {
+//                                Text("수정")
+//                                    .font(.subheadline)
+//                            }
+//                            .buttonStyle(MyPageButtonStyle())
+//                            
+//                            Button {
+//                                
+//                            } label: {
+//                                Text("삭제")
+//                                    .font(.subheadline)
+//                            }
+//                            .buttonStyle(MyPageButtonStyle())
+//                            
+//                            Spacer()
+//                        }
                     }
                     Divider()
                 }

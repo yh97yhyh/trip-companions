@@ -10,9 +10,9 @@ import SwiftUI
 struct CustomDatePickerView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var startDate: Date
-    @Binding var endDate: Date
-    @State var showingStartDatePicker = true
-    @State var showingEndDatePicker = false
+    //    @Binding var endDate: Date
+    //    @State var showingStartDatePicker = true
+    //    @State var showingEndDatePicker = false
     
     var body: some View {
         VStack {
@@ -37,52 +37,55 @@ struct CustomDatePickerView: View {
                 
                 // MARK: - Add DatePicker
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("시작 날짜")
-                        Spacer()
-                        Text(startDate.toDateText())
-                            .font(.headline)
-                            .modifier(ProfileFeatureTextModifier())
-                    }
-                    .onTapGesture {
-                        showingStartDatePicker.toggle()
-                        showingEndDatePicker = false
-                    }
+                    //                    HStack {
+                    //                        Text("시작 날짜")
+                    //                        Spacer()
+                    //                        Text(startDate.toDateText())
+                    //                            .font(.headline)
+                    //                            .modifier(ProfileFeatureTextModifier())
+                    //                    }
+                    //                    .onTapGesture {
+                    //                        showingStartDatePicker.toggle()
+                    //                        showingEndDatePicker = false
+                    //                    }
                     
-                    if showingStartDatePicker {
-                        DatePicker("시작 날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
-                            .datePickerStyle(GraphicalDatePickerStyle())
-                            .tint(Color.orangeF49321)
-                    }
+                    //                    if showingStartDatePicker {
+                    //                        DatePicker("시작 날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                    //                            .datePickerStyle(GraphicalDatePickerStyle())
+                    //                            .tint(Color.orangeF49321)
+                    //                    }
+                    DatePicker("날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .tint(Color.orangeF49321)
                 }
                 .padding(.bottom)
                 
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("끝 날짜")
-                        Spacer()
-                        Text(endDate.toDateText())
-                            .font(.headline)
-                            .modifier(ProfileFeatureTextModifier())
-                    }
-                    .onTapGesture {
-                        showingEndDatePicker.toggle()
-                        showingStartDatePicker = false
-                    }
-                    
-                    if showingEndDatePicker {
-                        DatePicker("끝 날짜를 선택해주세요", selection: $endDate, in: startDate..., displayedComponents: .date)
-                            .datePickerStyle(GraphicalDatePickerStyle())
-                            .tint(Color.orangeF49321)
-                            .onChange(of: endDate) { newEndDate in
-                                if newEndDate < startDate {
-                                    endDate = startDate
-                                }
-                            }
-                        
-                    }
-                }
-                .padding(.bottom)
+                //                VStack(alignment: .leading) {
+                //                    HStack {
+                //                        Text("끝 날짜")
+                //                        Spacer()
+                //                        Text(endDate.toDateText())
+                //                            .font(.headline)
+                //                            .modifier(ProfileFeatureTextModifier())
+                //                    }
+                //                    .onTapGesture {
+                //                        showingEndDatePicker.toggle()
+                //                        showingStartDatePicker = false
+                //                    }
+                //
+                //                    if showingEndDatePicker {
+                //                        DatePicker("끝 날짜를 선택해주세요", selection: $endDate, in: startDate..., displayedComponents: .date)
+                //                            .datePickerStyle(GraphicalDatePickerStyle())
+                //                            .tint(Color.orangeF49321)
+                //                            .onChange(of: endDate) { newEndDate in
+                //                                if newEndDate < startDate {
+                //                                    endDate = startDate
+                //                                }
+                //                            }
+                //
+                //                    }
+                //                }
+                //                .padding(.bottom)
             }
             .padding()
             
@@ -106,10 +109,12 @@ struct CustomDatePickerView_Previews: PreviewProvider {
     
     struct PreviewWrapper: View {
         @State private var startDate = Date()
-        @State private var endDate = Date()
+        //        @State private var endDate = Date()
         
         var body: some View {
-            CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+            //            CustomDatePickerView(startDate: $startDate, endDate: $endDate)
+            CustomDatePickerView(startDate: $startDate)
+            
         }
     }
 }

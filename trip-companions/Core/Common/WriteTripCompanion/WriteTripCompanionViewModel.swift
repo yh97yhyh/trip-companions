@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import Combine
+import Alamofire
 
 class WriteTripCompanionViewModel: ObservableObject {
-    @Published var region: String = "" {
+    @Published var region: Region? {
         didSet {
             validateForm()
         }
@@ -18,12 +20,17 @@ class WriteTripCompanionViewModel: ObservableObject {
             validateForm()
         }
     }
-    @Published var endDate = Date.defaultDate() {
+//    @Published var endDate = Date.defaultDate() {
+//        didSet {
+//            validateForm()
+//        }
+//    }
+    @Published var personal: String = "" {
         didSet {
             validateForm()
         }
     }
-    @Published var personal: String = "" {
+    @Published var title: String = "" {
         didSet {
             validateForm()
         }
@@ -41,18 +48,21 @@ class WriteTripCompanionViewModel: ObservableObject {
     @Published var isComplete: Bool = false
 
     private func validateForm() {
-        isComplete = !region.isEmpty &&
-        (startDate != Date.defaultDate() ||
-        endDate != Date.defaultDate()) &&
+        isComplete = region != nil &&
+        startDate != Date.defaultDate() &&
         !personal.isEmpty &&
+        !title.isEmpty &&
         !contents.isEmpty
     }
     
-    init(region: String = "", startDate: Date, endDate: Date, personal: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(region: Region? = Region.MOCK_REGIONS.first!, startDate: Date, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
         self.region = region
         self.startDate = startDate
-        self.endDate = endDate
+//        self.endDate = endDate
         self.personal = personal
+        self.title = title
         self.contents = contents
         self.isSameMbti = isSameMbti
         self.isMale = isMale
@@ -60,11 +70,60 @@ class WriteTripCompanionViewModel: ObservableObject {
         self.isSmoker = isSmoker
     }
     
-    private func clear() {
+    func createTripCompanion() {
+        var categoriesId: [Int] = []
         
+        if isSameMbti != nil {
+            isSameMbti! ? categoriesId.append(1) : categoriesId.append(2)
+        }
+        if isMale != nil {
+            isMale! ? categoriesId.append(3) : categoriesId.append(4)
+        }
+        if isDrinker != nil {
+            isDrinker! ? categoriesId.append(5) : categoriesId.append(6)
+        }
+        if isSmoker != nil {
+            isSmoker! ? categoriesId.append(7) : categoriesId.append(8)
+        }
+        
+        let parameters: Parameters = [
+            "title": title,
+            "regionId": region!.id,
+            "tripDate": startDate,
+            "companionMemberCount": personal,
+            "contents": contents,
+            "categoriesId": categoriesId
+        ]
+        
+        NetworkManager<TripCompanion>.request(route: .createTripCompanion(parameters))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request createTripCompanion!")
+                case .failure(let error):
+                    print("Failed to request createTripCompanion.. \(error.localizedDescription)")
+                }
+            } receiveValue: { tripCompanion in
+                print("Succeed to cate trip companion! \(tripCompanion.id)")
+            }.store(in: &cancellables)
+    }
+    
+    func clear() {
+        self.region = nil
+        self.startDate = .defaultDate()
+        self.personal = ""
+        self.title = ""
+        self.contents = ""
+        self.isSameMbti = nil
+        self.isMale = nil
+        self.isDrinker = nil
+        self.isSmoker = nil
+        self.isComplete = false
     }
 }
 
+
+
 extension WriteTripCompanionViewModel {
-    static let MOCK_VIEW_MODEL = WriteTripCompanionViewModel(startDate: Date.defaultDate(), endDate: Date.defaultDate())
+    static let MOCK_VIEW_MODEL = WriteTripCompanionViewModel(startDate: Date.defaultDate())
 }

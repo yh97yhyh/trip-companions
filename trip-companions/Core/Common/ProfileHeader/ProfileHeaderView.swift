@@ -15,8 +15,8 @@ struct ProfileHeaderView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if myPageViewModel.member.profileImageUrl != nil {
-                    KFImage(URL(string: myPageViewModel.member.profileImageUrl!))
+                if let imageUrl = myPageViewModel.member.profileImageUrl {
+                    KFImage(URL(string: imageUrl))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 64, height: 64)

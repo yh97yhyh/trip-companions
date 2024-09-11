@@ -30,8 +30,21 @@ struct SearchView: View {
                         Spacer()
                     }
                     
-                    TextField("지역명을 입력하세요", text: $viewModel.regionName)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            if viewModel.region == nil {
+                                Text("지역명을 입력하세요")
+                            } else {
+                                Text(viewModel.region!.regionName)
+                                    .foregroundColor(.black)
+                            }
+                            Spacer()
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
+                    .buttonStyle(SearchButtonStyle())
                 }
                 .padding(.bottom, 24)
 
@@ -55,17 +68,17 @@ struct SearchView: View {
                         showingDatePicker = true
                     } label: {
                         HStack {
-                            if viewModel.startDate == Date.defaultDate() && viewModel.endDate == Date.defaultDate() {
+                            if viewModel.startDate == Date.defaultDate() {
                                 Text("날짜를 입력하세요")
                             } else {
-                                Text("\(viewModel.startDate.toDateText()) ~ \(viewModel.endDate.toDateText())")
+                                Text("\(viewModel.startDate.toDateText())")
                                     .foregroundColor(.black)
                             }
                             Spacer()
                         }
                     }
                     .sheet(isPresented: $showingDatePicker) {
-                        CustomDatePickerView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
+                        CustomDatePickerView(startDate: $viewModel.startDate)
                     }
                     .buttonStyle(SearchButtonStyle())
                 }
