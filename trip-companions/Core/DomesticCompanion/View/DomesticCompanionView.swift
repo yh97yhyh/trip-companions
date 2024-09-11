@@ -45,7 +45,7 @@ struct DomesticCompanionView: View {
                     ScrollView(showsIndicators: false) {
                         ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
                             NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion, thumbnail: nil))
+                                TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
                                     .padding(.vertical, 12)
                             }
                             Divider()

@@ -15,6 +15,10 @@ class MyTripCompanionCellViewModel: ObservableObject {
         self.tripCompanion = tripCompanion
     }
     
+    func deleteTripCompanion() {
+        
+    }
+    
 }
 
 extension MyTripCompanionCellViewModel {
