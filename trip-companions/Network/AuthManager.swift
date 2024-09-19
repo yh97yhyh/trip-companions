@@ -18,8 +18,8 @@ class AuthManager: ObservableObject {
     @Published var isLoggedIn: Bool = false
     @Published var hasUserInfo: Bool? = nil
     @Published var currentMember: Member? = nil
-//    @Published var token: String? = nil
-    @Published var token: String? = "."
+    @Published var token: String? = nil
+//    @Published var token: String? = "."
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -27,7 +27,7 @@ class AuthManager: ObservableObject {
     init() {
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
-//        checkLoginStatus()
+        checkLoginStatus()
     }
     
     // MARK: - Kakao

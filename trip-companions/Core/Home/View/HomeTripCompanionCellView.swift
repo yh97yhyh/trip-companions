@@ -13,68 +13,77 @@ struct HomeTripCompanionCellView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
-                KFImage(URL(string: imageUrl))
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 64, height: 64)
-                    .clipShape(Circle())
-                    .padding(.trailing, 12)
-                    .padding(.bottom)
-            } else {
-                ZStack {
-                    Circle()
-                        .fill(.grayA2A2A2.opacity(0.1))
-                        .frame(width: 64, height: 64)
-                    Image("defaultThumbnail")
+            HStack {
+                if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
+                    KFImage(URL(string: imageUrl))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 64, height: 64)
                         .clipShape(Circle())
+                        .padding(.trailing, 12)
+                        .padding(.bottom)
+                } else {
+                    ZStack {
+                        Circle()
+                            .fill(.grayA2A2A2.opacity(0.1))
+                            .frame(width: 64, height: 64)
+                        Image("defaultThumbnail")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 64, height: 64)
+                            .clipShape(Circle())
+                    }
+                    .padding(.trailing, 12)
+                    .padding(.bottom)
                 }
-                .padding(.trailing, 12)
-                .padding(.bottom)
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        HStack {
+                            if let mbti = viewModel.tripCompanion.member.mbti {
+                                Text(mbti.desc)
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                            
+                            if let gender = viewModel.tripCompanion.member.gender {
+                                Text(gender.desc)
+                                    .font(.footnote)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                            
+                            if let isDrinking = viewModel.tripCompanion.member.isDrinking {
+                                if isDrinking {
+                                    Text("음주")
+                                        .font(.footnote)
+                                        .modifier(ProfileFeatureTextModifier())
+                                } else {
+                                    Text("논알콜")
+                                        .font(.footnote)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                            }
+                            
+                            if let isSmoking = viewModel.tripCompanion.member.isSmoking {
+                                if isSmoking {
+                                    Text("흡연")
+                                        .font(.footnote)
+                                        .modifier(ProfileFeatureTextModifier())
+                                } else {
+                                    Text("비흡연")
+                                        .font(.footnote)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                            }
+                        }
+                    }
+                    
+                    Text("동행")
+                }
             }
             
-            HStack {
-                HStack {
-                    if let mbti = viewModel.tripCompanion.member.mbti {
-                        Text(mbti.desc)
-                            .font(.footnote)
-                            .modifier(ProfileFeatureTextModifier())
-                    }
-                    
-                    if let gender = viewModel.tripCompanion.member.gender {
-                        Text(gender.desc)
-                            .font(.footnote)
-                            .modifier(ProfileFeatureTextModifier())
-                    }
-                    
-                    if let isDrinking = viewModel.tripCompanion.member.isDrinking {
-                        if isDrinking {
-                            Text("음주")
-                                .font(.footnote)
-                                .modifier(ProfileFeatureTextModifier())
-                        } else {
-                            Text("논알콜")
-                                .font(.footnote)
-                                .modifier(ProfileFeatureTextModifier())
-                        }
-                    }
-                    
-                    if let isSmoking = viewModel.tripCompanion.member.isSmoking {
-                        if isSmoking {
-                            Text("흡연")
-                                .font(.footnote)
-                                .modifier(ProfileFeatureTextModifier())
-                        } else {
-                            Text("비흡연")
-                                .font(.footnote)
-                                .modifier(ProfileFeatureTextModifier())
-                        }
-                    }
-                }
-            }
+            Divider()
+                .padding(.bottom)
             
             Text(viewModel.tripCompanion.title)
                 .font(.callout)
@@ -89,10 +98,28 @@ struct HomeTripCompanionCellView: View {
                 .foregroundColor(.gray767676)
                 .padding(.bottom, 4)
             
-            Text(viewModel.tripCompanion.tripDate)
+            Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
                 .font(.subheadline)
                 .foregroundColor(.gray767676)
+            
+            HStack {
+                Spacer()
+                
+                HStack {
+                    if viewModel.tripCompanion.interestTripCompanion ?? false {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
+                    } else {
+                        Image(systemName: "heart")
+                            .foregroundColor(.gray767676)
+                    }
+                    Text("\(viewModel.tripCompanion.interestTripCompanionCount)")
+                        .foregroundColor(.gray767676)
+                }
+                .padding(.trailing)
+            }
         }
+    
     }
 }
 

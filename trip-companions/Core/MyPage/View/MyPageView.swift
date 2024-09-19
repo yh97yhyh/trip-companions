@@ -50,9 +50,23 @@ struct MyPageView: View {
             Divider()
                 .padding(.bottom)
             
-            NavigationLink(destination: MyPostsView(viewModel: MyPostsViewModel.MOCK_VIEW_MODEL)) {
+            NavigationLink(destination: MyPostsView(viewModel: MyPostsViewModel.shared)) {
                 Text("내 게시글 관리")
+                    .foregroundColor(.black)
             }
+            .padding(.bottom)
+            
+            Divider()
+                .padding(.bottom)
+            
+            NavigationLink(destination: MyInterestingPostsView(viewModel: MyInterestingPostsViewModel.shared)) {
+                Text("관심있는 게시글")
+                    .foregroundColor(.black)
+            }
+            .padding(.bottom)
+            
+            Divider()
+                .padding(.bottom)
             
         
             Spacer()

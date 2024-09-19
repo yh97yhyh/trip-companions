@@ -1,18 +1,18 @@
 //
-//  MyPostsView.swift
+//  MyInterestingPostsView.swift
 //  trip-companions
 //
-//  Created by 영현 on 8/28/24.
+//  Created by 영현 on 9/19/24.
 //
 
 import SwiftUI
 
-struct MyPostsView: View {
-    @StateObject var viewModel: MyPostsViewModel
+struct MyInterestingPostsView: View {
+    @StateObject var viewModel: MyInterestingPostsViewModel
     
     var body: some View {
         VStack {
-            NavigationTitleView(title: "내 게시글 관리")
+            NavigationTitleView(title: "관심 있는 게시글")
                 .padding(.horizontal)
             
             VStack {
@@ -30,9 +30,9 @@ struct MyPostsView: View {
             .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
-                ForEach(viewModel.myPosts, id: \.self) { tripCompanion in
+                ForEach(viewModel.myInterestingPosts, id: \.self) { tripCompanion in
                     VStack {
-                        MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                        MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
                             .padding(.vertical, 12)
                     }
                     Divider()
@@ -46,6 +46,6 @@ struct MyPostsView: View {
     }
 }
 
-//#Preview {
-//    MyPostsView(viewModel: MyPostsViewModel.MOCK_VIEW_MODEL)
-//}
+#Preview {
+    MyInterestingPostsView(viewModel: MyInterestingPostsViewModel.MOCK_VIEW_MODEL)
+}

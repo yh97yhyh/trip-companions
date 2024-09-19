@@ -8,6 +8,8 @@
 import Foundation
 
 class MyPostsViewModel: ObservableObject {
+    static let shared = MyPostsViewModel()
+
     @Published var myPosts: [TripCompanion] = []
     
     init(myPosts: [TripCompanion] = []) {

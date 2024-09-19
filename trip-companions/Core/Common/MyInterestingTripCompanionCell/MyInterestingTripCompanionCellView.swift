@@ -1,20 +1,19 @@
 //
-//  MyTripCompanionCellView.swift
+//  MyInterestingTripCompanionCellView.swift
 //  trip-companions
 //
-//  Created by 영현 on 8/28/24.
+//  Created by 영현 on 9/19/24.
 //
 
 import SwiftUI
 import Kingfisher
 
-struct MyTripCompanionCellView: View {
-    @StateObject var viewModel: MyTripCompanionCellViewModel
+struct MyInterestingTripCompanionCellView: View {
+    @StateObject var viewModel: MyInterestingTripCompanionCellViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                
                 VStack {
                     if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
                         KFImage(URL(string: imageUrl))
@@ -103,27 +102,11 @@ struct MyTripCompanionCellView: View {
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray767676)
-                    
-                    HStack {
-                        Button {
-                            
-                        } label: {
-                            Text("수정")
-                                .font(.subheadline)
-                        }
-                        .buttonStyle(MyPageButtonStyle())
-                        
-                        Button {
-                            
-                        } label: {
-                            Text("삭제")
-                                .font(.subheadline)
-                        }
-                        .buttonStyle(MyPageButtonStyle())
-                        
-                        Spacer()
-                    }
-                    
+                }
+                
+                VStack {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.red)
                 }
             }
         }
@@ -131,5 +114,5 @@ struct MyTripCompanionCellView: View {
 }
 
 #Preview {
-    MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel.MOCK_VIEW_MODEL)
+    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel.MOCK_VIEW_MODEL)
 }
