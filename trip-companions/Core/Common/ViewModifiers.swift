@@ -225,6 +225,19 @@ struct MyPageButtonStyle: ButtonStyle {
     }
 }
 
+struct FilterButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.footnote)
+            .foregroundColor(.gray767676)
+            .padding(8)
+            .background(
+                RoundedRectangle(cornerRadius: 48)
+                    .fill(Color.grayF5F6F8)
+            )
+    }
+}
+
 // MARK: - Picker
 struct CustomPickerStyle: ViewModifier {
     func body(content: Content) -> some View {

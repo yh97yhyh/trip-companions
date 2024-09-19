@@ -35,53 +35,83 @@ struct DomesticCompanionView: View {
                     // MARK: - Update to add options
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            
                             if let region = searchViewModel.region {
                                 Button {
-                                    
+                                    searchViewModel.region = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(region.regionName)
+                                    HStack {
+                                        Text(region.regionName)
+                                        Image(systemName: "xmark")
+                                    }
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                             
                             if let startDate = searchViewModel.startDate {
                                 Button {
-                                    
+                                    searchViewModel.startDate = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(startDate.toDateText())
+                                    HStack {
+                                        Text(startDate.toDateText())
+                                        Image(systemName: "xmark")
+                                    }
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                             
                             if let isSameMbti = searchViewModel.isSameMbti {
                                 Button {
-                                    
+                                    searchViewModel.isSameMbti = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(isSameMbti ? "나와 같은 MBTI" : "다른 MBTI도 좋아요")
+                                    HStack {
+                                        Text(isSameMbti ? "나와 같은 MBTI" : "다른 MBTI도 좋아요")
+                                        Image(systemName: "xmark")
+                                    }
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                             
                             if let isMale = searchViewModel.isMale {
                                 Button {
-                                    
+                                    searchViewModel.isMale = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(isMale ? "남성" : "여성")
+                                    HStack {
+                                        Text(isMale ? "남성" : "여성")
+                                        Image(systemName: "xmark")
+                                    }
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                             
                             if let isDrinker = searchViewModel.isDrinker {
                                 Button {
-                                    
+                                    searchViewModel.isDrinker = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(isDrinker ? "음주" : "논알콜")
+                                    HStack {
+                                        Text(isDrinker ? "음주" : "논알콜")
+                                        Image(systemName: "xmark")
+                                    }
+                                        
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                             
                             if let isSmoker = searchViewModel.isSmoker {
                                 Button {
-                                    
+                                    searchViewModel.isSmoker = nil
+                                    viewModel.fetchTripCompanions()
                                 } label: {
-                                    Text(isSmoker ? "흡연" : "비흡연")
+                                    HStack {
+                                        Text(isSmoker ? "흡연" : "비흡연")
+                                        Image(systemName: "xmark")
+                                    }
                                 }
+                                .buttonStyle(FilterButtonStyle())
                             }
                         }
                     }

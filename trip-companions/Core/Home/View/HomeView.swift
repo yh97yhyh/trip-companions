@@ -91,7 +91,7 @@ struct HomeAddButtonView: View {
     }
 }
 
-//#Preview {
-//    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL, selectedIndex: 0)
-//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-//}
+#Preview {
+    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+}

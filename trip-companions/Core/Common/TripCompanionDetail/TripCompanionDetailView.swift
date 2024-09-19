@@ -78,8 +78,14 @@ struct TripCompanionDetailView: View {
                     .padding(.bottom, 8)
                     
                     // MARK: - Add info
-                    HStack {
-                        
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.tripCompanion.categories, id: \.self) { category in
+                                Text(category.categoriesType)
+                                    .font(.subheadline)
+                                    .modifier(FeatureTextModifier2())
+                            }
+                        }
                     }
                 }
                 .padding(.bottom, 32)
