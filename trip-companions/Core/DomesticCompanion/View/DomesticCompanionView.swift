@@ -123,13 +123,25 @@ struct DomesticCompanionView: View {
                 
                 VStack(alignment: .leading) {
                     ScrollView(showsIndicators: false) {
-                        ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                            NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                    .padding(.vertical, 12)
+                        LazyVStack {
+                            ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                                    TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                        .padding(.vertical, 12)
+                                }
+                                
+                                Divider()
                             }
-                            Divider()
+                            if viewModel.page < viewModel.totalPage && !viewModel.isFetching {
+                                ProgressView()
+                                    .onAppear {
+                                        viewModel.addTripCompanions()
+                                    }
+                            }
                         }
+                    }
+                    .refreshable {
+                        viewModel.fetchTripCompanions()
                     }
                 }
             }
@@ -162,6 +174,10 @@ struct DomesticAddButtonView: View {
             }
         }
     }
+}
+
+private var loadingView: some View {
+  ProgressView()
 }
 
 //#Preview {

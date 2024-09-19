@@ -10,9 +10,9 @@ import Foundation
 class MainTabViewModel: ObservableObject {
     static let shared = MainTabViewModel()
     
-    @Published var selectedIndex = 0 {
-        didSet {
-            print("selectedIndex : \(selectedIndex)")
-        }
-    }
+    @Published var selectedIndex = 0
+//        didSet {
+//            print("selectedIndex : \(selectedIndex)")
+//        }
+//    }
 }
