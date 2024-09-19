@@ -21,11 +21,14 @@ enum APIRouter: URLRequestConvertible {
     case updateMemberProfile(Parameters)
     case getMemberProfile
     case getGenderAndMbti
+    
+    case getRecommendedTripCompanions(Parameters)
+    
     case getMetaData
     
     var method: HTTPMethod {
         switch self {
-        case .fetchKakaoOAuthCode, .fetchTripCompanions, .getMemberProfile, .getGenderAndMbti, .getMetaData :
+        case .fetchKakaoOAuthCode, .fetchTripCompanions, .getMemberProfile, .getGenderAndMbti, .getMetaData, .getRecommendedTripCompanions :
             return .get
         case .createTripCompanion, .postSignIn:
             return .post
@@ -56,6 +59,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/members/my"
         case .getGenderAndMbti:
             return "/api/v1/members/filter-info"
+        case .getRecommendedTripCompanions:
+            return "/public/v1/trip-companions"
         case .getMetaData:
             return "/public/v1/meta"
         }
@@ -63,12 +68,13 @@ enum APIRouter: URLRequestConvertible {
     
     var parameters: Parameters? {
         switch self {
-        case .fetchTripCompanions(let parameters),
+        case .fetchKakaoOAuthCode(let parameters),
+                .postSignIn(let parameters),
+                .fetchTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
                 .updateTripCompanion(let parameters),
                 .updateMemberProfile(let parameters),
-                .fetchKakaoOAuthCode(let parameters),
-                .postSignIn(let parameters):
+                .getRecommendedTripCompanions(let parameters):
             return parameters
         case .getMemberProfile, .deleteTripCompanion, .getGenderAndMbti, .getMetaData:
             return Parameters()

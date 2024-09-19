@@ -10,35 +10,24 @@ import Alamofire
 import Combine
 
 class DomesticCompanionViewModel: ObservableObject {
-    @Published var tripCompanions: [TripCompanion]
+    static let shared = DomesticCompanionViewModel()
     
-    @Published var region: Region? {
-        didSet {
-            validateForm()
-        }
-    }
-    @Published var startDate: Date {
-        didSet {
-            validateForm()
-        }
-    }
+    @Published var tripCompanions: [TripCompanion] = []
+    
+    @Published var region: Region? = nil
+    @Published var startDate: Date? = nil
     @Published var isSameMbti: Bool? = nil
     @Published var isMale: Bool? = nil
     @Published var isDrinker: Bool? = nil
     @Published var isSmoker: Bool? = nil
     @Published var isComplete: Bool = false
 
-    private func validateForm() {
-        isComplete = region != nil &&
-        startDate != Date.defaultDate()
-    }
-
     private var fetchCount = 0
     private var page = 1
     private var totalPages = 0
     @Published var isFetching = true
     
-    init(tripCompanions: [TripCompanion], region: Region? = nil, startDate: Date, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    init(tripCompanions: [TripCompanion] = [], region: Region? = nil, startDate: Date? = nil, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
         self.tripCompanions = tripCompanions
         self.region = region
         self.startDate = startDate
@@ -49,14 +38,6 @@ class DomesticCompanionViewModel: ObservableObject {
         
 //        fetchTripUnion()
     }
-    
-//    func fetchTripUnion() {
-//        
-//        let parameters: Parameters = [
-//            
-//        ]
-//    }
-
 }
 
 extension DomesticCompanionViewModel {

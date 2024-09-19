@@ -6,12 +6,36 @@
 //
 
 import Foundation
+import Combine
+import Alamofire
 
 class HomeViewModel: ObservableObject {
-    @Published var tripCompanions: [TripCompanion]
+    static let shared = HomeViewModel()
     
-    init(tripCompanions: [TripCompanion]) {
+    @Published var tripCompanions: [TripCompanion] = []
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(tripCompanions: [TripCompanion] = []) {
         self.tripCompanions = tripCompanions
+        
+        fetchRecommendedTripCompanions()
+    }
+    
+    func fetchRecommendedTripCompanions() {
+        let parameters = Parameters()
+        
+        NetworkManager<[TripCompanion]>.request(route: .getRecommendedTripCompanions(parameters))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request getRecommendedTripCompanions!")
+                case .failure(let error):
+                    print("Failed to request getRecommendedTripCompanions.. \(error.localizedDescription)")
+                }
+            } receiveValue: { tripCompanions in
+                self.tripCompanions = tripCompanions
+            }.store(in: &cancellables)
     }
 }
 

@@ -52,6 +52,15 @@ struct HomeView: View {
                                 .padding(.trailing, 2)
                         }
                     }
+                    
+                    NavigationLink(destination: DomesticCompanionView(viewModel: DomesticCompanionViewModel.MOCK_VIEW_MODEL)) {
+                        HStack {
+                            Text("어디로 가시나요?")
+                            Spacer()
+                            Image(systemName: "magnifyingglass")
+                        }
+                    }
+                    
                 }
                 .padding(4)
             }

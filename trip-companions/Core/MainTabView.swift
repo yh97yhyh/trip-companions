@@ -19,7 +19,7 @@ struct MainTabView: View {
                     .ignoresSafeArea()
                 
                 TabView(selection: $selectedIndex) {
-                    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL)
+                    HomeView(viewModel: HomeViewModel.shared)
                         .onAppear {
                             selectedIndex = 0
                         }
