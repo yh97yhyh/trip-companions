@@ -24,7 +24,7 @@ struct MainTabView: View {
                             selectedIndex = 0
                         }
                         .tabItem {
-                            Image(systemName: "house")
+                            Image(selectedIndex == 0 ? "icn_home_fill" : "icn_home")
                             Text("홈")
                         }
                         .tag(0)
@@ -33,25 +33,25 @@ struct MainTabView: View {
                             selectedIndex = 1
                         }
                         .tabItem {
-                            Image(systemName: "square.grid.2x2")
+                            Image(selectedIndex == 1 ? "icn_domestic_fill" : "icn_domestic")
                             Text("국내 동행")
                         }
                         .tag(1)
-//                    OverseaCompanionView()
-//                        .onAppear {
-//                            selectedIndex = 2
-//                        }
-//                        .tabItem {
-//                            Image(systemName: "person.2")
-//                            Text("해외 동행")
-//                        }
-//                        .tag(2)
+                    OverseaCompanionView()
+                        .onAppear {
+                            selectedIndex = 2
+                        }
+                        .tabItem {
+                            Image(selectedIndex == 2 ? "icn_oversea_fill" : "icn_oversea")
+                            Text("해외 동행")
+                        }
+                        .tag(2)
                     MyPageView()
                         .onAppear {
                             selectedIndex = 3
                         }
                         .tabItem {
-                            Image(systemName: "person")
+                            Image(selectedIndex == 3 ? "icn_person_fill" : "icn_person")
                             Text("마이페이지")
                         }
                         .tag(3)
@@ -62,7 +62,7 @@ struct MainTabView: View {
     }
 }
 
-#Preview {
-    MainTabView()
-        .environmentObject(AuthManager.shared)
-}
+//#Preview {
+//    MainTabView()
+//        .environmentObject(AuthManager.shared)
+//}
