@@ -105,17 +105,7 @@ struct HomeTripCompanionCellView: View {
             HStack {
                 Spacer()
                 
-                HStack {
-                    if viewModel.tripCompanion.interestTripCompanion ?? false {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
-                    } else {
-                        Image(systemName: "heart")
-                            .foregroundColor(.gray767676)
-                    }
-                    Text("\(viewModel.tripCompanion.interestTripCompanionCount)")
-                        .foregroundColor(.gray767676)
-                }
+                InterestHeartView(isDetail: false, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
                 .padding(.trailing)
             }
         }

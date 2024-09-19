@@ -14,12 +14,19 @@ struct TripCompanionDetailView: View {
     
     var body: some View {
         VStack {
+            NavigationTitleView(title: "국내동행")
+                .padding(.horizontal)
+                .padding(.bottom)
+            
+            WriterHeaderView(viewModel: viewModel)
+                .padding(.horizontal)
+                .padding(.bottom)
+            
+            DividerView()
+                .ignoresSafeArea()
+                .padding(.bottom)
+            
             ScrollView(showsIndicators: false) {
-                WriterHeaderView(viewModel: viewModel)
-                    .padding(.bottom)
-                
-                Divider()
-                    .padding(.bottom)
 
                 VStack(alignment: .leading) {
                     HStack {
@@ -45,25 +52,11 @@ struct TripCompanionDetailView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    // MARK: - Add info
                     HStack {
                         Text(viewModel.tripCompanion.region.regionName)
                             .font(.subheadline)
                             .modifier(FeatureTextModifier())
-                        
-//                        if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
-//                            HStack {
-//                                Text(viewModel.tripCompanion.startDate.toDateText())
-//                            }
-//                            .font(.subheadline)
-//                            .modifier(FeatureTextModifier())
-//                        } else {
-//                            HStack {
-//                                Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
-//                            }
-//                            .font(.subheadline)
-//                            .modifier(FeatureTextModifier())
-//                        }
+
                         HStack {
                             Text(viewModel.tripCompanion.tripDate.toDetailDateFormat())
                         }
@@ -85,28 +78,45 @@ struct TripCompanionDetailView: View {
                     .padding(.bottom, 8)
                     
                     // MARK: - Add info
+                    HStack {
+                        
+                    }
                 }
                 .padding(.bottom, 32)
 
-                HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text("목록")
-                    }
-                    .buttonStyle(CompleButtonStyle2(isComplete: true))
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("오픈 채팅 바로가기")
-                    }
-                    .buttonStyle(CompleButtonStyle(isComplete: true))
-                }
+//                HStack {
+//                    Button {
+//                        dismiss()
+//                    } label: {
+//                        Text("목록")
+//                    }
+//                    .buttonStyle(CompleButtonStyle2(isComplete: true))
+//                    
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("오픈 채팅 바로가기")
+//                    }
+//                    .buttonStyle(CompleButtonStyle(isComplete: true))
+//                }
                 
             }
+            .padding(.horizontal)
+            
+            HStack {
+                InterestHeartView(isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                    .padding(.trailing, 24)
+                
+                Spacer()
+                
+                Button {
+                } label: {
+                    Text("오픈 채팅 바로가기")
+                }
+                .buttonStyle(CompleButtonStyle(isComplete: true))
+            }
+            .padding(.horizontal)
         }
-        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
@@ -175,6 +185,6 @@ struct WriterHeaderView: View  {
     }
 }
 
-//#Preview {
-//    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL)
-//}
+#Preview {
+    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL)
+}

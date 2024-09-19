@@ -15,7 +15,7 @@ struct ContentView: View {
         VStack {
             if showingMainView {
                 if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
-                    MainTabView()
+                    MainTabView(viewModel: MainTabViewModel.shared)
                         .environmentObject(getMyPageViewModel())
                         .environmentObject(getGenderAndMbtiViewModel())
                 } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {

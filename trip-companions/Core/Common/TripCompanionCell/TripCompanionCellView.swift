@@ -97,27 +97,18 @@ struct TripCompanionCellView: View {
                     }
                     
                     HStack {
-                        Image(systemName: "calendar")
-                        Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
+                        HStack {
+                            Image(systemName: "calendar")
+                            Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
+                        }
+                        .font(.subheadline)
+                        .foregroundColor(.gray767676)
+                        
+                        Spacer()
+                        
+                        InterestHeartView(isDetail: false, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
                     }
-                    .font(.subheadline)
-                    .foregroundColor(.gray767676)
-
-//                    if viewModel.tripCompanion.startDate == viewModel.tripCompanion.endDate {
-//                        HStack {
-//                            Image(systemName: "calendar")
-//                            Text(viewModel.tripCompanion.startDate.toDateText())
-//                        }
-//                        .font(.subheadline)
-//                        .foregroundColor(.gray767676)
-//                    } else {
-//                        HStack {
-//                            Image(systemName: "calendar")
-//                            Text("\(viewModel.tripCompanion.startDate.toDateText()) ~ \(viewModel.tripCompanion.endDate.toDateText())")
-//                        }
-//                        .font(.subheadline)
-//                        .foregroundColor(.gray767676)
-//                    }
+                    
                     
                 }
                 

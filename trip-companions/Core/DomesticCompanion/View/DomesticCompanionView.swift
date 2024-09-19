@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DomesticCompanionView: View {
     @StateObject var viewModel: DomesticCompanionViewModel
+    @StateObject var searchViewModel: SearchViewModel
     
     var body: some View {
         ZStack {
@@ -23,7 +24,7 @@ struct DomesticCompanionView: View {
                 
                 HStack {
                     HStack {
-                        NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "필터")) {
+                        NavigationLink(destination: SearchView(viewModel: searchViewModel, title: "필터")) {
                             Image(systemName: "slider.horizontal.3")
                             Text("필터")
                         }
@@ -31,10 +32,59 @@ struct DomesticCompanionView: View {
                     }
                     .fontWeight(.semibold)
                     
-                    //                // MARK: - Update to add options
-                    //                ScrollView(.horizontal, showsIndicators: false) {
-                    //                    
-                    //                }
+                    // MARK: - Update to add options
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            
+                            if let region = searchViewModel.region {
+                                Button {
+                                    
+                                } label: {
+                                    Text(region.regionName)
+                                }
+                            }
+                            
+                            if let startDate = searchViewModel.startDate {
+                                Button {
+                                    
+                                } label: {
+                                    Text(startDate.toDateText())
+                                }
+                            }
+                            
+                            if let isSameMbti = searchViewModel.isSameMbti {
+                                Button {
+                                    
+                                } label: {
+                                    Text(isSameMbti ? "나와 같은 MBTI" : "다른 MBTI도 좋아요")
+                                }
+                            }
+                            
+                            if let isMale = searchViewModel.isMale {
+                                Button {
+                                    
+                                } label: {
+                                    Text(isMale ? "남성" : "여성")
+                                }
+                            }
+                            
+                            if let isDrinker = searchViewModel.isDrinker {
+                                Button {
+                                    
+                                } label: {
+                                    Text(isDrinker ? "음주" : "논알콜")
+                                }
+                            }
+                            
+                            if let isSmoker = searchViewModel.isSmoker {
+                                Button {
+                                    
+                                } label: {
+                                    Text(isSmoker ? "흡연" : "비흡연")
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding(.bottom)
                 
@@ -83,6 +133,7 @@ struct DomesticAddButtonView: View {
         }
     }
 }
-#Preview {
-    DomesticCompanionView(viewModel: DomesticCompanionViewModel.MOCK_VIEW_MODEL)
-}
+
+//#Preview {
+//    DomesticCompanionView(viewModel: DomesticCompanionViewModel.MOCK_VIEW_MODEL, searchViewModel: SearchViewModel.MOCK_VIEW_MODEL)
+//}

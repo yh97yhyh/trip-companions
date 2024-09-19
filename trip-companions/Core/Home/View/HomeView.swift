@@ -53,12 +53,10 @@ struct HomeView: View {
                         }
                     }
                     
-                    NavigationLink(destination: DomesticCompanionView(viewModel: DomesticCompanionViewModel.MOCK_VIEW_MODEL)) {
-                        HStack {
-                            Text("어디로 가시나요?")
-                            Spacer()
-                            Image(systemName: "magnifyingglass")
-                        }
+                    Button {
+                        MainTabViewModel.shared.selectedIndex = 1
+                    } label: {
+                        Image("btn_see_more")
                     }
                     
                 }
@@ -93,7 +91,7 @@ struct HomeAddButtonView: View {
     }
 }
 
-#Preview {
-    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL)
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
-}
+//#Preview {
+//    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL, selectedIndex: 0)
+//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//}

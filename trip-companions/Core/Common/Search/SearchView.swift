@@ -11,7 +11,7 @@ struct SearchView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var showingDatePicker = false
     var title: String
     
@@ -166,7 +166,8 @@ struct SearchView: View {
             .padding(.horizontal)
             
             Button {
-                viewModel.fetchTripUnion()
+                DomesticCompanionViewModel.shared.fetchTripCompanions()
+                MainTabViewModel.shared.selectedIndex = 1
                 dismiss()
             } label: {
                 Text("검색 결과 보기")
@@ -178,7 +179,7 @@ struct SearchView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .onDisappear {
-            viewModel.clear()
+//            viewModel.clear()
         }
     }
 }
