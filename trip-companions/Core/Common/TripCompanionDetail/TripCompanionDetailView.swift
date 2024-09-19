@@ -77,7 +77,6 @@ struct TripCompanionDetailView: View {
                     }
                     .padding(.bottom, 8)
                     
-                    // MARK: - Add info
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(viewModel.tripCompanion.categories, id: \.self) { category in

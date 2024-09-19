@@ -30,12 +30,14 @@ struct MyInterestingPostsView: View {
             .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
-                ForEach(viewModel.myInterestingPosts, id: \.self) { tripCompanion in
-                    VStack {
-                        MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
-                            .padding(.vertical, 12)
+                LazyVStack {
+                    ForEach(viewModel.myInterestingPosts, id: \.self) { tripCompanion in
+                        VStack {
+                            MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                .padding(.vertical, 12)
+                        }
+                        Divider()
                     }
-                    Divider()
                 }
             }
             .padding(.horizontal)

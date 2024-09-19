@@ -18,75 +18,76 @@ struct CustomDatePickerView: View {
     var body: some View {
         VStack {
             ScrollView(showsIndicators: false) {
-                HStack {
-                    Text("날짜 입력")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .imageScale(.large)
-                            .foregroundColor(.gray999999)
+                VStack {
+                    HStack {
+                        Text("날짜 입력")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .imageScale(.large)
+                                .foregroundColor(.gray999999)
+                        }
                     }
-                }
-                .padding(.bottom)
-                
-                Divider()
                     .padding(.bottom)
-                
-                // MARK: - Add DatePicker
-                VStack(alignment: .leading) {
+                    
+                    Divider()
+                        .padding(.bottom)
+                    
+                    VStack(alignment: .leading) {
+                        //                    HStack {
+                        //                        Text("시작 날짜")
+                        //                        Spacer()
+                        //                        Text(startDate.toDateText())
+                        //                            .font(.headline)
+                        //                            .modifier(ProfileFeatureTextModifier())
+                        //                    }
+                        //                    .onTapGesture {
+                        //                        showingStartDatePicker.toggle()
+                        //                        showingEndDatePicker = false
+                        //                    }
+                        
+                        //                    if showingStartDatePicker {
+                        //                        DatePicker("시작 날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                        //                            .datePickerStyle(GraphicalDatePickerStyle())
+                        //                            .tint(Color.orangeF49321)
+                        //                    }
+                        DatePicker("날짜를 선택해주세요", selection: $date, displayedComponents: .date)
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .tint(Color.orangeF49321)
+                    }
+                    .padding(.bottom)
+                    
+                    //                VStack(alignment: .leading) {
                     //                    HStack {
-                    //                        Text("시작 날짜")
+                    //                        Text("끝 날짜")
                     //                        Spacer()
-                    //                        Text(startDate.toDateText())
+                    //                        Text(endDate.toDateText())
                     //                            .font(.headline)
                     //                            .modifier(ProfileFeatureTextModifier())
                     //                    }
                     //                    .onTapGesture {
-                    //                        showingStartDatePicker.toggle()
-                    //                        showingEndDatePicker = false
+                    //                        showingEndDatePicker.toggle()
+                    //                        showingStartDatePicker = false
                     //                    }
-                    
-                    //                    if showingStartDatePicker {
-                    //                        DatePicker("시작 날짜를 선택해주세요", selection: $startDate, displayedComponents: .date)
+                    //
+                    //                    if showingEndDatePicker {
+                    //                        DatePicker("끝 날짜를 선택해주세요", selection: $endDate, in: startDate..., displayedComponents: .date)
                     //                            .datePickerStyle(GraphicalDatePickerStyle())
                     //                            .tint(Color.orangeF49321)
+                    //                            .onChange(of: endDate) { newEndDate in
+                    //                                if newEndDate < startDate {
+                    //                                    endDate = startDate
+                    //                                }
+                    //                            }
+                    //
                     //                    }
-                    DatePicker("날짜를 선택해주세요", selection: $date, displayedComponents: .date)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .tint(Color.orangeF49321)
+                    //                }
+                    //                .padding(.bottom)
                 }
-                .padding(.bottom)
-                
-                //                VStack(alignment: .leading) {
-                //                    HStack {
-                //                        Text("끝 날짜")
-                //                        Spacer()
-                //                        Text(endDate.toDateText())
-                //                            .font(.headline)
-                //                            .modifier(ProfileFeatureTextModifier())
-                //                    }
-                //                    .onTapGesture {
-                //                        showingEndDatePicker.toggle()
-                //                        showingStartDatePicker = false
-                //                    }
-                //
-                //                    if showingEndDatePicker {
-                //                        DatePicker("끝 날짜를 선택해주세요", selection: $endDate, in: startDate..., displayedComponents: .date)
-                //                            .datePickerStyle(GraphicalDatePickerStyle())
-                //                            .tint(Color.orangeF49321)
-                //                            .onChange(of: endDate) { newEndDate in
-                //                                if newEndDate < startDate {
-                //                                    endDate = startDate
-                //                                }
-                //                            }
-                //
-                //                    }
-                //                }
-                //                .padding(.bottom)
             }
             .padding()
             

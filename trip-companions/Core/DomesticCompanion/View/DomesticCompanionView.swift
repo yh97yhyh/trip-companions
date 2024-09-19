@@ -32,7 +32,6 @@ struct DomesticCompanionView: View {
                     }
                     .fontWeight(.semibold)
                     
-                    // MARK: - Update to add options
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             if let region = searchViewModel.region {
@@ -129,7 +128,6 @@ struct DomesticCompanionView: View {
                                     TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
                                         .padding(.vertical, 12)
                                 }
-                                
                                 Divider()
                             }
                             if viewModel.page < viewModel.totalPage && !viewModel.isFetching {

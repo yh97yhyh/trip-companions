@@ -14,7 +14,6 @@ struct TripCompanionCellView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                // MARK: - Update to KFImage
                 VStack {
                     if let imageUrl = viewModel.tripCompanion.member.profileImageUrl {
                         KFImage(URL(string: imageUrl))

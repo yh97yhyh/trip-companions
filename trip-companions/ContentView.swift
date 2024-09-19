@@ -17,11 +17,11 @@ struct ContentView: View {
                 if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
                     MainTabView(viewModel: MainTabViewModel.shared)
                         .environmentObject(getMyPageViewModel())
-                        .environmentObject(getGenderAndMbtiViewModel())
+                        .environmentObject(getMetaDataViewModel())
                 } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
                     InfoCollectionView(isEditMode: false)
                         .environmentObject(getMyPageViewModel())
-                        .environmentObject(getGenderAndMbtiViewModel())
+                        .environmentObject(getMetaDataViewModel())
                 } else {
                     LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
                         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
@@ -51,8 +51,8 @@ struct ContentView: View {
         }
     }
     
-    func getGenderAndMbtiViewModel() -> MetaDataViewModel {
-        return MetaDataViewModel()
+    func getMetaDataViewModel() -> MetaDataViewModel {
+        return MetaDataViewModel.shared
     }
 }
 

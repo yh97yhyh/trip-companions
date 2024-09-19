@@ -14,6 +14,8 @@ struct InfoCollectionView: View {
     @StateObject private var viewModel = InfoCollectionViewModel.shared
     var isEditMode: Bool
     @Environment(\.dismiss) private var dismiss
+    @State var gender: Gender?
+    @State var mbti: MBTI?
     
 //    init(isEditMode: Bool) {
 //        self.isEditMode = isEditMode
@@ -32,148 +34,150 @@ struct InfoCollectionView: View {
                     .padding(.horizontal)
             }
             ScrollView(showsIndicators: false) {
-                if !isEditMode {
-                    HStack {
-                        Text("프로필")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    .padding(.bottom, 32)
-                }
-                
-                VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("닉네임")
-                                .modifier(Title2TextModifier())
-                            Text ("(필수)")
-                                .modifier(AdditionalEssentialTextModifier())
-                        }
-                        
-                        TextField("이름 입력", text: $viewModel.nickname)
-                            .textFieldStyle(CustomTextFieldStyle(isEditing: viewModel.isEditingNickname))
-                            .onTapGesture {
-                                viewModel.isEditingNickname = true
-                                viewModel.isEditingAge = false
-                            }
-                    }
-                    .padding(.bottom)
-                    
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("나이")
-                                .modifier(Title2TextModifier())
-                            Text ("(필수)")
-                                .modifier(AdditionalEssentialTextModifier())
-                        }
-                        
-                        TextField("나이 입력", text: $viewModel.age)
-                            .textFieldStyle(CustomTextFieldStyle(isEditing: viewModel.isEditingAge))
-                            .keyboardType(.numberPad)
-                            .onTapGesture {
-                                viewModel.isEditingAge = true
-                                viewModel.isEditingNickname = false
-                            }
-                            .disabled(true)
-                    }
-                    .padding(.bottom)
-                    
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("성별")
-                                .modifier(Title2TextModifier())
-                            Text ("(필수)")
-                                .modifier(AdditionalEssentialTextModifier())
-                        }
-                        
-                        // MARK: - Update to use Cusotm PickerView
-                        Picker("성별", selection: $viewModel.gender) {
-                            ForEach(genderAndMbtiViewModel.genders, id: \.code) { gender in
-                                Text(gender.desc)
-                                    .tag(gender as Gender)
-                            }
-                        }
-                        .accentColor(.black)
-                        .labelsHidden()
-                        .frame(alignment: .leading)
-                        .modifier(CustomPickerStyle())
-//                        .disabled(true)
-                    }
-                    .padding(.bottom)
-                    
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("MBTI")
-                                .modifier(Title2TextModifier())
-                            Text("(선택)")
-                                .modifier(AdditionalOptionalTextModifier())
-                        }
-                        
-                        // MARK: - Update to use Cusotm PickerView
-                        Picker("MBTI", selection: $viewModel.mbti) {
-                            ForEach(genderAndMbtiViewModel.mbtis, id: \.code) { mbti in
-                                Text(mbti.desc)
-                                    .tag(mbti as MBTI)
-                            }
-                        }
-                        .accentColor(.black)
-                        .modifier(CustomPickerStyle())
-                    }
-                    .padding(.bottom)
-                    
-                    VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("흡연 여부")
-                                .modifier(Title2TextModifier())
-                            Text("(선택)")
-                                .modifier(AdditionalOptionalTextModifier())
-                        }
-                        
+                VStack {
+                    if !isEditMode {
                         HStack {
-                            Button {
-                                viewModel.isSmoking = viewModel.isSmoking == true ? nil : true
-                            } label: {
-                                Text("Yes")
-                            }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == true))
-                            
-                            Button {
-                                viewModel.isSmoking = viewModel.isSmoking == false ? nil : false
-                            } label: {
-                                Text("No")
-                            }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == false))
-                            
+                            Text("프로필")
+                                .font(.title)
+                                .fontWeight(.semibold)
+                            Spacer()
                         }
+                        .padding(.bottom, 32)
                     }
-                    .padding(.bottom)
                     
                     VStack(alignment: .leading) {
-                        HStack(spacing: 4) {
-                            Text("음주 여부")
-                                .modifier(Title2TextModifier())
-                            Text("(선택)")
-                                .modifier(AdditionalOptionalTextModifier())
-                        }
-                        
-                        HStack {
-                            Button {
-                                viewModel.isDrinking = viewModel.isDrinking == true ? nil : true
-                            } label: {
-                                Text("Yes")
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("닉네임")
+                                    .modifier(Title2TextModifier())
+                                Text ("(필수)")
+                                    .modifier(AdditionalEssentialTextModifier())
                             }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == true))
                             
-                            Button {
-                                viewModel.isDrinking = viewModel.isDrinking == false ? nil : false
-                            } label: {
-                                Text("No")
-                            }
-                            .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == false))
+                            TextField("이름 입력", text: $viewModel.nickname)
+                                .textFieldStyle(CustomTextFieldStyle(isEditing: viewModel.isEditingNickname))
+                                .onTapGesture {
+                                    viewModel.isEditingNickname = true
+                                    viewModel.isEditingAge = false
+                                }
                         }
+                        .padding(.bottom)
+                        
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("나이")
+                                    .modifier(Title2TextModifier())
+                                Text ("(필수)")
+                                    .modifier(AdditionalEssentialTextModifier())
+                            }
+                            
+                            TextField("나이 입력", text: $viewModel.age)
+                                .textFieldStyle(CustomTextFieldStyle(isEditing: viewModel.isEditingAge))
+                                .keyboardType(.numberPad)
+                                .onTapGesture {
+                                    viewModel.isEditingAge = true
+                                    viewModel.isEditingNickname = false
+                                }
+                                .disabled(true)
+                        }
+                        .padding(.bottom)
+                        
+                        // MARK: - Update using Menu
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("성별")
+                                    .modifier(Title2TextModifier())
+                                Text ("(필수)")
+                                    .modifier(AdditionalEssentialTextModifier())
+                            }
+                            
+                            Picker("성별", selection: $viewModel.gender) {
+                                ForEach(genderAndMbtiViewModel.genders, id: \.code) { gender in
+                                    Text(gender.desc)
+                                        .tag(gender as Gender)
+                                }
+                            }
+                            .accentColor(.black)
+                            .labelsHidden()
+                            .frame(alignment: .leading)
+                            .modifier(CustomPickerStyle())
+                            //                        .disabled(true)
+                        }
+                        .padding(.bottom)
+                        
+                        // MARK: - Update using Menu
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("MBTI")
+                                    .modifier(Title2TextModifier())
+                                Text("(선택)")
+                                    .modifier(AdditionalOptionalTextModifier())
+                            }
+                            
+                            Picker("MBTI", selection: $viewModel.mbti) {
+                                ForEach(genderAndMbtiViewModel.mbtis, id: \.code) { mbti in
+                                    Text(mbti.desc)
+                                        .tag(mbti as MBTI)
+                                }
+                            }
+                            .accentColor(.black)
+                            .modifier(CustomPickerStyle())
+                        }
+                        .padding(.bottom)
+                        
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("흡연 여부")
+                                    .modifier(Title2TextModifier())
+                                Text("(선택)")
+                                    .modifier(AdditionalOptionalTextModifier())
+                            }
+                            
+                            HStack {
+                                Button {
+                                    viewModel.isSmoking = viewModel.isSmoking == true ? nil : true
+                                } label: {
+                                    Text("Yes")
+                                }
+                                .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == true))
+                                
+                                Button {
+                                    viewModel.isSmoking = viewModel.isSmoking == false ? nil : false
+                                } label: {
+                                    Text("No")
+                                }
+                                .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == false))
+                                
+                            }
+                        }
+                        .padding(.bottom)
+                        
+                        VStack(alignment: .leading) {
+                            HStack(spacing: 4) {
+                                Text("음주 여부")
+                                    .modifier(Title2TextModifier())
+                                Text("(선택)")
+                                    .modifier(AdditionalOptionalTextModifier())
+                            }
+                            
+                            HStack {
+                                Button {
+                                    viewModel.isDrinking = viewModel.isDrinking == true ? nil : true
+                                } label: {
+                                    Text("Yes")
+                                }
+                                .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == true))
+                                
+                                Button {
+                                    viewModel.isDrinking = viewModel.isDrinking == false ? nil : false
+                                } label: {
+                                    Text("No")
+                                }
+                                .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == false))
+                            }
+                        }
+                        .padding(.bottom)
                     }
-                    .padding(.bottom)
                 }
                 //            .padding(.top)
             }

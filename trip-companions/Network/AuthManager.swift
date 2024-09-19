@@ -94,7 +94,7 @@ class AuthManager: ObservableObject {
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
                                         InfoCollectionViewModel.shared.age = String(curMember.age)
-//                                        InfoCollectionViewModel.shared.gender = curMember.gender
+                                        InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
                                         self.isLoggedIn = true
                                     }
                                 }
@@ -153,7 +153,7 @@ class AuthManager: ObservableObject {
                             self.getMemberInfo(token) { success in
                                 if let curMember = self.currentMember {
                                     InfoCollectionViewModel.shared.age = String(curMember.age)
-//                                    InfoCollectionViewModel.shared.gender = curMember.gender
+                                    InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
                                     self.isLoggedIn = true
                                     print("Succeed to sign-in! \(userInfo)")
                                 }

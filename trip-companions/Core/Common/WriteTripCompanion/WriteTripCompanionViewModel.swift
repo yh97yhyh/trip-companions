@@ -59,7 +59,7 @@ class WriteTripCompanionViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(region: Region = Region.MOCK_REGIONS[1], startDate: Date? = nil, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    init(region: Region? = nil, startDate: Date? = nil, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
         self.region = region
         self.startDate = startDate
 //        self.endDate = endDate

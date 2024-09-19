@@ -11,7 +11,7 @@ struct SearchView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
-
+    
     @State private var showingDatePicker = false
     var title: String
     
@@ -23,15 +23,22 @@ struct SearchView: View {
             ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
-                        // MARK: - Add Image(systemName: "magnifyingglass")
-                        Text("여기는 어떠신가요?")
+                        Text("어디로 떠나시나요?")
                             .font(.title2)
                             .fontWeight(.semibold)
                         Spacer()
                     }
                     
-                    Button {
-                        
+                    Menu {
+                        ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
+                            Button {
+                                viewModel.region = region
+                            } label: {
+                                VStack {
+                                    Text(region.regionName)
+                                }
+                            }
+                        }
                     } label: {
                         HStack {
                             if viewModel.region == nil {
@@ -45,9 +52,10 @@ struct SearchView: View {
                         }
                     }
                     .buttonStyle(SearchButtonStyle())
+                    
                 }
                 .padding(.bottom, 24)
-
+                
                 VStack {
                     HStack {
                         Text("날짜 입력")
@@ -56,13 +64,13 @@ struct SearchView: View {
                         Spacer()
                     }
                     
-//                    NavigationLink(destination: CustomDatePickerView()) {
-//                        HStack {
-//                            Text("날짜를 입력하세요")
-//                            Spacer()
-//                        }
-//                    }
-//                    .buttonStyle(SearchButtonStyle())
+                    //                    NavigationLink(destination: CustomDatePickerView()) {
+                    //                        HStack {
+                    //                            Text("날짜를 입력하세요")
+                    //                            Spacer()
+                    //                        }
+                    //                    }
+                    //                    .buttonStyle(SearchButtonStyle())
                     
                     Button {
                         showingDatePicker = true
@@ -83,7 +91,7 @@ struct SearchView: View {
                     .buttonStyle(SearchButtonStyle())
                 }
                 .padding(.bottom, 24)
-
+                
                 VStack {
                     HStack {
                         Text("당신의 동행은?")
@@ -179,7 +187,7 @@ struct SearchView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .onDisappear {
-//            viewModel.clear()
+            //            viewModel.clear()
         }
     }
 }
