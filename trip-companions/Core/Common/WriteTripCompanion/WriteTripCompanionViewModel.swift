@@ -106,12 +106,47 @@ class WriteTripCompanionViewModel: ObservableObject {
                     print("Failed to request createTripCompanion.. \(error.localizedDescription)")
                 }
             } receiveValue: { tripCompanion in
-                print("Succeed to cate trip companion! \(tripCompanion.id)")
+                print("Succeed to create trip companion! \(tripCompanion.id)")
             }.store(in: &cancellables)
     }
     
-    func updateTripCompanion() {
+    func updateTripCompanion(postId: Int) {
+        var categoriesId: [Int] = []
         
+        if isSameMbti != nil {
+            isSameMbti! ? categoriesId.append(1) : categoriesId.append(2)
+        }
+        if isMale != nil {
+            isMale! ? categoriesId.append(3) : categoriesId.append(4)
+        }
+        if isDrinker != nil {
+            isDrinker! ? categoriesId.append(5) : categoriesId.append(6)
+        }
+        if isSmoker != nil {
+            isSmoker! ? categoriesId.append(7) : categoriesId.append(8)
+        }
+        
+        let parameters: Parameters = [
+            "tripCompanionId": postId,
+            "title": title,
+            "regionId": region!.id,
+            "tripDate": startDate!.toServerDateText(),
+            "companionMemberCount": personal,
+            "contents": contents,
+            "categoriesId": categoriesId
+        ]
+        
+        NetworkManager<TripCompanion>.request(route: .updateTripCompanion(parameters))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request updateTripCompanion!")
+                case .failure(let error):
+                    print("Failed to request updateTripCompanion.. \(error.localizedDescription)")
+                }
+            } receiveValue: { tripCompanion in
+                print("Succeed to update trip companion! \(tripCompanion.id)")
+            }.store(in: &cancellables)
     }
     
     func clear() {

@@ -107,13 +107,29 @@ struct MyTripCompanionCellView: View {
                     .padding(.bottom, 8)
                     
                     HStack {
-                        Button {
-                            
-                        } label: {
+                        NavigationLink(destination: WriteTripCompanionView(isWriteMode: false, tripCompanion: viewModel.tripCompanion, viewModel: WriteTripCompanionViewModel.shared)) {
                             Text("수정")
                                 .font(.subheadline)
                         }
                         .buttonStyle(MyPageButtonStyle())
+                        
+//                        Button {
+//                            
+//                        } label: {
+//                            Text("수정")
+//                                .font(.subheadline)
+//                        }
+//                        .buttonStyle(MyPageButtonStyle())
+                        
+//                        NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "검색")) {
+//                            HStack {
+//                                Text("어디로 가시나요?")
+//                                Spacer()
+//                                Image(systemName: "magnifyingglass")
+//                            }
+//                        }
+//                        .buttonStyle(TripSearchButtonStyle())
+//                        .padding(.bottom)
                         
                         Button {
                             MyPostsViewModel.shared.deletePost(postId: viewModel.tripCompanion.id)

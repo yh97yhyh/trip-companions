@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WriteTripCompanionView: View {
     var isWriteMode: Bool
+    var tripCompanion: TripCompanion?
     @StateObject var viewModel: WriteTripCompanionViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var showingDatePicker = false
@@ -172,7 +173,9 @@ struct WriteTripCompanionView: View {
                 if isWriteMode {
                     viewModel.createTripCompanion()
                 } else {
-                    viewModel.updateTripCompanion()
+                    if let postId = tripCompanion?.id {
+                        viewModel.updateTripCompanion(postId: postId)
+                    }
                 }
                 dismiss()
             } label: {
@@ -183,6 +186,38 @@ struct WriteTripCompanionView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            if tripCompanion != nil {
+                viewModel.region = tripCompanion!.region
+                viewModel.startDate = tripCompanion!.tripDate.toDate()
+                viewModel.personal = String(tripCompanion!.companionMemberCount)
+                viewModel.title = tripCompanion!.title
+                viewModel.contents = tripCompanion!.contents
+                
+                for category in tripCompanion!.categories {
+                    switch category.id {
+                    case 1:
+                        viewModel.isSameMbti = true
+                    case 2:
+                        viewModel.isSameMbti = false
+                    case 3:
+                        viewModel.isMale = true
+                    case 4:
+                        viewModel.isMale = false
+                    case 5:
+                        viewModel.isDrinker = true
+                    case 6:
+                        viewModel.isDrinker = false
+                    case 7:
+                        viewModel.isSmoker = true
+                    case 8:
+                        viewModel.isSmoker = false
+                    default:
+                        continue
+                    }
+                }
+            }
+        }
         .onDisappear {
             viewModel.clear()
         }
