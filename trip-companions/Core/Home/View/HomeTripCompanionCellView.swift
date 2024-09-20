@@ -18,7 +18,7 @@ struct HomeTripCompanionCellView: View {
                     KFImage(URL(string: imageUrl))
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 64, height: 64)
+                        .frame(width: 52, height: 52)
                         .clipShape(Circle())
                         .padding(.trailing, 12)
                         .padding(.bottom)
@@ -26,11 +26,11 @@ struct HomeTripCompanionCellView: View {
                     ZStack {
                         Circle()
                             .fill(.grayA2A2A2.opacity(0.1))
-                            .frame(width: 64, height: 64)
+                            .frame(width: 52, height: 52)
                         Image("defaultThumbnail")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 64, height: 64)
+                            .frame(width: 48, height: 48)
                             .clipShape(Circle())
                     }
                     .padding(.trailing, 12)
@@ -79,6 +79,8 @@ struct HomeTripCompanionCellView: View {
                     }
                     
                     Text("동행")
+                        .font(.callout)
+                        .fontWeight(.semibold)
                 }
             }
             
@@ -89,14 +91,14 @@ struct HomeTripCompanionCellView: View {
                 .font(.callout)
                 .fontWeight(.semibold)
                 .foregroundColor(.black)
-                .padding(.bottom, 2)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .padding(.bottom, 4)
             
             Text(viewModel.tripCompanion.region.regionName)
                 .font(.subheadline)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
                 .foregroundColor(.gray767676)
-                .padding(.bottom, 4)
+                .padding(.bottom, 2)
             
             Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
                 .font(.subheadline)

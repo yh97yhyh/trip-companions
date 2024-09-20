@@ -45,7 +45,7 @@ class DomesticCompanionViewModel: ObservableObject {
 
         let parameters = createParameters()
         
-        NetworkManager<TripCompanionResponse>.request(route: .fetchTripCompanions(parameters))
+        NetworkManager<TripCompanionResponse>.request(route: .getTripCompanions(parameters))
             .sink { completion in
                 self.isFetching = false
                 switch completion {

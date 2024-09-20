@@ -29,18 +29,29 @@ struct MyInterestingPostsView: View {
             }
             .padding(.horizontal)
             
-            ScrollView(showsIndicators: false) {
-                LazyVStack {
-                    ForEach(viewModel.myInterestingPosts, id: \.self) { tripCompanion in
-                        VStack {
-                            MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                .padding(.vertical, 12)
+            VStack(alignment: .leading) {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                            VStack {
+                                MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                    .padding(.vertical, 12)
+                            }
+                            Divider()
                         }
-                        Divider()
+                        if viewModel.page < viewModel.totalPage && !viewModel.isFetching {
+                            ProgressView()
+                                .onAppear {
+                                    viewModel.addTripCompanions()
+                                }
+                        }
                     }
                 }
+                .padding(.horizontal)
+                .refreshable {
+                    viewModel.fetchTripCompanions()
+                }
             }
-            .padding(.horizontal)
             
         }
         .navigationBarHidden(true)

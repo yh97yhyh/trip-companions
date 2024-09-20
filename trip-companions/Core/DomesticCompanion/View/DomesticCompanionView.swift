@@ -121,7 +121,7 @@ struct DomesticCompanionView: View {
                     .padding(.horizontal, -16)
                 
                 VStack(alignment: .leading) {
-                    ScrollView(showsIndicators: false) {
+                    ScrollView {
                         LazyVStack {
                             ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
                                 NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
