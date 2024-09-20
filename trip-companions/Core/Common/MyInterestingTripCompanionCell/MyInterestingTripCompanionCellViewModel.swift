@@ -6,12 +6,31 @@
 //
 
 import Foundation
+import Alamofire
+import Combine
 
 class MyInterestingTripCompanionCellViewModel: ObservableObject {
     @Published var tripCompanion: TripCompanion
     
     init(tripCompanion: TripCompanion) {
         self.tripCompanion = tripCompanion
+    }
+    
+    var cancellables = Set<AnyCancellable>()
+    
+    func deleteLike() {
+        NetworkManager<Int>.requestWithoutResponse(route: .deleteLikeTripCompanion(postId: tripCompanion.id))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request deleteLikeTripCompanion!")
+                case .failure(let error):
+                    print("Failed to request deleteLikeTripCompanion.. \(error.localizedDescription)")
+                }
+                MyInterestingPostsViewModel.shared.fetchTripCompanions()
+            } receiveValue: { _ in
+                
+            }.store(in: &cancellables)
     }
 }
 

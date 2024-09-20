@@ -43,7 +43,11 @@ class MyInterestingPostsViewModel: ObservableObject {
     private func fetchData() {
         isFetching = true
         
-        NetworkManager<TripCompanionResponse>.request(route: .getMyLikeTripCompanions)
+        let parameters: [String: Any] = [
+            "page": page
+        ]
+        
+        NetworkManager<TripCompanionResponse>.request(route: .getMyLikeTripCompanions(parameters))
             .sink { completion in
                 self.isFetching = false
                 switch completion {

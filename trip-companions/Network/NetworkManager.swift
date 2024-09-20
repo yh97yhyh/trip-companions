@@ -17,11 +17,11 @@ enum APIRouter: URLRequestConvertible {
     case createTripCompanion(Parameters)
     case updateTripCompanion(Parameters)
     case deleteTripCompanion(postId: Int)
-    case getMyTripCompanions
+    case getMyTripCompanions(Parameters)
     
     case createLikeTripCompanion(Parameters)
-    case deleteLikeTripCompanion(Parameters)
-    case getMyLikeTripCompanions
+    case deleteLikeTripCompanion(postId: Int)
+    case getMyLikeTripCompanions(Parameters)
     
     case updateMemberProfile(Parameters)
     case getMemberProfile
@@ -91,11 +91,13 @@ enum APIRouter: URLRequestConvertible {
                 .getTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
                 .updateTripCompanion(let parameters),
+                .getMyTripCompanions(let parameters),
                 .createLikeTripCompanion(let parameters),
+                .getMyLikeTripCompanions(let parameters),
                 .updateMemberProfile(let parameters),
                 .getRecommendedTripCompanions(let parameters):
             return parameters
-        case .getMyTripCompanions, .deleteTripCompanion, .deleteLikeTripCompanion, .getMyLikeTripCompanions, .getMemberProfile, .getGenderAndMbti, .getMetaData:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .getMemberProfile, .getGenderAndMbti, .getMetaData:
             return Parameters()
         }
     }
@@ -114,7 +116,7 @@ enum APIRouter: URLRequestConvertible {
         }
         
         switch method {
-        case .get, .delete:
+        case .get:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
             urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)

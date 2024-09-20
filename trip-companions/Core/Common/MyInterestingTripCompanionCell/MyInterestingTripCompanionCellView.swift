@@ -107,6 +107,9 @@ struct MyInterestingTripCompanionCellView: View {
                 VStack {
                     Image(systemName: "heart.fill")
                         .foregroundColor(.red)
+                        .onTapGesture {
+                            viewModel.deleteLike()
+                        }
                 }
             }
         }

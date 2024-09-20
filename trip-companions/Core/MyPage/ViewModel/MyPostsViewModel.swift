@@ -43,7 +43,11 @@ class MyPostsViewModel: ObservableObject {
     private func fetchData() {
         isFetching = true
         
-        NetworkManager<TripCompanionResponse>.request(route: .getMyTripCompanions)
+        let parameters: [String: Any] = [
+            "page": page
+        ]
+        
+        NetworkManager<TripCompanionResponse>.request(route: .getMyTripCompanions(parameters))
             .sink { completion in
                 self.isFetching = false
                 switch completion {
@@ -58,6 +62,7 @@ class MyPostsViewModel: ObservableObject {
                 } else {
                     self?.tripCompanions.append(contentsOf: tripCompanionResponse.data)
                 }
+                print("myPostsCount : \(self!.tripCompanions.count)")
                 self?.totalPage = tripCompanionResponse.totalPage
             }.store(in: &cancellables)
     }
