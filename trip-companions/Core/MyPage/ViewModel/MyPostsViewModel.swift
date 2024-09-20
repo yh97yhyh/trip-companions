@@ -67,6 +67,21 @@ class MyPostsViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
     
+    func deletePost(postId: Int) {
+        NetworkManager<Int>.requestWithoutResponse(route: .deleteTripCompanion(postId: postId))
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to request deleteTripCompanion!")
+                case .failure(let error):
+                    print("Failed to request deleteTripCompanion.. \(error.localizedDescription)")
+                }
+                MyPostsViewModel.shared.fetchTripCompanions()
+            } receiveValue: { _ in
+                
+            }.store(in: &cancellables)
+    }
+    
 }
 
 extension MyPostsViewModel {

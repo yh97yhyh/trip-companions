@@ -162,7 +162,7 @@ struct DomesticCompanionView: View {
 struct DomesticAddButtonView: View {
     var body: some View {
         VStack {
-            NavigationLink(destination: WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.shared)) {
+            NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel.shared)) {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .foregroundColor(.white)

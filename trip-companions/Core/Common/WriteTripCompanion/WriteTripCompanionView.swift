@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct WriteTripCompanionView: View {
+    var isWriteMode: Bool
     @StateObject var viewModel: WriteTripCompanionViewModel
     @Environment(\.dismiss) private var dismiss
-    
     @State private var showingDatePicker = false
     
 //    init(viewModel: WriteTripCompanionViewModel) {
@@ -20,7 +20,7 @@ struct WriteTripCompanionView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationTitleView(title: "동행등록")
+            NavigationTitleView(title: isWriteMode ? "동행등록" : "동행등록 수정")
                 .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
@@ -28,7 +28,7 @@ struct WriteTripCompanionView: View {
                     
                     HStack {
                         HStack {
-                            Image(systemName: "location")
+                            Image("icn_location")
                             Text("지역")
                                 .font(.callout)
                         }
@@ -169,7 +169,11 @@ struct WriteTripCompanionView: View {
             .padding()
             
             Button {
-                viewModel.createTripCompanion()
+                if isWriteMode {
+                    viewModel.createTripCompanion()
+                } else {
+                    viewModel.updateTripCompanion()
+                }
                 dismiss()
             } label: {
                 Text("등록하기")
@@ -211,6 +215,6 @@ struct ContentsTextEditor: View {
     }
 }
 
-#Preview {
-    WriteTripCompanionView(viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)
-}
+//#Preview {
+//    WriteTripCompanionView(isWriteMode: false, viewModel: WriteTripCompanionViewModel.MOCK_VIEW_MODEL)
+//}

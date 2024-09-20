@@ -109,7 +109,7 @@ struct TripCompanionDetailView: View {
             .padding(.horizontal)
             
             HStack {
-                InterestHeartView(isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion), isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
                     .padding(.trailing, 24)
                 
                 Spacer()

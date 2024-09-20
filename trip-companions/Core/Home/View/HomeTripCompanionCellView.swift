@@ -107,7 +107,7 @@ struct HomeTripCompanionCellView: View {
             HStack {
                 Spacer()
                 
-                InterestHeartView(isDetail: false, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion), isDetail: false, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
                 .padding(.trailing)
             }
         }

@@ -59,6 +59,6 @@ struct MyPostsView: View {
     }
 }
 
-//#Preview {
-//    MyPostsView(viewModel: MyPostsViewModel.MOCK_VIEW_MODEL)
-//}
+#Preview {
+    MyPostsView(viewModel: MyPostsViewModel.MOCK_VIEW_MODEL)
+}

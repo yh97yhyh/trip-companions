@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct InterestHeartView: View {
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @StateObject var viewModel: InterestHeartViewModel
     var isDetail: Bool
     var isInterest: Bool
     var inerestCount: Int
@@ -19,8 +21,15 @@ struct InterestHeartView: View {
                     if isInterest {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
+                            .onTapGesture {
+                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: false)
+                            }
                     } else {
-                        Image(systemName: "heart")                            .foregroundColor(.gray767676)
+                        Image(systemName: "heart") 
+                            .foregroundColor(.gray767676)
+                            .onTapGesture {
+                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: true)
+                            }
                     }
                     Text("\(inerestCount)")
                         .foregroundColor(.gray767676)
@@ -31,9 +40,15 @@ struct InterestHeartView: View {
                     if isInterest {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
+                            .onTapGesture {
+                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: false)
+                            }
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.gray767676)
+                            .onTapGesture {
+                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: true)
+                            }
                     }
                     Text("\(inerestCount)")
                         .foregroundColor(.gray767676)
@@ -45,5 +60,6 @@ struct InterestHeartView: View {
 }
 
 #Preview {
-    InterestHeartView(isDetail: true, isInterest: true, inerestCount: 127)
+    InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, isDetail: true, isInterest: true, inerestCount: 127)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

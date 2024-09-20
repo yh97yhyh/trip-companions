@@ -10,6 +10,7 @@ import Kingfisher
 
 struct MyTripCompanionCellView: View {
     @StateObject var viewModel: MyTripCompanionCellViewModel
+    @State private var showAlert = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -103,6 +104,7 @@ struct MyTripCompanionCellView: View {
                     }
                     .font(.subheadline)
                     .foregroundColor(.gray767676)
+                    .padding(.bottom, 8)
                     
                     HStack {
                         Button {
@@ -114,12 +116,18 @@ struct MyTripCompanionCellView: View {
                         .buttonStyle(MyPageButtonStyle())
                         
                         Button {
-                            
+                            MyPostsViewModel.shared.deletePost(postId: viewModel.tripCompanion.id)
                         } label: {
                             Text("삭제")
                                 .font(.subheadline)
                         }
                         .buttonStyle(MyPageButtonStyle())
+//                        .alert("정말 삭제하시겠습니까?", isPresented: $showAlert) {
+//                            Button("삭제", role: .destructive) {
+//                                // 삭제 로직을 여기에 추가
+//                            }
+//                            Button("취소", role: .cancel) { }
+//                        }
                         
                         Spacer()
                     }

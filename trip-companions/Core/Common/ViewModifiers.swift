@@ -222,6 +222,8 @@ struct MyPageButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: 5)
                     .stroke(.gray767676, lineWidth: 1)
             )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
     }
 }
 

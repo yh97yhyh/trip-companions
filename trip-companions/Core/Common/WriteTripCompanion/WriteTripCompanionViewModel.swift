@@ -110,6 +110,10 @@ class WriteTripCompanionViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
     
+    func updateTripCompanion() {
+        
+    }
+    
     func clear() {
         self.region = nil
         self.startDate = nil
