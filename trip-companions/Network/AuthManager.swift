@@ -54,7 +54,13 @@ class AuthManager: ObservableObject {
                             if success, let token = self.token {
                                 let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
                                 self.saveUserToUserDefaults(userInfo)
-                                self.isLoggedIn = true
+                                self.getMemberInfo(token) { success in
+                                    if let curMember = self.currentMember {
+                                        InfoCollectionViewModel.shared.age = String(curMember.age)
+                                        InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+                                        self.isLoggedIn = true
+                                    }
+                                }
                                 promise(.success((true, true)))
                             } else {
                                 promise(.success((false, false)))

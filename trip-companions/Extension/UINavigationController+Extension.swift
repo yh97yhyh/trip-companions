@@ -8,13 +8,20 @@
 import Foundation
 import UIKit
 
-extension UINavigationController: UIGestureRecognizerDelegate {
-    override open func viewDidLoad() {
+//extension UINavigationController: UIGestureRecognizerDelegate {
+//    override open func viewDidLoad() {
+//        super.viewDidLoad()
+//        interactivePopGestureRecognizer?.delegate = self
+//    }
+//    
+//    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return viewControllers.count > 1
+//    }
+//}
+
+extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
+    open override func viewDidLoad() {
         super.viewDidLoad()
-        interactivePopGestureRecognizer?.delegate = self
-    }
-    
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
+        interactivePopGestureRecognizer?.delegate = nil
     }
 }

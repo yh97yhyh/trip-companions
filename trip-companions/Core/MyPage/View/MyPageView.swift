@@ -40,11 +40,11 @@ struct MyPageView: View {
                 }
                 .padding(.bottom)
                 
-                NavigationLink(destination: MyAccountView(viewModel: MyAccountViewModel())) {
-                    Text("계정 확인")
-                        .foregroundColor(.black)
-                }
-                .padding(.bottom)
+//                NavigationLink(destination: MyAccountView(viewModel: MyAccountViewModel())) {
+//                    Text("계정 확인")
+//                        .foregroundColor(.black)
+//                }
+//                .padding(.bottom)
             }
             
             Divider()
