@@ -90,22 +90,6 @@ struct TripCompanionDetailView: View {
                     }
                 }
                 .padding(.bottom, 32)
-
-//                HStack {
-//                    Button {
-//                        dismiss()
-//                    } label: {
-//                        Text("목록")
-//                    }
-//                    .buttonStyle(CompleButtonStyle2(isComplete: true))
-//                    
-//                    Button {
-//                        
-//                    } label: {
-//                        Text("오픈 채팅 바로가기")
-//                    }
-//                    .buttonStyle(CompleButtonStyle(isComplete: true))
-//                }
                 
             }
             .padding(.horizontal)
@@ -117,6 +101,9 @@ struct TripCompanionDetailView: View {
                 Spacer()
                 
                 Button {
+                    if let url = URL(string: viewModel.tripCompanion.openKakaoUrl ?? "") {
+                        UIApplication.shared.open(url)
+                    }
                 } label: {
                     Text("오픈 채팅 바로가기")
                 }

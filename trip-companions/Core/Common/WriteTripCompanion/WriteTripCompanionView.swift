@@ -91,6 +91,18 @@ struct WriteTripCompanionView: View {
                     
                     VStack {
                         HStack {
+                            Text("동행과 안전하게 소통해요.")
+                                .font(.title3)
+                            Spacer()
+                        }
+                        
+                        TextField("카카오 오픈채팅 url 입력", text: $viewModel.openKakaoUrl)
+                            .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                    }
+                    .padding(.bottom)
+                    
+                    VStack {
+                        HStack {
                             Text("당신의 동행은?")
                                 .font(.title3)
                             Spacer()

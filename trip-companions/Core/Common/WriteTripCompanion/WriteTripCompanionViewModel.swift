@@ -44,6 +44,7 @@ class WriteTripCompanionViewModel: ObservableObject {
     }
     @Published var openKakaoUrl: String = "" {
         didSet {
+//            openKakaoUrl = self.openKakaoUrl.trimmingCharacters(in: .whitespacesAndNewlines)
             validateForm()
         }
     }
@@ -60,7 +61,7 @@ class WriteTripCompanionViewModel: ObservableObject {
         !personal.isEmpty &&
         !title.isEmpty &&
         !contents.isEmpty &&
-        !openKakaoUrl.isEmpty
+        isValidURL(openKakaoUrl)
     }
     
     private var cancellables = Set<AnyCancellable>()
@@ -102,7 +103,7 @@ class WriteTripCompanionViewModel: ObservableObject {
             "companionMemberCount": personal,
             "contents": contents,
             "categoriesId": categoriesId,
-            "openKakaoUrl": openKakaoUrl
+            "openKakaoUrl": openKakaoUrl.trimmingCharacters(in: .whitespacesAndNewlines)
         ]
         
         NetworkManager<TripCompanion>.request(route: .createTripCompanion(parameters))
@@ -169,6 +170,14 @@ class WriteTripCompanionViewModel: ObservableObject {
         self.isDrinker = nil
         self.isSmoker = nil
         self.isComplete = false
+        self.openKakaoUrl = ""
+    }
+    
+    func isValidURL(_ string: String) -> Bool {
+        if let url = URL(string: string) {
+            return UIApplication.shared.canOpenURL(url)
+        }
+        return false
     }
 }
 
