@@ -14,7 +14,7 @@ struct HomeSearchView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationTitleView(title: "검색")
+            NavigationTitleView(title: "검색", isFilter: true)
                 .padding(.bottom)
             
             VStack {

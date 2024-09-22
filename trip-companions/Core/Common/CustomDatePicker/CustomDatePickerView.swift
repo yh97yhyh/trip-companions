@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomDatePickerView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var startDate: Date?
-    @State var date: Date = Date()
+    @State var selectDate: Date = Date()
     //    @Binding var endDate: Date
     //    @State var showingStartDatePicker = true
     //    @State var showingEndDatePicker = false
@@ -55,7 +55,7 @@ struct CustomDatePickerView: View {
                         //                            .datePickerStyle(GraphicalDatePickerStyle())
                         //                            .tint(Color.orangeF49321)
                         //                    }
-                        DatePicker("날짜를 선택해주세요", selection: $date, displayedComponents: .date)
+                        DatePicker("날짜를 선택해주세요", selection: $selectDate, displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .tint(Color.orangeF49321)
                     }
@@ -92,7 +92,7 @@ struct CustomDatePickerView: View {
             .padding()
             
             Button {
-                startDate = date
+                startDate = selectDate
                 dismiss()
             } label: {
                 Text("날짜 선택 완료")

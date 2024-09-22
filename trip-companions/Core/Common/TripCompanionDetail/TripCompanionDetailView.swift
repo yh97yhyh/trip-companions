@@ -86,8 +86,8 @@ struct TripCompanionDetailView: View {
                                     .modifier(FeatureTextModifier2())
                             }
                         }
+                        .padding(.horizontal, 1)
                     }
-                    .padding(.horizontal, 1)
                 }
                 .padding(.bottom, 32)
 

@@ -10,7 +10,7 @@ import SwiftUI
 struct InfoCollectionView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
-    @EnvironmentObject var genderAndMbtiViewModel: MetaDataViewModel
+    @EnvironmentObject var metaDataViewModel: MetaDataViewModel
     @StateObject private var viewModel = InfoCollectionViewModel.shared
     var isEditMode: Bool
     @Environment(\.dismiss) private var dismiss
@@ -95,7 +95,7 @@ struct InfoCollectionView: View {
                             }
                             
                             Picker("성별", selection: $viewModel.gender) {
-                                ForEach(genderAndMbtiViewModel.genders, id: \.code) { gender in
+                                ForEach(metaDataViewModel.genders, id: \.code) { gender in
                                     Text(gender.desc)
                                         .tag(gender as Gender)
                                 }
@@ -118,7 +118,7 @@ struct InfoCollectionView: View {
                             }
                             
                             Picker("MBTI", selection: $viewModel.mbti) {
-                                ForEach(genderAndMbtiViewModel.mbtis, id: \.code) { mbti in
+                                ForEach(metaDataViewModel.mbtis, id: \.code) { mbti in
                                     Text(mbti.desc)
                                         .tag(mbti as MBTI)
                                 }

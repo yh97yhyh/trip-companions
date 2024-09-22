@@ -21,8 +21,8 @@ struct DomesticCompanionView: View {
                         .padding(.trailing, 12)
                     
                     TextField("검색어를 입력하세요.", text: $searchViewModel.keyword)
-                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
                         .frame(height: 24)
+                        .textFieldStyle(CustomTextFieldStyle(isEditing: false, paddingSize: 12))
                 }
                 .padding(.bottom)
                 
@@ -35,6 +35,7 @@ struct DomesticCompanionView: View {
                         .foregroundColor(.black)
                     }
                     .fontWeight(.semibold)
+                    .padding(.trailing, 18)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -119,7 +120,7 @@ struct DomesticCompanionView: View {
                         }
                     }
                 }
-                .padding(.bottom)
+                .padding(.bottom, 12)
                 
                 DividerView()
                     .padding(.horizontal, -16)

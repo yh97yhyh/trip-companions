@@ -36,6 +36,12 @@ struct HomeView: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
+                    
+                    NavigationLink(destination: SelectRegionView(region: $viewModel.myRegion)) {
+                        Text("지역 선택")
+                            .foregroundColor(.grayA2A2A2)
+                            .underline(true, color: .grayA2A2A2)
+                    }
                 }
             }
             .padding(.bottom)

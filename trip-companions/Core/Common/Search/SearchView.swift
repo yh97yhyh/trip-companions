@@ -17,7 +17,7 @@ struct SearchView: View {
     
     var body: some View {
         VStack {
-            NavigationTitleView(title: title)
+            NavigationTitleView(title: title, isFilter: true)
                 .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {

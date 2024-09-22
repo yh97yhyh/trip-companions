@@ -13,6 +13,7 @@ class HomeViewModel: ObservableObject {
     static let shared = HomeViewModel()
     
     @Published var tripCompanions: [TripCompanion] = []
+    @Published var myRegion: Region? = nil
     
     private var cancellables = Set<AnyCancellable>()
     

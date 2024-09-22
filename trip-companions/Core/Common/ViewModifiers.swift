@@ -70,11 +70,12 @@ struct FeatureTextModifier2: ViewModifier {
 // MARK: - TextField
 struct CustomTextFieldStyle: TextFieldStyle {
     var isEditing: Bool = false
+    var paddingSize: CGFloat = 16
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
             .font(.subheadline)
-            .padding(16)
+            .padding(paddingSize)
             .background(isEditing ? Color.white : Color.grayF5F6F8)
             .cornerRadius(6)
             .overlay(
