@@ -69,10 +69,7 @@ struct ProfileHeaderView: View {
                 Spacer()
                 
                 if viewModel.isShowingProfileUpdateButton {
-                    // MARK: - Update to NavigationLink
-                    Button {
-                        
-                    } label: {
+                    NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
                         Image(systemName: "chevron.forward")
                             .foregroundColor(.black)
                             .frame(width: 20, height: 20)

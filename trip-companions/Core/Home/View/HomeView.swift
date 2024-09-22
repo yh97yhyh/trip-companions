@@ -20,9 +20,9 @@ struct HomeView: View {
                 .padding(.horizontal, -16)
                 .padding(.bottom)
             
-            NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "검색")) {
+            NavigationLink(destination: HomeSearchView(viewModel: SearchViewModel.shared)) {
                 HStack {
-                    Text("어디로 가시나요?")
+                    Text("검색어를 입력하세요.")
                     Spacer()
                     Image(systemName: "magnifyingglass")
                 }

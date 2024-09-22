@@ -115,6 +115,7 @@ struct SearchView: View {
                         .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == false))
                         Spacer()
                     }
+                    .padding(.horizontal, 1)
                     
                     HStack {
                         Button {
@@ -132,7 +133,8 @@ struct SearchView: View {
                         .buttonStyle(SelectButtonStyle(isSelected: viewModel.isMale == false))
                         Spacer()
                     }
-                    
+                    .padding(.horizontal, 1)
+
                     HStack {
                         Button {
                             viewModel.isDrinker = viewModel.isDrinker == true ? nil : true
@@ -149,7 +151,8 @@ struct SearchView: View {
                         .buttonStyle(SelectButtonStyle(isSelected: viewModel.isDrinker == false))
                         Spacer()
                     }
-                    
+                    .padding(.horizontal, 1)
+
                     HStack {
                         Button {
                             viewModel.isSmoker = viewModel.isSmoker == true ? nil : true
@@ -166,6 +169,7 @@ struct SearchView: View {
                         .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSmoker == false))
                         Spacer()
                     }
+                    .padding(.horizontal, 1)
                 }
                 .padding(.bottom, 24)
                 

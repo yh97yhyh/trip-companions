@@ -18,7 +18,11 @@ struct DomesticCompanionView: View {
                     Text("국내동행")
                         .font(.title3)
                         .fontWeight(.semibold)
-                    Spacer()
+                        .padding(.trailing, 12)
+                    
+                    TextField("검색어를 입력하세요.", text: $searchViewModel.keyword)
+                        .textFieldStyle(CustomTextFieldStyle(isEditing: false))
+                        .frame(height: 24)
                 }
                 .padding(.bottom)
                 

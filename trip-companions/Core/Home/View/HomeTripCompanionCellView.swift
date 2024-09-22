@@ -95,14 +95,23 @@ struct HomeTripCompanionCellView: View {
                 .lineLimit(2)
                 .padding(.bottom, 4)
             
-            Text(viewModel.tripCompanion.region.regionName)
-                .font(.subheadline)
-                .foregroundColor(.gray767676)
-                .padding(.bottom, 2)
+            HStack {
+                Image("icn_location")
+                    .padding(.trailing, -6)
+                Text(viewModel.tripCompanion.region.regionName)
+                    .font(.subheadline)
+                    .foregroundColor(.gray767676)
+                    .padding(.bottom, 2)
+            }
+            .padding(.bottom, -2)
             
-            Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
-                .font(.subheadline)
-                .foregroundColor(.gray767676)
+            HStack {
+                Image("icn_calendar")
+                    .padding(.trailing, -6)
+                Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
+                    .font(.subheadline)
+                    .foregroundColor(.gray767676)
+            }
             
             HStack {
                 Spacer()

@@ -60,6 +60,7 @@ struct InfoCollectionView: View {
                                     viewModel.isEditingNickname = true
                                     viewModel.isEditingAge = false
                                 }
+                                .padding(.horizontal, 1)
                         }
                         .padding(.bottom)
                         
@@ -79,6 +80,8 @@ struct InfoCollectionView: View {
                                     viewModel.isEditingNickname = false
                                 }
                                 .disabled(true)
+                                .padding(.horizontal, 1)
+
                         }
                         .padding(.bottom)
                         
@@ -149,6 +152,7 @@ struct InfoCollectionView: View {
                                 .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isSmoking == false))
                                 
                             }
+                            .padding(.horizontal, 1)
                         }
                         .padding(.bottom)
                         
@@ -175,6 +179,7 @@ struct InfoCollectionView: View {
                                 }
                                 .buttonStyle(WidthMaxSelectButtonStyle(isSelected: viewModel.isDrinking == false))
                             }
+                            .padding(.horizontal, 1)
                         }
                         .padding(.bottom)
                     }

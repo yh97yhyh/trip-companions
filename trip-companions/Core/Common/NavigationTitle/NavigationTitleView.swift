@@ -23,7 +23,7 @@ struct NavigationTitleView: View {
             Spacer()
             
             Text(title)
-                .font(.title3)
+                .fontWeight(.semibold)
             
             Spacer()
         }

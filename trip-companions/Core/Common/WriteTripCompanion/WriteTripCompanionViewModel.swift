@@ -42,6 +42,11 @@ class WriteTripCompanionViewModel: ObservableObject {
             validateForm()
         }
     }
+    @Published var openKakaoUrl: String = "" {
+        didSet {
+            validateForm()
+        }
+    }
     @Published var isSameMbti: Bool? = nil
     @Published var isMale: Bool? = nil
     @Published var isDrinker: Bool? = nil
@@ -54,18 +59,20 @@ class WriteTripCompanionViewModel: ObservableObject {
         startDate != nil &&
         !personal.isEmpty &&
         !title.isEmpty &&
-        !contents.isEmpty
+        !contents.isEmpty &&
+        !openKakaoUrl.isEmpty
     }
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(region: Region? = nil, startDate: Date? = nil, personal: String = "", title: String = "", contents: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    init(region: Region? = nil, startDate: Date? = nil, personal: String = "", title: String = "", contents: String = "", openKakaoUrl: String = "", isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
         self.region = region
         self.startDate = startDate
 //        self.endDate = endDate
         self.personal = personal
         self.title = title
         self.contents = contents
+        self.openKakaoUrl = openKakaoUrl
         self.isSameMbti = isSameMbti
         self.isMale = isMale
         self.isDrinker = isDrinker
@@ -94,7 +101,8 @@ class WriteTripCompanionViewModel: ObservableObject {
             "tripDate": startDate!.toServerDateText(),
             "companionMemberCount": personal,
             "contents": contents,
-            "categoriesId": categoriesId
+            "categoriesId": categoriesId,
+            "openKakaoUrl": openKakaoUrl
         ]
         
         NetworkManager<TripCompanion>.request(route: .createTripCompanion(parameters))
@@ -134,6 +142,7 @@ class WriteTripCompanionViewModel: ObservableObject {
             "companionMemberCount": personal,
             "contents": contents,
             "categoriesId": categoriesId
+            
         ]
         
         NetworkManager<TripCompanion>.request(route: .updateTripCompanion(parameters))

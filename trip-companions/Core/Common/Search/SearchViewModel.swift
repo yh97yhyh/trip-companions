@@ -18,14 +18,16 @@ class SearchViewModel: ObservableObject {
     @Published var isMale: Bool? = nil
     @Published var isDrinker: Bool? = nil
     @Published var isSmoker: Bool? = nil
+    @Published var keyword: String = ""
     
-    init(region: Region? = nil, startDate: Date? = nil, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil) {
+    init(region: Region? = nil, startDate: Date? = nil, isSameMbti: Bool? = nil, isMale: Bool? = nil, isDrinker: Bool? = nil, isSmoker: Bool? = nil, keyword: String = "") {
         self.region = region
         self.startDate = startDate
         self.isSameMbti = isSameMbti
         self.isMale = isMale
         self.isDrinker = isDrinker
         self.isSmoker = isSmoker
+        self.keyword = keyword
     }
     
 //    func fetchTripUnion() {
@@ -77,6 +79,7 @@ class SearchViewModel: ObservableObject {
         isMale = nil
         isDrinker = nil
         isSmoker = nil
+        keyword = ""
     }
 }
 

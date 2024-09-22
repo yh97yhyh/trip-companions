@@ -67,6 +67,7 @@ struct TripCompanionDetailView: View {
                             .font(.subheadline)
                             .modifier(FeatureTextModifier2())
                     }
+                    .padding(.horizontal, 1)
                 }
                 .padding(.bottom, 32)
                 
@@ -86,6 +87,7 @@ struct TripCompanionDetailView: View {
                             }
                         }
                     }
+                    .padding(.horizontal, 1)
                 }
                 .padding(.bottom, 32)
 

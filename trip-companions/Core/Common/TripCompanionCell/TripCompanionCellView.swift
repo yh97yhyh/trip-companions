@@ -87,17 +87,19 @@ struct TripCompanionCellView: View {
                     }
 
                     HStack {
+                        Image("icn_location")
+                            .padding(.trailing, -6)
                         Text(viewModel.tripCompanion.region.regionName)
                             .font(.subheadline)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
                             .foregroundColor(.gray767676)
                         Spacer()
                     }
+                    .padding(.bottom, -2)
                     
                     HStack {
                         HStack {
-                            Image(systemName: "calendar")
+                            Image("icn_calendar")
+                                .padding(.trailing, -6)
                             Text(viewModel.tripCompanion.tripDate.toCellDateFormat())
                         }
                         .font(.subheadline)
