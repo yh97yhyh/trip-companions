@@ -32,12 +32,16 @@ struct HomeView: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Text("여기는 어떠신가요?")
+                    Text("\(myPageViewModel.member.interestRegion?.regionName ?? "")")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.orangeF49321) +
+                    Text(" 여행 계획중이에요")
                         .font(.title3)
                         .fontWeight(.semibold)
                     Spacer()
                     
-                    NavigationLink(destination: SelectRegionView(region: $viewModel.myRegion)) {
+                    NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel())) {
                         Text("지역 선택")
                             .foregroundColor(.grayA2A2A2)
                             .underline(true, color: .grayA2A2A2)

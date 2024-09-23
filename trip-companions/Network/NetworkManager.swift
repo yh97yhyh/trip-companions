@@ -25,6 +25,7 @@ enum APIRouter: URLRequestConvertible {
     
     case updateMemberProfile(Parameters)
     case getMemberProfile
+    case updateInterestRegion(Parameters)
     case getGenderAndMbti
     
     case getRecommendedTripCompanions(Parameters)
@@ -42,7 +43,7 @@ enum APIRouter: URLRequestConvertible {
             return .get
         case .postSignIn, .createTripCompanion, .createLikeTripCompanion:
             return .post
-        case .updateTripCompanion, .updateMemberProfile:
+        case .updateTripCompanion, .updateMemberProfile, .updateInterestRegion:
             return .patch
         case .deleteTripCompanion, .deleteLikeTripCompanion:
             return .delete
@@ -73,6 +74,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/interest-trip-companions/my"
         case .updateMemberProfile:
             return "/api/v1/members/profile"
+        case .updateInterestRegion:
+            return "/api/v1/members/interest-region"
         case .getMemberProfile:
             return "/api/v1/members/my"
         case .getGenderAndMbti:
@@ -95,6 +98,7 @@ enum APIRouter: URLRequestConvertible {
                 .createLikeTripCompanion(let parameters),
                 .getMyLikeTripCompanions(let parameters),
                 .updateMemberProfile(let parameters),
+                .updateInterestRegion(let parameters),
                 .getRecommendedTripCompanions(let parameters):
             return parameters
         case .deleteTripCompanion, .deleteLikeTripCompanion, .getMemberProfile, .getGenderAndMbti, .getMetaData:

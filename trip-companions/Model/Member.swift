@@ -21,10 +21,11 @@ struct Member: Identifiable, Codable, Hashable {
     let gender: Gender?
     let isSmoking: Bool?
     let isDrinking: Bool?
+    let interestRegion: Region?
     let isLogin: Bool
     let isDelete: Bool
 }
 
 extension Member {
-    static let MOCK_MEMBER1: Member = .init(id: 0, loginId: "member1", age: 25, name: "김소피", nickName: "Sophie", phoneNumber: "010-1234-1234", email: "member1@test.com", tokenKey: "test", mbti: MBTI.MOCK_MBTIS[0], gender: Gender.MOCK_GENDERS[0], isSmoking: true, isDrinking: true, isLogin: true, isDelete: false)
+    static let MOCK_MEMBER1: Member = .init(id: 0, loginId: "member1", age: 25, name: "김소피", nickName: "Sophie", phoneNumber: "010-1234-1234", email: "member1@test.com", tokenKey: "test", mbti: MBTI.MOCK_MBTIS[0], gender: Gender.MOCK_GENDERS[0], isSmoking: true, isDrinking: true, interestRegion: Region.MOCK_REGIONS[0], isLogin: false, isDelete: false)
 }

@@ -79,7 +79,7 @@ struct InfoCollectionView: View {
                                     viewModel.isEditingAge = true
                                     viewModel.isEditingNickname = false
                                 }
-                                .disabled(true)
+//                                .disabled(true)
                                 .padding(.horizontal, 1)
 
                         }

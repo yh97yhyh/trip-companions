@@ -71,6 +71,7 @@ struct HomeSearchView: View {
                 Text("검색 결과 보기")
             }
             .buttonStyle(CompleButtonStyle(isComplete: keyword != ""))
+            .disabled(keyword == "")
         }
         .padding(.horizontal)
         .navigationBarHidden(true)

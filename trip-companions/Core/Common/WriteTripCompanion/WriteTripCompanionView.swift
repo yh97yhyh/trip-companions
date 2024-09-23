@@ -36,6 +36,7 @@ struct WriteTripCompanionView: View {
                         .padding(.trailing, 56)
                         Spacer()
                         
+                        // MARK: - NavigationLink, SelectRegionView
                         Menu {
                             ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
                                 Button {
@@ -49,7 +50,7 @@ struct WriteTripCompanionView: View {
                         } label: {
                             HStack {
                                 if viewModel.region == nil {
-                                    Text("지역 찾기")
+                                    Text("지역 선택")
                                 } else {
                                     Text(viewModel.region!.regionName)
                                         .foregroundColor(.black)
@@ -198,6 +199,7 @@ struct WriteTripCompanionView: View {
                 Text("등록하기")
             }
             .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+            .disabled(!viewModel.isComplete)
             .padding(.horizontal)
         }
         .navigationBarHidden(true)
