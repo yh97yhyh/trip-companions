@@ -188,18 +188,34 @@ struct InfoCollectionView: View {
             }
             .padding()
             
-            Button {
-                viewModel.updateMemberProfile { member in
-                    authManager.currentMember = member
-                    myPageViewModel.member = member
+            if isEditMode {
+                Button {
+                    viewModel.updateMemberProfile { member in
+                        authManager.currentMember = member
+                        myPageViewModel.member = member
+                    }
                     dismiss()
+                } label: {
+                    Text("완료")
                 }
-            } label: {
-                Text("완료")
+                .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+                .disabled(!viewModel.isComplete)
+                .padding(.horizontal)
+            } else {
+                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel())
+                    .environmentObject(myPageViewModel)) {
+                    Text("완료")
+                }
+                .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+                .disabled(!viewModel.isComplete)
+                .padding(.horizontal)
+                .onTapGesture {
+                    viewModel.updateMemberProfile { member in
+                        authManager.currentMember = member
+                        myPageViewModel.member = member
+                    }
+                }
             }
-            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
-            .disabled(!viewModel.isComplete)
-            .padding(.horizontal)
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)

@@ -77,5 +77,5 @@ struct ProfileHeaderView: View {
 
 #Preview {
     ProfileHeaderView(viewModel: ProfileHeaderViewModel.MOCK_VIEW_MODEL1)
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

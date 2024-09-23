@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InterestHeartView: View {
-    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel: InterestHeartViewModel
     var isDetail: Bool
     var isInterest: Bool
@@ -22,13 +22,13 @@ struct InterestHeartView: View {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
-                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: false)
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
                             }
                     } else {
                         Image(systemName: "heart") 
                             .foregroundColor(.gray767676)
                             .onTapGesture {
-                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: true)
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }
                     Text("\(inerestCount)")
@@ -41,13 +41,13 @@ struct InterestHeartView: View {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
-                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: false)
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
                             }
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.gray767676)
                             .onTapGesture {
-                                viewModel.toggleLike(writer: myPageViewModel.member, isLike: true)
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }
                     Text("\(inerestCount)")
@@ -61,5 +61,5 @@ struct InterestHeartView: View {
 
 #Preview {
     InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, isDetail: true, isInterest: true, inerestCount: 127)
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(AuthManager.shared)
 }

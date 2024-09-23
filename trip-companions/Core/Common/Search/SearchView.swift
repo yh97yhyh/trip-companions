@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var myPageViewModel: MyPageViewModel
+//    @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
     
@@ -211,5 +211,5 @@ struct SearchView: View {
 
 #Preview {
     SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")
-        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

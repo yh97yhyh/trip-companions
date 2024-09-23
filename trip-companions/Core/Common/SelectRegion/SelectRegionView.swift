@@ -62,20 +62,17 @@ struct SelectRegionView: View {
             
             Button {
                 if isInterestRegion {
-                    // MARK: - Update to interest region
                     viewModel.updateInterestRegion { member in
                         authManager.currentMember = member
                         myPageViewModel.member = member
                         HomeViewModel.shared.fetchRecommendedTripCompanions()
-                        dismiss()
                     }
-                    HomeViewModel.shared.fetchRecommendedTripCompanions()
                 } else {
                     SearchViewModel.shared.region = viewModel.region
                 }
                 dismiss()
             } label: {
-                Text("검색 결과 보기")
+                Text("등록하기")
             }
             .buttonStyle(CompleButtonStyle(isComplete: viewModel.region != nil))
             .disabled(viewModel.region == nil)

@@ -14,14 +14,16 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if showingMainView {
-                if authManager.currentMember?.nickName != nil && authManager.isLoggedIn {
+                if authManager.currentMember?.interestRegion != nil && authManager.isLoggedIn {
                     MainTabView(viewModel: MainTabViewModel.shared)
                         .environmentObject(getMyPageViewModel())
                         .environmentObject(getMetaDataViewModel())
-                } else if authManager.currentMember?.nickName == nil && authManager.isLoggedIn == true {
-                    InfoCollectionView(isEditMode: false)
-                        .environmentObject(getMyPageViewModel())
-                        .environmentObject(getMetaDataViewModel())
+                } else if authManager.currentMember?.interestRegion == nil && authManager.isLoggedIn {
+                    NavigationStack {
+                        InfoCollectionView(isEditMode: false)
+                            .environmentObject(getMyPageViewModel())
+                            .environmentObject(getMetaDataViewModel())
+                    }
                 }
                 else {
                     LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
