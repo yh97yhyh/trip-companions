@@ -23,18 +23,13 @@ struct HomeTripCompanionCellView: View {
                         .padding(.trailing, 12)
                         .padding(.bottom)
                 } else {
-                    ZStack {
-                        Circle()
-                            .fill(.grayA2A2A2.opacity(0.1))
-                            .frame(width: 52, height: 52)
-                        Image("defaultThumbnail")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 48, height: 48)
-                            .clipShape(Circle())
-                    }
-                    .padding(.trailing, 12)
-                    .padding(.bottom)
+                    Image("default_profile")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 52, height: 52)
+                        .clipShape(Circle())
+                        .padding(.trailing, 12)
+                        .padding(.bottom)
                 }
                 
                 VStack(alignment: .leading) {

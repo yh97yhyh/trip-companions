@@ -14,8 +14,21 @@ import KakaoSDKUser
 
 class AuthManager: ObservableObject {
     static let shared = AuthManager()
-    
-    @Published var isLoggedIn: Bool = false
+
+    @Published var isGuestMode: Bool = false {
+        didSet {
+            if self.isGuestMode == true {
+                isLoggedIn = false
+            }
+        }
+    }
+    @Published var isLoggedIn: Bool = false {
+        didSet {
+            if self.isLoggedIn == true {
+                isGuestMode = false
+            }
+        }
+    }
     @Published var hasUserInfo: Bool? = nil
     @Published var currentMember: Member? = nil
     @Published var token: String? = nil

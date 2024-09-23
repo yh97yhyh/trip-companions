@@ -167,17 +167,33 @@ struct CompleButtonStyle2: ButtonStyle {
 struct KakaoButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.title3)
+//            .font(.title3)
             .foregroundColor(.black)
             .padding()
             .padding(.horizontal)
             .background(configuration.isPressed ? Color.yellowFEE500.opacity(0.7) : Color.yellowFEE500)
-            .cornerRadius(6) // 모서리 둥글게
+            .cornerRadius(40)
             .frame(maxWidth: .infinity)
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut, value: configuration.isPressed)
     }
 }
+
+struct AppleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+//            .font(.title3)
+            .foregroundColor(.white)
+            .padding()
+            .padding(.horizontal)
+            .background(configuration.isPressed ? Color.black.opacity(0.7) : Color.black)
+            .cornerRadius(40)
+            .frame(maxWidth: .infinity)
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut, value: configuration.isPressed)
+    }
+}
+
 
 struct SearchButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

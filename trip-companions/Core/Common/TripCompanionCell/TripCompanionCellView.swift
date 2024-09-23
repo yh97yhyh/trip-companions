@@ -23,17 +23,12 @@ struct TripCompanionCellView: View {
                             .cornerRadius(10)
                             .padding(.trailing, 12)
                     } else {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.grayA2A2A2.opacity(0.1))
-                                .frame(width: 70, height: 70)
-                            Image("defaultThumbnail")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 70, height: 70)
-                                .cornerRadius(10)
-                        }
-                        .padding(.trailing, 12)
+                        Image("default_profile")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
+                            .cornerRadius(10)
+                            .padding(.trailing, 12)
                     }
                     
                     Spacer()

@@ -36,9 +36,6 @@ struct ContentView: View {
                         }
                     }
             }
-//            MainTabView()
-//                .environmentObject(getMyPageViewModel())
-//                .environmentObject(getGenderAndMbtiViewModel())
         }
         
     }

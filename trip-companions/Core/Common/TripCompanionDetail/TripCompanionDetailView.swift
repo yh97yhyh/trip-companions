@@ -130,17 +130,12 @@ struct WriterHeaderView: View  {
                         .clipShape(Circle())
                         .padding(.trailing, 12)
                 } else {
-                    ZStack {
-                        Circle()
-                            .fill(.grayA2A2A2.opacity(0.1))
-                            .frame(width: 64, height: 64)
-                        Image("defaultThumbnail")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 64, height: 64)
-                            .clipShape(Circle())
-                    }
-                    .padding(.trailing, 12)
+                    Image("default_profile")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 64, height: 64)
+                        .clipShape(Circle())
+                        .padding(.trailing, 12)
                 }
                 
                 VStack(alignment: .leading) {

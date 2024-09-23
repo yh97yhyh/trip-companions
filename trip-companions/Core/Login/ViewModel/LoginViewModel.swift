@@ -15,7 +15,7 @@ class LoginViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    func login() {
+    func kakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             AuthManager.shared.loginWithKakaoTalk()
                 .receive(on: DispatchQueue.main) // UI Update?
@@ -26,9 +26,8 @@ class LoginViewModel: ObservableObject {
                     case .failure(let error):
                         print("로그인 실패: \(error)")
                     }
-                } receiveValue: { [weak self] success, isNewUser in
-//                    self?.isLoggedIn = success
-//                    self?.isNewUser = isNewUser
+                } receiveValue: { _ in
+
                 }.store(in: &cancellables)
         } else {
             AuthManager.shared.loginWithKakaoAccount()
@@ -40,12 +39,19 @@ class LoginViewModel: ObservableObject {
                     case .failure(let error):
                         print("로그인 실패: \(error)")
                     }
-                } receiveValue: { [weak self] success, isNewUser in
-//                    self?.isLoggedIn = success
-//                    self?.isNewUser = isNewUser
+                } receiveValue: { _ in
+                    
                 }.store(in: &cancellables)
         }
     }    
+    
+    func appleLogin() {
+        
+    }
+    
+    func guest() {
+        AuthManager.shared.isGuestMode = true
+    }
     
 }
 
