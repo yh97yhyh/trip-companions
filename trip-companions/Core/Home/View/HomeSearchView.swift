@@ -65,6 +65,7 @@ struct HomeSearchView: View {
             Button {
                 viewModel.keyword = keyword
                 viewModel.startDate = startDate
+                DomesticCompanionViewModel.shared.fetchTripCompanions()
                 MainTabViewModel.shared.selectedIndex = 1
                 dismiss()
             } label: {
@@ -76,10 +77,10 @@ struct HomeSearchView: View {
         .padding(.horizontal)
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            self.keyword = viewModel.keyword
-            self.startDate = viewModel.startDate
-        }
+//        .onAppear {
+//            self.keyword = viewModel.keyword
+//            self.startDate = viewModel.startDate
+//        }
     }
 }
 

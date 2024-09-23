@@ -13,7 +13,6 @@ enum APIRouter: URLRequestConvertible {
     case fetchKakaoOAuthCode(Parameters)
     case postSignIn(Parameters)
     
-    case getTripCompanions(Parameters)
     case createTripCompanion(Parameters)
     case updateTripCompanion(Parameters)
     case deleteTripCompanion(postId: Int)
@@ -28,6 +27,7 @@ enum APIRouter: URLRequestConvertible {
     case updateInterestRegion(Parameters)
     case getGenderAndMbti
     
+    case getTripCompanions(Parameters)
     case getRecommendedTripCompanions(Parameters)
     
     case getMetaData
@@ -35,10 +35,11 @@ enum APIRouter: URLRequestConvertible {
     var method: HTTPMethod {
         switch self {
         case .fetchKakaoOAuthCode,
-                .getTripCompanions, .getMyTripCompanions,
+                .getMyTripCompanions,
                 .getMemberProfile, .getGenderAndMbti,
                 .getRecommendedTripCompanions,
                 .getMyLikeTripCompanions,
+                .getTripCompanions,
                 .getMetaData:
             return .get
         case .postSignIn, .createTripCompanion, .createLikeTripCompanion:
@@ -56,8 +57,6 @@ enum APIRouter: URLRequestConvertible {
             return "/oauth2/code/kakao"
         case .postSignIn:
             return "/oauth2/kakao/sign-in"
-        case .getTripCompanions:
-            return "/api/v1/trip-companions"
         case .createTripCompanion:
             return "/api/v1/trip-companions"
         case .updateTripCompanion:
@@ -80,6 +79,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/members/my"
         case .getGenderAndMbti:
             return "/api/v1/members/filter-info"
+        case .getTripCompanions:
+            return "/public/v1/trip-companions"
         case .getRecommendedTripCompanions:
             return "/public/v1/trip-companions/recommend"
         case .getMetaData:

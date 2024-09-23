@@ -94,6 +94,14 @@ class DomesticCompanionViewModel: ObservableObject {
             parameters["tripDate"] = startDate.toServerDateText()
         }
         
+        if SearchViewModel.shared.keyword != "" {
+            parameters["keyword"] = SearchViewModel.shared.keyword 
+        }
+        
+        if let member = AuthManager.shared.currentMember {
+            parameters["memberId"] = member.id
+        }
+        
         return parameters
     }
 }

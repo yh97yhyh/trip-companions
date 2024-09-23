@@ -23,6 +23,9 @@ struct DomesticCompanionView: View {
                     TextField("검색어를 입력하세요.", text: $searchViewModel.keyword)
                         .frame(height: 24)
                         .textFieldStyle(CustomTextFieldStyle(isEditing: false, paddingSize: 12))
+                        .onSubmit {
+                            viewModel.fetchTripCompanions()
+                        }
                 }
                 .padding(.bottom)
                 
