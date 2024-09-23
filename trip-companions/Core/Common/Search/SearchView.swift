@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct SearchView: View {
-//    @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: SearchViewModel
     @Environment(\.dismiss) private var dismiss
     
+    @State private var hasAppeared = false
     @State private var showingDatePicker = false
     var title: String
     
@@ -37,27 +38,40 @@ struct SearchView: View {
                         Spacer()
                     }
                     
-                    Menu {
-                        ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
-                            Button {
-                                self.region = region
-                            } label: {
-                                VStack {
-                                    Text(region.regionName)
+//                    Menu {
+//                        ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
+//                            Button {
+//                                self.region = region
+//                            } label: {
+//                                VStack {
+//                                    Text(region.regionName)
+//                                }
+//                            }
+//                        }
+//                    } label: {
+//                        HStack {
+//                            if region == nil {
+//                                Text("지역명을 입력하세요")
+//                            } else {
+//                                Text(region!.regionName)
+//                                    .foregroundColor(.black)
+//                            }
+//                            Spacer()
+//                            Image(systemName: "magnifyingglass")
+//                        }
+//                    }
+                    NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), isInterestRegion: false, bindedRegion: $region)
+                        .environmentObject(myPageViewModel)) {
+                            HStack {
+                                if region == nil {
+                                    Text("지역명을 입력하세요")
+                                } else {
+                                    Text(region!.regionName)
+                                        .foregroundColor(.black)
                                 }
+                                Spacer()
+                                Image(systemName: "magnifyingglass")
                             }
-                        }
-                    } label: {
-                        HStack {
-                            if region == nil {
-                                Text("지역명을 입력하세요")
-                            } else {
-                                Text(region!.regionName)
-                                    .foregroundColor(.black)
-                            }
-                            Spacer()
-                            Image(systemName: "magnifyingglass")
-                        }
                     }
                     .buttonStyle(SearchButtonStyle())
                     
@@ -198,18 +212,22 @@ struct SearchView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            self.region = viewModel.region
-            self.startDate = viewModel.startDate
-            self.isSameMbti = viewModel.isSameMbti
-            self.isMale = viewModel.isMale
-            self.isDrinker = viewModel.isDrinker
-            self.isSmoker = viewModel.isSmoker
-            self.keyword = viewModel.keyword
+            if !hasAppeared { // dismiss 시에는 X
+                self.region = viewModel.region
+                self.startDate = viewModel.startDate
+                self.isSameMbti = viewModel.isSameMbti
+                self.isMale = viewModel.isMale
+                self.isDrinker = viewModel.isDrinker
+                self.isSmoker = viewModel.isSmoker
+                self.keyword = viewModel.keyword
+                
+                hasAppeared = true
+            }
         }
     }
 }
 
 #Preview {
     SearchView(viewModel: SearchViewModel.MOCK_VIEW_MODEL, title: "검색")
-//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

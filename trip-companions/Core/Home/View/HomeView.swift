@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: HomeViewModel
+    @State var mockRegion: Region?
     
     var body: some View {
         VStack {
@@ -41,7 +42,7 @@ struct HomeView: View {
                         .fontWeight(.semibold)
                     Spacer()
                     
-                    NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel())) {
+                    NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)) {
                         Text("지역 선택")
                             .foregroundColor(.grayA2A2A2)
                             .underline(true, color: .grayA2A2A2)

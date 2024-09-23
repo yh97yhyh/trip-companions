@@ -13,6 +13,7 @@ struct SelectRegionView: View {
     @StateObject var viewModel: SelectRegionViewModel
     
     var isInterestRegion = true
+    @Binding var bindedRegion: Region?
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -68,7 +69,7 @@ struct SelectRegionView: View {
                         HomeViewModel.shared.fetchRecommendedTripCompanions()
                     }
                 } else {
-                    SearchViewModel.shared.region = viewModel.region
+                    bindedRegion = viewModel.region
                 }
                 dismiss()
             } label: {

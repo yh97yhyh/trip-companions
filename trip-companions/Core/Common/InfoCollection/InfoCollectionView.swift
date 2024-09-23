@@ -16,6 +16,7 @@ struct InfoCollectionView: View {
     @Environment(\.dismiss) private var dismiss
     @State var gender: Gender?
     @State var mbti: MBTI?
+    @State var mockRegion: Region?
     
 //    init(isEditMode: Bool) {
 //        self.isEditMode = isEditMode
@@ -202,7 +203,7 @@ struct InfoCollectionView: View {
                 .disabled(!viewModel.isComplete)
                 .padding(.horizontal)
             } else {
-                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel())
+                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
                     .environmentObject(myPageViewModel)) {
                     Text("완료")
                 }
