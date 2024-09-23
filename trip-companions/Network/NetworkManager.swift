@@ -81,7 +81,7 @@ enum APIRouter: URLRequestConvertible {
         case .getGenderAndMbti:
             return "/api/v1/members/filter-info"
         case .getRecommendedTripCompanions:
-            return "/public/v1/trip-companions"
+            return "/public/v1/trip-companions/recommend"
         case .getMetaData:
             return "/public/v1/meta"
         }
@@ -116,6 +116,8 @@ enum APIRouter: URLRequestConvertible {
         if case .postSignIn(_) = self {
             
         } else if case .getMetaData = self {
+            
+        } else if case .getRecommendedTripCompanions(_) = self {
             
         }
         else {

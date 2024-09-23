@@ -66,6 +66,7 @@ struct SelectRegionView: View {
                     viewModel.updateInterestRegion { member in
                         authManager.currentMember = member
                         myPageViewModel.member = member
+                        HomeViewModel.shared.fetchRecommendedTripCompanions()
                         dismiss()
                     }
                     HomeViewModel.shared.fetchRecommendedTripCompanions()

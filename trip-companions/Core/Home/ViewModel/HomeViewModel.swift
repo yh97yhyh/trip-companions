@@ -23,7 +23,13 @@ class HomeViewModel: ObservableObject {
     }
     
     func fetchRecommendedTripCompanions() {
-        let parameters = Parameters()
+        var parameters = Parameters()
+        if AuthManager.shared.isLoggedIn {
+            parameters = [
+                "regionId": AuthManager.shared.currentMember?.interestRegion?.id ?? nil,
+                "memberId": AuthManager.shared.currentMember!.id
+            ]
+        }
         
         NetworkManager<[TripCompanion]>.request(route: .getRecommendedTripCompanions(parameters))
             .sink { completion in
