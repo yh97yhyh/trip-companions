@@ -22,7 +22,8 @@ struct ContentView: View {
                     InfoCollectionView(isEditMode: false)
                         .environmentObject(getMyPageViewModel())
                         .environmentObject(getMetaDataViewModel())
-                } else {
+                }
+                else {
                     LoginView(viewModel: LoginViewModel.MOCK_VIEW_MODEL)
                         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
                 }

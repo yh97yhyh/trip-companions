@@ -10,14 +10,10 @@ import SwiftUI
 struct NavigationTitleView: View {
     @Environment(\.dismiss) private var dismiss
     var title: String
-    var isFilter: Bool = false
     
     var body: some View {
         HStack {
             Button {
-                if isFilter {
-                    
-                }
                 dismiss()
             } label: {
                 Image(systemName: "chevron.backward")

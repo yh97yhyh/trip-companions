@@ -109,9 +109,12 @@ enum APIRouter: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        if case .postSignIn(let parameters) = self {
+        if case .postSignIn(_) = self {
             
-        } else {
+        } else if case .getMetaData = self {
+            
+        }
+        else {
             urlRequest.setValue("Bearer \(AuthManager.shared.token!)", forHTTPHeaderField: "Authorization")
         }
         

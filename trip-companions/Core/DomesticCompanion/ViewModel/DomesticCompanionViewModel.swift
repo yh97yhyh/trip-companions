@@ -82,7 +82,8 @@ class DomesticCompanionViewModel: ObservableObject {
         
         var parameters: [String: Any] = [
             "categoriesId": categoriesId,
-            "page": page
+            "page": page,
+            "size": 20
         ]
         
         if let regionId = SearchViewModel.shared.region?.id {

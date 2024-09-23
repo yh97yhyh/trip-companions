@@ -44,7 +44,8 @@ class MyPostsViewModel: ObservableObject {
         isFetching = true
         
         let parameters: [String: Any] = [
-            "page": page
+            "page": page,
+            "size": 20
         ]
         
         NetworkManager<TripCompanionResponse>.request(route: .getMyTripCompanions(parameters))

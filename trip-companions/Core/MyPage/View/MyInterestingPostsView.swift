@@ -18,19 +18,21 @@ struct MyInterestingPostsView: View {
             VStack {
                 HStack {
                     Spacer()
-                    Button {
-                        
-                    } label: {
-                        Text("최신순")
-                            .foregroundColor(.gray767676)
-                    }
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("최신순")
+//                            .foregroundColor(.gray767676)
+//                    }
+                    Text("최신순")
+                        .foregroundColor(.gray767676)
                 }
                 Divider()
             }
             .padding(.horizontal)
             
             VStack(alignment: .leading) {
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     LazyVStack {
                         ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
                             VStack {

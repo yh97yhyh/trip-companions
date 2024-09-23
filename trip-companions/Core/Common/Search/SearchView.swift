@@ -15,9 +15,17 @@ struct SearchView: View {
     @State private var showingDatePicker = false
     var title: String
     
+    @State var region: Region? = nil
+    @State var startDate: Date? = nil
+    @State var isSameMbti: Bool? = nil
+    @State var isMale: Bool? = nil
+    @State var isDrinker: Bool? = nil
+    @State var isSmoker: Bool? = nil
+    @State var keyword: String = ""
+    
     var body: some View {
         VStack {
-            NavigationTitleView(title: title, isFilter: true)
+            NavigationTitleView(title: title)
                 .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
@@ -32,7 +40,7 @@ struct SearchView: View {
                     Menu {
                         ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
                             Button {
-                                viewModel.region = region
+                                self.region = region
                             } label: {
                                 VStack {
                                     Text(region.regionName)
@@ -41,10 +49,10 @@ struct SearchView: View {
                         }
                     } label: {
                         HStack {
-                            if viewModel.region == nil {
+                            if region == nil {
                                 Text("지역명을 입력하세요")
                             } else {
-                                Text(viewModel.region!.regionName)
+                                Text(region!.regionName)
                                     .foregroundColor(.black)
                             }
                             Spacer()
@@ -64,29 +72,21 @@ struct SearchView: View {
                         Spacer()
                     }
                     
-                    //                    NavigationLink(destination: CustomDatePickerView()) {
-                    //                        HStack {
-                    //                            Text("날짜를 입력하세요")
-                    //                            Spacer()
-                    //                        }
-                    //                    }
-                    //                    .buttonStyle(SearchButtonStyle())
-                    
                     Button {
                         showingDatePicker = true
                     } label: {
                         HStack {
-                            if viewModel.startDate == nil {
+                            if startDate == nil {
                                 Text("날짜를 입력하세요")
                             } else {
-                                Text("\(viewModel.startDate!.toDateText())")
+                                Text("\(startDate!.toDateText())")
                                     .foregroundColor(.black)
                             }
                             Spacer()
                         }
                     }
                     .sheet(isPresented: $showingDatePicker) {
-                        CustomDatePickerView(startDate: $viewModel.startDate)
+                        CustomDatePickerView(startDate: $startDate)
                     }
                     .buttonStyle(SearchButtonStyle())
                 }
@@ -101,72 +101,72 @@ struct SearchView: View {
                     
                     HStack {
                         Button {
-                            viewModel.isSameMbti = viewModel.isSameMbti == true ? nil : true
+                            isSameMbti = isSameMbti == true ? nil : true
                         } label: {
                             Text("나와 같은 MBTI")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: isSameMbti == true))
                         
                         Button {
-                            viewModel.isSameMbti = viewModel.isSameMbti == false ? nil : false
+                            isSameMbti = isSameMbti == false ? nil : false
                         } label: {
                             Text("다른 MBTI도 좋아요")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSameMbti == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: isSameMbti == false))
                         Spacer()
                     }
                     .padding(.horizontal, 1)
                     
                     HStack {
                         Button {
-                            viewModel.isMale = viewModel.isMale == true ? nil : true
+                            isMale = isMale == true ? nil : true
                         } label: {
                             Text("남성")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isMale == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: isMale == true))
                         
                         Button {
-                            viewModel.isMale = viewModel.isMale == false ? nil : false
+                            isMale = isMale == false ? nil : false
                         } label: {
                             Text("여성")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isMale == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: isMale == false))
                         Spacer()
                     }
                     .padding(.horizontal, 1)
 
                     HStack {
                         Button {
-                            viewModel.isDrinker = viewModel.isDrinker == true ? nil : true
+                            isDrinker = isDrinker == true ? nil : true
                         } label: {
                             Text("음주")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isDrinker == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: isDrinker == true))
                         
                         Button {
-                            viewModel.isDrinker = viewModel.isDrinker == false ? nil : false
+                            isDrinker = isDrinker == false ? nil : false
                         } label: {
                             Text("논알콜")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isDrinker == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: isDrinker == false))
                         Spacer()
                     }
                     .padding(.horizontal, 1)
 
                     HStack {
                         Button {
-                            viewModel.isSmoker = viewModel.isSmoker == true ? nil : true
+                            isSmoker = isSmoker == true ? nil : true
                         } label: {
                             Text("흡연")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSmoker == true))
+                        .buttonStyle(SelectButtonStyle(isSelected: isSmoker == true))
                         
                         Button {
-                            viewModel.isSmoker = viewModel.isSmoker == false ? nil : false
+                            isSmoker = isSmoker == false ? nil : false
                         } label: {
                             Text("비흡연")
                         }
-                        .buttonStyle(SelectButtonStyle(isSelected: viewModel.isSmoker == false))
+                        .buttonStyle(SelectButtonStyle(isSelected: isSmoker == false))
                         Spacer()
                     }
                     .padding(.horizontal, 1)
@@ -178,6 +178,13 @@ struct SearchView: View {
             .padding(.horizontal)
             
             Button {
+                viewModel.region = region
+                viewModel.startDate = startDate
+                viewModel.isSameMbti = isSameMbti
+                viewModel.isMale = isMale
+                viewModel.isDrinker = isDrinker
+                viewModel.isSmoker = isSmoker
+                viewModel.keyword = keyword
                 DomesticCompanionViewModel.shared.fetchTripCompanions()
                 MainTabViewModel.shared.selectedIndex = 1
                 dismiss()
@@ -190,8 +197,14 @@ struct SearchView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-        .onDisappear {
-            //            viewModel.clear()
+        .onAppear {
+            self.region = viewModel.region
+            self.startDate = viewModel.startDate
+            self.isSameMbti = viewModel.isSameMbti
+            self.isMale = viewModel.isMale
+            self.isDrinker = viewModel.isDrinker
+            self.isSmoker = viewModel.isSmoker
+            self.keyword = viewModel.keyword
         }
     }
 }

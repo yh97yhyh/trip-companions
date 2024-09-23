@@ -44,7 +44,8 @@ class MyInterestingPostsViewModel: ObservableObject {
         isFetching = true
         
         let parameters: [String: Any] = [
-            "page": page
+            "page": page,
+            "size": 20
         ]
         
         NetworkManager<TripCompanionResponse>.request(route: .getMyLikeTripCompanions(parameters))

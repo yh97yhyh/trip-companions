@@ -125,26 +125,30 @@ struct DomesticCompanionView: View {
                 DividerView()
                     .padding(.horizontal, -16)
                 
-                VStack(alignment: .leading) {
-                    ScrollView {
-                        LazyVStack {
-                            ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                    TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                        .padding(.vertical, 12)
-                                }
-                                Divider()
-                            }
-                            if viewModel.page < viewModel.totalPage && !viewModel.isFetching {
-                                ProgressView()
-                                    .onAppear {
-                                        viewModel.addTripCompanions()
+                if viewModel.tripCompanions.isEmpty {
+                    NoSearchResultView()
+                } else {
+                    VStack(alignment: .leading) {
+                        ScrollView(showsIndicators: false) {
+                            LazyVStack {
+                                ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                                    NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                                        TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                            .padding(.vertical, 12)
                                     }
+                                    Divider()
+                                }
+                                if viewModel.page < viewModel.totalPage && !viewModel.isFetching {
+                                    ProgressView()
+                                        .onAppear {
+                                            viewModel.addTripCompanions()
+                                        }
+                                }
                             }
                         }
-                    }
-                    .refreshable {
-                        viewModel.fetchTripCompanions()
+                        .refreshable {
+                            viewModel.fetchTripCompanions()
+                        }
                     }
                 }
             }

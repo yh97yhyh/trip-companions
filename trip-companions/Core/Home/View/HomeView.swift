@@ -83,6 +83,8 @@ struct HomeView: View {
 }
 
 struct HomeAddButtonView: View {
+    @State private var showAlert = false
+
     var body: some View {
         VStack {
             NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel.shared)) {
@@ -92,6 +94,17 @@ struct HomeAddButtonView: View {
                     .padding(24)
                     .background(Color.orangeF49321)
                     .clipShape(Circle())
+                    .onTapGesture {
+                        if AuthManager.shared.isGuestMode {
+                            showAlert = true
+                        } else {
+                            // Trigger navigation if not in guest mode
+                            showAlert = false // This won't be used since NavigationLink handles it
+                        }
+                    }
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("Guest Mode"), message: Text("You cannot add a trip in guest mode."), dismissButton: .default(Text("OK")))
             }
         }
     }

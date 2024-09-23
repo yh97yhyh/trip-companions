@@ -52,21 +52,7 @@ struct SelectRegionView: View {
             }
             
             if filteredRegions.isEmpty {
-                Spacer()
-                HStack {
-                    Spacer()
-                    VStack {
-                        Image("no_serach_result")
-                            .padding()
-                        Text("지역 검색 결과가 없습니다.")
-                            .padding(.bottom, 4)
-                        Text("다른 검색어를 입력해 주세요.")
-                            .font(.subheadline)
-                            .foregroundColor(.grayA2A2A2)
-                    }
-                    Spacer()
-                }
-                Spacer()
+                NoSearchResultView()
             } else {
                 ScrollView(showsIndicators: false) {
                     ForEach(filteredRegions, id: \.id) { region in

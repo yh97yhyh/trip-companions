@@ -12,9 +12,12 @@ struct HomeSearchView: View {
     @State private var showingDatePicker = false
     @Environment(\.dismiss) private var dismiss
     
+    @State var keyword: String = ""
+    @State var startDate: Date? = nil
+    
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationTitleView(title: "검색", isFilter: true)
+            NavigationTitleView(title: "검색")
                 .padding(.bottom)
             
             VStack {
@@ -25,7 +28,7 @@ struct HomeSearchView: View {
                     Spacer()
                 }
                 
-                TextField("예) 제주도, 여자 등", text: $viewModel.keyword)
+                TextField("예) 제주도, 여자 등", text: $keyword)
                     .textFieldStyle(CustomTextFieldStyle(isEditing: false))
             }
             .padding(.bottom, 32)
@@ -42,17 +45,17 @@ struct HomeSearchView: View {
                     showingDatePicker = true
                 } label: {
                     HStack {
-                        if viewModel.startDate == nil {
+                        if startDate == nil {
                             Text("날짜를 입력하세요")
                         } else {
-                            Text("\(viewModel.startDate!.toDateText())")
+                            Text("\(startDate!.toDateText())")
                                 .foregroundColor(.black)
                         }
                         Spacer()
                     }
                 }
                 .sheet(isPresented: $showingDatePicker) {
-                    CustomDatePickerView(startDate: $viewModel.startDate)
+                    CustomDatePickerView(startDate: $startDate)
                 }
                 .buttonStyle(SearchButtonStyle())
             }
@@ -60,17 +63,22 @@ struct HomeSearchView: View {
             Spacer()
             
             Button {
-//                DomesticCompanionViewModel.shared.fetchTripCompanions()
+                viewModel.keyword = keyword
+                viewModel.startDate = startDate
                 MainTabViewModel.shared.selectedIndex = 1
                 dismiss()
             } label: {
                 Text("검색 결과 보기")
             }
-            .buttonStyle(CompleButtonStyle(isComplete: true))
+            .buttonStyle(CompleButtonStyle(isComplete: keyword != ""))
         }
         .padding(.horizontal)
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            self.keyword = viewModel.keyword
+            self.startDate = viewModel.startDate
+        }
     }
 }
 
