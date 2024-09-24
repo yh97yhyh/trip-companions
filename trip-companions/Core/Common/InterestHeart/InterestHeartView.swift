@@ -22,12 +22,18 @@ struct InterestHeartView: View {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
                             }
                     } else {
                         Image(systemName: "heart") 
                             .foregroundColor(.gray767676)
                             .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }
@@ -41,12 +47,18 @@ struct InterestHeartView: View {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
                             }
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.gray767676)
                             .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }

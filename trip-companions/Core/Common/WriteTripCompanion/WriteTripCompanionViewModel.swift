@@ -156,6 +156,7 @@ class WriteTripCompanionViewModel: ObservableObject {
                 }
             } receiveValue: { tripCompanion in
                 print("Succeed to update trip companion! \(tripCompanion.id)")
+                MyPostsViewModel.shared.fetchTripCompanions()
             }.store(in: &cancellables)
     }
     

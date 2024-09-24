@@ -63,6 +63,7 @@ struct HomeView: View {
                                     .cornerRadius(10)
                                     .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
                                     .padding(.trailing, 2)
+                                    .frame(minWidth: 200)
                             }
                         }
                         

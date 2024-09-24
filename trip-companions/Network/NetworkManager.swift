@@ -23,6 +23,7 @@ enum APIRouter: URLRequestConvertible {
     case getMyLikeTripCompanions(Parameters)
     
     case updateMemberProfile(Parameters)
+    case updateProfileImage(profileImageFile: UIImage?)
     case getMemberProfile
     case updateInterestRegion(Parameters)
     case getGenderAndMbti
@@ -44,7 +45,7 @@ enum APIRouter: URLRequestConvertible {
             return .get
         case .postSignIn, .createTripCompanion, .createLikeTripCompanion:
             return .post
-        case .updateTripCompanion, .updateMemberProfile, .updateInterestRegion:
+        case .updateTripCompanion, .updateMemberProfile, .updateProfileImage, .updateInterestRegion:
             return .patch
         case .deleteTripCompanion, .deleteLikeTripCompanion:
             return .delete
@@ -73,6 +74,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/interest-trip-companions/my"
         case .updateMemberProfile:
             return "/api/v1/members/profile"
+        case .updateProfileImage:
+            return "/api/v1/members/profile-image"
         case .updateInterestRegion:
             return "/api/v1/members/interest-region"
         case .getMemberProfile:
@@ -102,8 +105,17 @@ enum APIRouter: URLRequestConvertible {
                 .updateInterestRegion(let parameters),
                 .getRecommendedTripCompanions(let parameters):
             return parameters
-        case .deleteTripCompanion, .deleteLikeTripCompanion, .getMemberProfile, .getGenderAndMbti, .getMetaData:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .updateProfileImage, .getMemberProfile, .getGenderAndMbti, .getMetaData:
             return Parameters()
+        }
+    }
+    
+    var image: UIImage? {
+        switch self {
+        case .updateProfileImage(let profileImageFile):
+            return profileImageFile
+        default:
+            return nil
         }
     }
     
@@ -112,7 +124,11 @@ enum APIRouter: URLRequestConvertible {
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         
         urlRequest.httpMethod = method.rawValue
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if case .updateProfileImage(_) = self {
+            urlRequest.setValue("multipart/form-data", forHTTPHeaderField: "Content-Type")
+        } else {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
         
         if case .postSignIn(_) = self {
             
@@ -131,7 +147,11 @@ enum APIRouter: URLRequestConvertible {
         case .get:
             urlRequest = try URLEncoding.default.encode(urlRequest, with: parameters)
         default:
-            urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
+            if let image = image {
+                // Do not set Content-Type here for multipart/form-data
+            } else {
+                urlRequest = try JSONEncoding.default.encode(urlRequest, with: parameters)
+            }
         }
         
         return urlRequest
@@ -176,6 +196,42 @@ final class NetworkManager<T: Codable> {
             .replaceError(with: 0)
             .eraseToAnyPublisher()
     }
+    
+    static func requestFormData(route: APIRouter) -> AnyPublisher<T, NetworkError> {
+            return Future<T, NetworkError> { promise in
+                AF.upload(multipartFormData: { multipartFormData in
+//                    if let parameters = route.parameters,
+//                       let jsonData = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
+//                        multipartFormData.append(jsonData, withName: "saveRequest", mimeType: "application/json")
+//                    }
+                    
+                    if let image = route.image {
+                        if let imageData = image.jpegData(compressionQuality: 0.7) {
+                            multipartFormData.append(imageData, withName: "profileImageFile", fileName: "image.jpg", mimeType: "image/jpeg")
+                        }
+                    }
+                }, with: route)
+                .validate()
+                .responseDecodable(of: T.self) { response in
+                    switch response.result {
+                    case .success(let value):
+                        promise(.success(value))
+                    case .failure(let error):
+                        if let statusCode = response.response?.statusCode {
+                            switch statusCode {
+                            case 401:
+                                promise(.failure(.error(err: "Unauthorized")))
+                            default:
+                                promise(.failure(.error(err: "Status code: \(statusCode)")))
+                            }
+                        } else {
+                            promise(.failure(.error(err: error.localizedDescription)))
+                        }
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
 }
 
 enum NetworkError: Error {

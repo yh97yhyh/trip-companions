@@ -211,6 +211,7 @@ struct WriteTripCompanionView: View {
                 viewModel.personal = String(tripCompanion!.companionMemberCount)
                 viewModel.title = tripCompanion!.title
                 viewModel.contents = tripCompanion!.contents
+                viewModel.openKakaoUrl = tripCompanion!.openKakaoUrl ?? ""
                 
                 for category in tripCompanion!.categories {
                     switch category.id {

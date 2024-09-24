@@ -88,7 +88,7 @@ struct TripCompanionDetailView: View {
                                         .modifier(FeatureTextModifier2())
                                 }
                             }
-                            .padding(.horizontal, 1)
+                            .padding(1)
                         }
                     }
                     .padding(.bottom, 32)
@@ -105,6 +105,7 @@ struct TripCompanionDetailView: View {
                     Button {
                         if AuthManager.shared.isGuestMode {
                             showingNoSignInAlert = true
+                            return
                         }
                         if let url = URL(string: viewModel.tripCompanion.openKakaoUrl ?? "") {
                             UIApplication.shared.open(url)
