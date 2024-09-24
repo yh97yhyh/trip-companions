@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if showingMainView {
-                if authManager.currentMember?.interestRegion != nil && authManager.isLoggedIn {
+                if (authManager.currentMember?.interestRegion != nil && authManager.isLoggedIn) || authManager.isGuestMode {
                     MainTabView(viewModel: MainTabViewModel.shared)
                         .environmentObject(getMyPageViewModel())
                         .environmentObject(getMetaDataViewModel())

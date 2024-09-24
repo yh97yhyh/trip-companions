@@ -18,5 +18,5 @@ class MyPageViewModel: ObservableObject {
 }
 
 extension MyPageViewModel {
-    static let MOCK_VIEW_MODEL = MyPageViewModel(member: Member.MOCK_MEMBER1)
+    static let MOCK_VIEW_MODEL = MyPageViewModel(member: Member.Guest)
 }

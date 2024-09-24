@@ -11,105 +11,121 @@ import Kingfisher
 struct TripCompanionDetailView: View {
     @StateObject var viewModel: TripCompanionDetailViewModel
     @Environment(\.dismiss) private var dismiss
+    @State var showingNoSignInAlert = false
     
     var body: some View {
-        VStack {
-            NavigationTitleView(title: "국내동행")
-                .padding(.horizontal)
-                .padding(.bottom)
-            
-            WriterHeaderView(viewModel: viewModel)
-                .padding(.horizontal)
-                .padding(.bottom)
-            
-            DividerView()
-                .ignoresSafeArea()
-                .padding(.bottom)
-            
-            ScrollView(showsIndicators: false) {
-
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(viewModel.tripCompanion.title)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                        Spacer()
-                    }
-                    .padding(.bottom, 8)
+        ZStack {
+            VStack {
+                NavigationTitleView(title: "국내동행")
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                
+                WriterHeaderView(viewModel: viewModel)
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                
+                DividerView()
+                    .ignoresSafeArea()
+                    .padding(.bottom)
+                
+                ScrollView(showsIndicators: false) {
                     
-                    HStack {
-                        Text(viewModel.tripCompanion.contents)
-                            .font(.subheadline)
-                            .foregroundColor(.gray767676)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(viewModel.tripCompanion.title)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                            Spacer()
+                        }
+                        .padding(.bottom, 8)
+                        
+                        HStack {
+                            Text(viewModel.tripCompanion.contents)
+                                .font(.subheadline)
+                                .foregroundColor(.gray767676)
+                        }
                     }
-                }
-                .padding(.bottom, 32)
-
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("여행 계획이에요")
-                        Spacer()
-                    }
-                    .padding(.bottom, 8)
+                    .padding(.bottom, 32)
                     
-                    HStack {
-                        Text(viewModel.tripCompanion.region.regionName)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("여행 계획이에요")
+                            Spacer()
+                        }
+                        .padding(.bottom, 8)
+                        
+                        HStack {
+                            Text(viewModel.tripCompanion.region.regionName)
+                                .font(.subheadline)
+                                .modifier(FeatureTextModifier())
+                            
+                            HStack {
+                                Text(viewModel.tripCompanion.tripDate.toDetailDateFormat())
+                            }
                             .font(.subheadline)
                             .modifier(FeatureTextModifier())
-
-                        HStack {
-                            Text(viewModel.tripCompanion.tripDate.toDetailDateFormat())
-                        }
-                        .font(.subheadline)
-                        .modifier(FeatureTextModifier())
-                        
-                        Text("\(viewModel.tripCompanion.companionMemberCount)명")
-                            .font(.subheadline)
-                            .modifier(FeatureTextModifier2())
-                    }
-                    .padding(.horizontal, 1)
-                }
-                .padding(.bottom, 32)
-                
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("이런 분이면 좋겠어요")
-                        Spacer()
-                    }
-                    .padding(.bottom, 8)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(viewModel.tripCompanion.categories, id: \.self) { category in
-                                Text(category.categoriesType)
-                                    .font(.subheadline)
-                                    .modifier(FeatureTextModifier2())
-                            }
+                            
+                            Text("\(viewModel.tripCompanion.companionMemberCount)명")
+                                .font(.subheadline)
+                                .modifier(FeatureTextModifier2())
                         }
                         .padding(.horizontal, 1)
                     }
-                }
-                .padding(.bottom, 32)
-                
-            }
-            .padding(.horizontal)
-            
-            HStack {
-                InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion), isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
-                    .padding(.trailing, 24)
-                
-                Spacer()
-                
-                Button {
-                    if let url = URL(string: viewModel.tripCompanion.openKakaoUrl ?? "") {
-                        UIApplication.shared.open(url)
+                    .padding(.bottom, 32)
+                    
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("이런 분이면 좋겠어요")
+                            Spacer()
+                        }
+                        .padding(.bottom, 8)
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(viewModel.tripCompanion.categories, id: \.self) { category in
+                                    Text(category.categoriesType)
+                                        .font(.subheadline)
+                                        .modifier(FeatureTextModifier2())
+                                }
+                            }
+                            .padding(.horizontal, 1)
+                        }
                     }
-                } label: {
-                    Text("오픈 채팅 바로가기")
+                    .padding(.bottom, 32)
+                    
                 }
-                .buttonStyle(CompleButtonStyle(isComplete: true))
+                .padding(.horizontal)
+                
+                HStack {
+                    InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion), isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                        .padding(.trailing, 24)
+                    
+                    Spacer()
+                    
+                    Button {
+                        if AuthManager.shared.isGuestMode {
+                            showingNoSignInAlert = true
+                        }
+                        if let url = URL(string: viewModel.tripCompanion.openKakaoUrl ?? "") {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        Text("오픈 채팅 바로가기")
+                    }
+                    .buttonStyle(CompleButtonStyle(isComplete: true))
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
+            
+            if showingNoSignInAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                NoSignInAlertView(showingAlert: $showingNoSignInAlert)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
+            }
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)

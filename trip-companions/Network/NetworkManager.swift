@@ -120,6 +120,8 @@ enum APIRouter: URLRequestConvertible {
             
         } else if case .getRecommendedTripCompanions(_) = self {
             
+        } else if case .getTripCompanions(_) = self {
+            
         }
         else {
             urlRequest.setValue("Bearer \(AuthManager.shared.token!)", forHTTPHeaderField: "Authorization")

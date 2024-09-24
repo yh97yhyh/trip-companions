@@ -69,6 +69,7 @@ struct ProfileHeaderView: View {
                             .foregroundColor(.black)
                             .frame(width: 20, height: 20)
                     }
+                    .disabled(AuthManager.shared.isGuestMode)
                 }
             }
         }

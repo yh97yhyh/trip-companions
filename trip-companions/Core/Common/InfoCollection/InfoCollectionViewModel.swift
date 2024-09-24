@@ -22,12 +22,12 @@ class InfoCollectionViewModel: ObservableObject {
             validateForm()
         }
     }
-    @Published var gender: Gender = Gender.MOCK_GENDERS[0] {
+    @Published var gender: Gender? = nil {
         didSet {
             validateForm()
         }
     }
-    @Published var mbti: MBTI = MBTI.MOCK_MBTIS[0]  {
+    @Published var mbti: MBTI? = nil {
         didSet {
             validateForm()
         }
@@ -49,20 +49,34 @@ class InfoCollectionViewModel: ObservableObject {
 
     private func validateForm() {
         isComplete = !nickname.isEmpty &&
-                      !age.isEmpty
+        !age.isEmpty &&
+        gender != nil
     }
 
     private var cancellables = Set<AnyCancellable>()
     
     func updateMemberProfile(completion: @escaping (Member) -> Void) {
-        let parameters: Parameters = [
+        var parameters: Parameters = [
             "nickName": nickname,
             "age": Int(age)!,
-            "gender": gender.desc,
-            "mbti": mbti.desc,
-            "isSmoking": isSmoking != nil ? isSmoking : nil,
-            "isDrinking": isDrinking != nil ? isDrinking : nil
+            "gender": gender!.desc,
+            "mbti": mbti?.desc ?? "",
+            "isSmoking": isSmoking != nil ? isSmoking! : nil,
+            "isDrinking": isDrinking != nil ? isDrinking! : nil
         ]
+
+        // Adding additional parameters based on nil checks
+        if mbti == nil {
+            parameters["clearMbti"] = true
+        }
+
+        if isSmoking == nil {
+            parameters["clearIsSmoking"] = true
+        }
+
+        if isDrinking == nil {
+            parameters["clearIsDrinking"] = true
+        }
         
         NetworkManager<Member>.request(route: .updateMemberProfile(parameters))
             .sink { completion in

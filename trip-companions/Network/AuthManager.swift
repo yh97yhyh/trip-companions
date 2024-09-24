@@ -26,6 +26,7 @@ class AuthManager: ObservableObject {
         didSet {
             if self.isLoggedIn == true {
                 isGuestMode = false
+//                SearchViewModel.shared.clear()
             }
         }
     }

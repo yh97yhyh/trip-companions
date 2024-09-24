@@ -10,6 +10,7 @@ import SwiftUI
 struct DomesticCompanionView: View {
     @StateObject var viewModel: DomesticCompanionViewModel
     @StateObject var searchViewModel: SearchViewModel
+    @State private var showingNoSignInAlert = false // 알림을 관리하는 상태 변수
     
     var body: some View {
         ZStack {
@@ -54,7 +55,7 @@ struct DomesticCompanionView: View {
                                 }
                                 .buttonStyle(FilterButtonStyle())
                             }
-                            
+                            // 필터 버튼 코드 생략...
                             if let startDate = searchViewModel.startDate {
                                 Button {
                                     searchViewModel.startDate = nil
@@ -103,7 +104,7 @@ struct DomesticCompanionView: View {
                                         Text(isDrinker ? "음주" : "논알콜")
                                         Image(systemName: "xmark")
                                     }
-                                        
+                                    
                                 }
                                 .buttonStyle(FilterButtonStyle())
                             }
@@ -155,39 +156,36 @@ struct DomesticCompanionView: View {
                     }
                 }
             }
+            .padding()
             
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
-                    DomesticAddButtonView()
+                    WriteButtonView(showingNoSignInAlert: $showingNoSignInAlert)
                         .padding(.bottom, 32)
                 }
             }
+            .padding()
+            
+            if showingNoSignInAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                NoSignInAlertView(showingAlert: $showingNoSignInAlert)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
+            }
         }
-        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
 }
 
-struct DomesticAddButtonView: View {
-    var body: some View {
-        VStack {
-            NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel.shared)) {
-                Image(systemName: "plus")
-                    .imageScale(.large)
-                    .foregroundColor(.white)
-                    .padding(24)
-                    .background(Color.orangeF49321)
-                    .clipShape(Circle())
-            }
-        }
-    }
-}
 
 private var loadingView: some View {
-  ProgressView()
+    ProgressView()
 }
 
 //#Preview {

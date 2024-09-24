@@ -94,6 +94,7 @@ struct MBTI: Codable, Hashable {
 
 extension MBTI {
     static let MOCK_MBTIS: [MBTI] = [
+//        .init(code: "ETC", desc: "기타"),
         .init(code: "INTP", desc: "INTP"),
         .init(code: "ISTP", desc: "ISTP")
     ]

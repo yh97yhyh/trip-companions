@@ -38,28 +38,6 @@ struct SearchView: View {
                         Spacer()
                     }
                     
-//                    Menu {
-//                        ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
-//                            Button {
-//                                self.region = region
-//                            } label: {
-//                                VStack {
-//                                    Text(region.regionName)
-//                                }
-//                            }
-//                        }
-//                    } label: {
-//                        HStack {
-//                            if region == nil {
-//                                Text("지역명을 입력하세요")
-//                            } else {
-//                                Text(region!.regionName)
-//                                    .foregroundColor(.black)
-//                            }
-//                            Spacer()
-//                            Image(systemName: "magnifyingglass")
-//                        }
-//                    }
                     NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), isInterestRegion: false, bindedRegion: $region)
                         .environmentObject(myPageViewModel)) {
                             HStack {

@@ -19,7 +19,7 @@ struct MainTabView: View {
                     .ignoresSafeArea()
                 
                 TabView(selection: $viewModel.selectedIndex) {
-                    HomeView(viewModel: HomeViewModel.shared)
+                    HomeView(viewModel: HomeViewModel.shared, showingNoSignInAlert: false)
                         .tabItem {
                             Image(viewModel.selectedIndex == 0 ? "icn_home_fill" : "icn_home")
                             Text("홈")
@@ -43,6 +43,7 @@ struct MainTabView: View {
                             Text("마이페이지")
                         }
                         .tag(3)
+                        .disabled(authManager.isGuestMode)
                 }
                 .accentColor(.black)
             }

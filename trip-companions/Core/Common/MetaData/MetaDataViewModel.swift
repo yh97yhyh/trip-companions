@@ -46,6 +46,7 @@ class MetaDataViewModel: ObservableObject {
                 self?.ageRanges = metadata.ageRange
                 self?.genders = metadata.gender
                 self?.mbtis = metadata.mbti
+//                self?.mbtis.insert(MBTI(code: "ETC", desc: "선택안함"), at: 0)
             }
             .store(in: &cancellables)
 

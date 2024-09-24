@@ -11,111 +11,96 @@ struct HomeView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: HomeViewModel
     @State var mockRegion: Region?
+    @State var showingNoSignInAlert: Bool
     
     var body: some View {
-        VStack {
-            ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: true))
-                .padding(.bottom)
-            
-            DividerView()
-                .padding(.horizontal, -16)
-                .padding(.bottom)
-            
-            NavigationLink(destination: HomeSearchView(viewModel: SearchViewModel.shared)) {
-                HStack {
-                    Text("검색어를 입력하세요.")
-                    Spacer()
-                    Image(systemName: "magnifyingglass")
-                }
-            }
-            .buttonStyle(TripSearchButtonStyle())
-            .padding(.bottom)
-            
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("\(myPageViewModel.member.interestRegion?.regionName ?? "")")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.orangeF49321) +
-                    Text(" 여행 계획중이에요")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    
-                    NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)) {
-                        Text("지역 선택")
-                            .foregroundColor(.grayA2A2A2)
-                            .underline(true, color: .grayA2A2A2)
+        ZStack {
+            VStack {
+                ProfileHeaderView(viewModel: ProfileHeaderViewModel(isShowingProfileUpdateButton: true))
+                    .padding(.bottom)
+                
+                DividerView()
+                    .padding(.horizontal, -16)
+                    .padding(.bottom)
+                
+                NavigationLink(destination: HomeSearchView(viewModel: SearchViewModel.shared)) {
+                    HStack {
+                        Text("검색어를 입력하세요.")
+                        Spacer()
+                        Image(systemName: "magnifyingglass")
                     }
                 }
-            }
-            .padding(.bottom)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                        NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                            HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                .padding()
-                                .background(.white)
-                                .cornerRadius(10)
-                                .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
-                                .padding(.trailing, 2)
+                .buttonStyle(TripSearchButtonStyle())
+                .padding(.bottom)
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("\(myPageViewModel.member.interestRegion?.regionName ?? "")")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.orangeF49321) +
+                        Text(" 여행 계획중이에요")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        
+                        NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)) {
+                            Text("지역 선택")
+                                .foregroundColor(.grayA2A2A2)
+                                .underline(true, color: .grayA2A2A2)
                         }
                     }
-                    
-                    Button {
-                        MainTabViewModel.shared.selectedIndex = 1
-                    } label: {
-                        Image("btn_see_more")
-                    }
-                    
                 }
-                .padding(4)
-            }
-            Spacer()
-            
-            HStack {
+                .padding(.bottom)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                            NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                                HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                    .padding()
+                                    .background(.white)
+                                    .cornerRadius(10)
+                                    .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
+                                    .padding(.trailing, 2)
+                            }
+                        }
+                        
+                        Button {
+                            MainTabViewModel.shared.selectedIndex = 1
+                        } label: {
+                            Image("btn_see_more")
+                        }
+                        
+                    }
+                    .padding(4)
+                }
                 Spacer()
-                HomeAddButtonView()
-                    .padding(.bottom, 32)
+                
+                HStack {
+                    Spacer()
+                    WriteButtonView(showingNoSignInAlert: $showingNoSignInAlert)
+                        .padding(.bottom, 32)
+                }
+            }
+            .padding()
+            
+            if showingNoSignInAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                NoSignInAlertView(showingAlert: $showingNoSignInAlert)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
             }
         }
-        .padding()
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
 }
 
-struct HomeAddButtonView: View {
-    @State private var showAlert = false
-
-    var body: some View {
-        VStack {
-            NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel.shared)) {
-                Image(systemName: "plus")
-                    .imageScale(.large)
-                    .foregroundColor(.white)
-                    .padding(24)
-                    .background(Color.orangeF49321)
-                    .clipShape(Circle())
-                    .onTapGesture {
-                        if AuthManager.shared.isGuestMode {
-                            showAlert = true
-                        } else {
-                            // Trigger navigation if not in guest mode
-                            showAlert = false // This won't be used since NavigationLink handles it
-                        }
-                    }
-            }
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Guest Mode"), message: Text("You cannot add a trip in guest mode."), dismissButton: .default(Text("OK")))
-            }
-        }
-    }
-}
-
 #Preview {
-    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL)
+    HomeView(viewModel: HomeViewModel.MOCK_VIEW_MODEL, showingNoSignInAlert: false)
         .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }
