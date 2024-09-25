@@ -22,7 +22,6 @@ class MyPostsViewModel: ObservableObject {
     
     init(tripCompanions: [TripCompanion] = []) {
         self.tripCompanions = tripCompanions
-        fetchTripCompanions()
     }
     
     func fetchTripCompanions() {

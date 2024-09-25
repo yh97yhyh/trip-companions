@@ -16,6 +16,8 @@ struct ProfileHeaderView: View {
     @State var showingImagePicker = false
     @State var showingActionSheet = false
     
+    var isHomeView = true
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -65,46 +67,79 @@ struct ProfileHeaderView: View {
                     }
                 }
                 
-                VStack(alignment: .leading) {
-                    if AuthManager.shared.isGuestMode {
-                        Text("로그인이 필요합니다")
-                            .font(.title3)
-                            .fontWeight(.semibold)
+                if AuthManager.shared.isGuestMode {
+                    Text("로그인이 필요합니다")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .padding(.bottom, 8)
+                } else {
+                    if viewModel.isHomeView {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                if myPageViewModel.member.isSmoking != nil {
+                                    Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                if myPageViewModel.member.isDrinking != nil {
+                                    Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                
+                                if myPageViewModel.member.mbti != nil {
+                                    Text(myPageViewModel.member.mbti!.desc)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                if let gender = myPageViewModel.member.gender {
+                                    Text(gender.desc)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                            }
                             .padding(.bottom, 8)
+                            
+                            Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                        }
                     } else {
-                        Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .padding(.bottom, 8)
-                        
-                        HStack {
-                            if myPageViewModel.member.isSmoking != nil {
-                                Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
-                                    .modifier(ProfileFeatureTextModifier())
-                            }
+                        VStack(alignment: .leading) {
+                            Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .padding(.bottom, 8)
                             
-                            if myPageViewModel.member.isDrinking != nil {
-                                Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
-                                    .modifier(ProfileFeatureTextModifier())
-                            }
-                            
-                            
-                            if myPageViewModel.member.mbti != nil {
-                                Text(myPageViewModel.member.mbti!.desc)
-                                    .modifier(ProfileFeatureTextModifier())
-                            }
-                            
-                            if let gender = myPageViewModel.member.gender {
-                                Text(gender.desc)
-                                    .modifier(ProfileFeatureTextModifier())
+                            HStack {
+                                if myPageViewModel.member.isSmoking != nil {
+                                    Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                if myPageViewModel.member.isDrinking != nil {
+                                    Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                
+                                if myPageViewModel.member.mbti != nil {
+                                    Text(myPageViewModel.member.mbti!.desc)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
+                                
+                                if let gender = myPageViewModel.member.gender {
+                                    Text(gender.desc)
+                                        .modifier(ProfileFeatureTextModifier())
+                                }
                             }
                         }
                     }
                 }
                 
+                
                 Spacer()
                 
-                if viewModel.isShowingProfileUpdateButton {
+                if viewModel.isHomeView {
                     NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
                         Image(systemName: "chevron.forward")
                             .foregroundColor(.black)
@@ -133,10 +168,10 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            // 선택된 이미지를 가져오기
+
             if let uiImage = info[.editedImage] as? UIImage {
                 parent.selectedImage = uiImage
-                parent.onImagePicked?()  // 이미지 선택 후 클로저 호출
+                parent.onImagePicked?()
             }
 
             parent.presentationMode.wrappedValue.dismiss()
@@ -152,7 +187,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.allowsEditing = true  // 편집 모드 활성화
+        picker.allowsEditing = true
         picker.sourceType = .photoLibrary
 
         return picker
@@ -164,5 +199,5 @@ struct ImagePicker: UIViewControllerRepresentable {
 
 #Preview {
     ProfileHeaderView(viewModel: ProfileHeaderViewModel.MOCK_VIEW_MODEL1)
-//        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
+        .environmentObject(MyPageViewModel.MOCK_VIEW_MODEL)
 }

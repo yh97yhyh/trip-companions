@@ -18,12 +18,12 @@ struct MyInterestingPostsView: View {
             VStack {
                 HStack {
                     Spacer()
-//                    Button {
-//                        
-//                    } label: {
-//                        Text("최신순")
-//                            .foregroundColor(.gray767676)
-//                    }
+                    //                    Button {
+                    //
+                    //                    } label: {
+                    //                        Text("최신순")
+                    //                            .foregroundColor(.gray767676)
+                    //                    }
                     Text("최신순")
                         .foregroundColor(.gray767676)
                 }
@@ -36,8 +36,10 @@ struct MyInterestingPostsView: View {
                     LazyVStack {
                         ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
                             VStack {
-                                MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                    .padding(.vertical, 12)
+                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: InterestHeartViewModel(tripCompanion: tripCompanion))) {
+                                    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                }
+                                .padding(.vertical, 12)
                             }
                             Divider()
                         }
@@ -58,6 +60,9 @@ struct MyInterestingPostsView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewModel.fetchTripCompanions()
+        }
     }
 }
 

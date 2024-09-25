@@ -75,8 +75,9 @@ struct HomeView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                    HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                let interestHeartViewModel = InterestHeartViewModel(tripCompanion: tripCompanion)
+                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)) {
+                                    HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)
                                         .padding()
                                         .background(.white)
                                         .cornerRadius(10)
@@ -94,6 +95,10 @@ struct HomeView: View {
                             
                         }
                         .padding(4)
+                        
+                    }
+                    .refreshable {
+                        viewModel.fetchRecommendedTripCompanions()
                     }
                 }
                 Spacer()

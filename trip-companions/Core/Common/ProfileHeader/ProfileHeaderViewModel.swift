@@ -8,10 +8,10 @@
 import Foundation
 
 class ProfileHeaderViewModel: ObservableObject {
-    @Published var isShowingProfileUpdateButton: Bool = false
+    @Published var isHomeView: Bool = false
     
     init(isShowingProfileUpdateButton: Bool) {
-        self.isShowingProfileUpdateButton = isShowingProfileUpdateButton
+        self.isHomeView = isShowingProfileUpdateButton
     }
     
     func toTextIsDrinking(_ isDrinking: Bool) -> String {

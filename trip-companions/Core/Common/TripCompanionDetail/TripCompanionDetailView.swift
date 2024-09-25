@@ -10,6 +10,7 @@ import Kingfisher
 
 struct TripCompanionDetailView: View {
     @StateObject var viewModel: TripCompanionDetailViewModel
+    @StateObject var interestHeartViewModel: InterestHeartViewModel
     @Environment(\.dismiss) private var dismiss
     @State var showingNoSignInAlert = false
     
@@ -100,7 +101,7 @@ struct TripCompanionDetailView: View {
                 .padding(.horizontal)
                 
                 HStack {
-                    InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion), isDetail: true, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                    InterestHeartView(viewModel: interestHeartViewModel, isDetail: true)
                         .padding(.trailing, 24)
                     
                     Spacer()
@@ -195,5 +196,5 @@ struct WriterHeaderView: View  {
 }
 
 #Preview {
-    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL)
+    TripCompanionDetailView(viewModel: TripCompanionDetailViewModel.MOCK_VIEW_MODEL, interestHeartViewModel: InterestHeartViewModel.MOCK_VIEW_MODEL)
 }

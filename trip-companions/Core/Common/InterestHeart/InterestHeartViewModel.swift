@@ -11,17 +11,21 @@ import Combine
 
 class InterestHeartViewModel: ObservableObject {
     @Published var tripCompanion: TripCompanion
+    @Published var isUpdateHeartLike: Bool
+    @Published var updateHeartCount: Int
     
     init(tripCompanion: TripCompanion) {
         self.tripCompanion = tripCompanion
+        self.isUpdateHeartLike = tripCompanion.isInterestTripCompanion ?? false
+        self.updateHeartCount = tripCompanion.interestTripCompanionCount
     }
     
     var cancellables = Set<AnyCancellable>()
     
     func toggleLike(writer: Member, isLike: Bool) {
-        if tripCompanion.member == writer {
-            return
-        }
+//        if tripCompanion.member == writer {
+//            return
+//        }
         
         if isLike {
             like()
@@ -43,9 +47,11 @@ class InterestHeartViewModel: ObservableObject {
                 case .failure(let error):
                     print("Failed to request createLikeTripCompanion.. \(error.localizedDescription)")
                 }
-            } receiveValue: { tripCompanion in
-                self.tripCompanion = tripCompanion
-            }
+            } receiveValue: { [weak self] tripCompanion in
+//                self?.tripCompanion = tripCompanion
+                self?.isUpdateHeartLike = true
+                self?.updateHeartCount += 1
+            }.store(in: &cancellables)
     }
     
     func unlike() {
@@ -57,8 +63,9 @@ class InterestHeartViewModel: ObservableObject {
                 case .failure(let error):
                     print("Failed to request deleteLikeTripCompanion.. \(error.localizedDescription)")
                 }
-            } receiveValue: { _ in
-                
+            } receiveValue: { [weak self] _ in
+                self?.isUpdateHeartLike = false
+                self?.updateHeartCount -= 1
             }.store(in: &cancellables)
     }
     

@@ -19,13 +19,13 @@ struct TripCompanion: Identifiable, Codable, Hashable {
     let member: Member
     let categories: [Category]
     let interestTripCompanionCount: Int
-    let interestTripCompanion: Bool?
+    let isInterestTripCompanion: Bool?
 }
 
 extension TripCompanion {
-    static let MOCK_TRIP_COMPANION1: TripCompanion = .init(id: 1, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 127, interestTripCompanion: true)
-    static let MOCK_TRIP_COMPANION2: TripCompanion = .init(id: 2, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 119, interestTripCompanion: true)
-    static let MOCK_TRIP_COMPANION3: TripCompanion = .init(id: 3, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 87, interestTripCompanion: false)
+    static let MOCK_TRIP_COMPANION1: TripCompanion = .init(id: 1, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 127, isInterestTripCompanion: true)
+    static let MOCK_TRIP_COMPANION2: TripCompanion = .init(id: 2, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 119, isInterestTripCompanion: true)
+    static let MOCK_TRIP_COMPANION3: TripCompanion = .init(id: 3, tripCompanionsStatus: .MOCK_TRIP_COMPANION_STATUSES.first!, title: "오늘 광안리에서 만나실 분!", contents: "부산 앞바다 야경 보러가요", companionMemberCount: 2, tripDate: Date().toServerDateText(), openKakaoUrl: "", region: .MOCK_REGIONS.first!, member: .MOCK_MEMBER1, categories: Category.MOCK_CATEGORIES, interestTripCompanionCount: 87, isInterestTripCompanion: false)
     
     static let MOCK_TRIP_COMPANIONS: [TripCompanion] = [
         MOCK_TRIP_COMPANION1,

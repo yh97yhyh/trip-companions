@@ -146,8 +146,9 @@ struct DomesticCompanionView: View {
                         ScrollView(showsIndicators: false) {
                             LazyVStack {
                                 ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                                    NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                        TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                    let interestHeartViewModel = InterestHeartViewModel(tripCompanion: tripCompanion)
+                                    NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)) {
+                                        TripCompanionCellView(viewModel: TripCompanionCellViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)
                                             .padding(.vertical, 12)
                                     }
                                     Divider()

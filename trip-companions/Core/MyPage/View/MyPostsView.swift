@@ -58,6 +58,9 @@ struct MyPostsView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewModel.fetchTripCompanions()
+        }
     }
 }
 

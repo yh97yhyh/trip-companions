@@ -11,14 +11,12 @@ struct InterestHeartView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel: InterestHeartViewModel
     var isDetail: Bool
-    var isInterest: Bool
-    var inerestCount: Int
     
     var body: some View {
         VStack {
             if isDetail {
                 VStack {
-                    if isInterest {
+                    if viewModel.isUpdateHeartLike {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
@@ -37,13 +35,13 @@ struct InterestHeartView: View {
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }
-                    Text("\(inerestCount)")
+                    Text("\(viewModel.updateHeartCount)")
                         .foregroundColor(.gray767676)
                         .font(.subheadline)
                 }
             } else {
                 HStack {
-                    if isInterest {
+                    if viewModel.isUpdateHeartLike {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)
                             .onTapGesture {
@@ -62,7 +60,7 @@ struct InterestHeartView: View {
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
                             }
                     }
-                    Text("\(inerestCount)")
+                    Text("\(viewModel.updateHeartCount)")
                         .foregroundColor(.gray767676)
                         .font(.subheadline)
                 }
@@ -72,6 +70,6 @@ struct InterestHeartView: View {
 }
 
 #Preview {
-    InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, isDetail: true, isInterest: true, inerestCount: 127)
+    InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, isDetail: false)
         .environmentObject(AuthManager.shared)
 }

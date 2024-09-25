@@ -10,6 +10,7 @@ import Kingfisher
 
 struct TripCompanionCellView: View {
     @StateObject var viewModel: TripCompanionCellViewModel
+    @StateObject var interestHeartViewModel: InterestHeartViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -102,10 +103,8 @@ struct TripCompanionCellView: View {
                         
                         Spacer()
                         
-                        InterestHeartView(viewModel: InterestHeartViewModel(tripCompanion: viewModel.tripCompanion),isDetail: false, isInterest: viewModel.tripCompanion.interestTripCompanion ?? false, inerestCount: viewModel.tripCompanion.interestTripCompanionCount)
+                        InterestHeartView(viewModel: interestHeartViewModel, isDetail: false)
                     }
-                    
-                    
                 }
                 
                 Spacer()
@@ -115,5 +114,5 @@ struct TripCompanionCellView: View {
 }
 
 #Preview {
-    TripCompanionCellView(viewModel: TripCompanionCellViewModel.MOCK_VIEW_MODEL)
+    TripCompanionCellView(viewModel: TripCompanionCellViewModel.MOCK_VIEW_MODEL, interestHeartViewModel: InterestHeartViewModel.MOCK_VIEW_MODEL)
 }
