@@ -75,6 +75,12 @@ struct HomeSearchView: View {
             }
             .buttonStyle(CompleButtonStyle(isComplete: keyword != ""))
             .disabled(keyword == "")
+            .padding(.vertical)
+            .background(
+                Color.white
+                    .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 0)
+                    .mask(Rectangle().padding(.top, -20))
+            )
         }
         .padding(.horizontal)
         .navigationBarHidden(true)

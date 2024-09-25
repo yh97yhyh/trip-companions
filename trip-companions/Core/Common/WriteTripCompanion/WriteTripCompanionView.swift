@@ -188,7 +188,7 @@ struct WriteTripCompanionView: View {
                     .padding(.bottom)
                 }
             }
-            .padding()
+            .padding(.horizontal)
             
             Button {
                 if isWriteMode {
@@ -204,7 +204,13 @@ struct WriteTripCompanionView: View {
             }
             .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
             .disabled(!viewModel.isComplete)
-            .padding(.horizontal)
+            .padding()
+            .background(
+                Color.white
+                    .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 0)
+                    .mask(Rectangle().padding(.top, -20))
+            )
+            
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)

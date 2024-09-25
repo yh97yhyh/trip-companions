@@ -101,11 +101,10 @@ struct TripCompanionDetailView: View {
                 .padding(.horizontal)
                 
                 HStack {
+                    Spacer()
                     InterestHeartView(viewModel: interestHeartViewModel, isDetail: true)
                         .padding(.trailing, 24)
-                    
                     Spacer()
-                    
                     Button {
                         if AuthManager.shared.isGuestMode {
                             showingNoSignInAlert = true
@@ -120,6 +119,12 @@ struct TripCompanionDetailView: View {
                     .buttonStyle(CompleButtonStyle(isComplete: true))
                 }
                 .padding(.horizontal)
+                .padding(.vertical)
+                .background(
+                    Color.white
+                        .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 0)
+                        .mask(Rectangle().padding(.top, -20))
+                )
             }
             
             if showingNoSignInAlert {

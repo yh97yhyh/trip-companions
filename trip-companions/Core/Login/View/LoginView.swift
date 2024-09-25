@@ -69,7 +69,7 @@ struct LoginView: View {
                 .padding(.bottom, 40)
             }
             .frame(height: UIScreen.main.bounds.height / 2)
-            .background(Color.white) // 배경 색상 설정
+            .background(Color.white)
             .clipShape(
                 .rect(
                     topLeadingRadius: 40,

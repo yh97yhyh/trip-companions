@@ -229,54 +229,62 @@ struct InfoCollectionView: View {
                     }
                     //            .padding(.top)
                 }
-                .padding()
+                .padding(.horizontal)
                 
-                if isEditMode {
-                    Button {
-                        viewModel.updateMemberProfile { member in
-                            authManager.currentMember = member
-                            myPageViewModel.member = member
-                        }
-                        dismiss()
-                    } label: {
-                        Text("완료")
-                    }
-                    .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
-                    .disabled(!viewModel.isComplete)
-                    .padding(.horizontal)
-                } else {
-                    if viewModel.mbti == nil {
+                VStack {
+                    if isEditMode {
                         Button {
-                            showingNoMbtiAlert = true
+                            viewModel.updateMemberProfile { member in
+                                authManager.currentMember = member
+                                myPageViewModel.member = member
+                            }
+                            dismiss()
                         } label: {
                             Text("완료")
                         }
                         .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
                         .disabled(!viewModel.isComplete)
                         .padding(.horizontal)
-                        .background(
-                            NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
-                                .environmentObject(myPageViewModel), isActive: $shouldNavigate) {
-                                EmptyView()
-                            }
-                        )
                     } else {
-                        NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
-                            .environmentObject(myPageViewModel)) {
+                        if viewModel.mbti == nil {
+                            Button {
+                                showingNoMbtiAlert = true
+                            } label: {
                                 Text("완료")
                             }
                             .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
                             .disabled(!viewModel.isComplete)
                             .padding(.horizontal)
-                            .onTapGesture {
-                                viewModel.updateMemberProfile { member in
-                                    authManager.currentMember = member
-                                    myPageViewModel.member = member
+                            .background(
+                                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
+                                    .environmentObject(myPageViewModel), isActive: $shouldNavigate) {
+                                        EmptyView()
+                                    }
+                            )
+                        } else {
+                            NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
+                                .environmentObject(myPageViewModel)) {
+                                    Text("완료")
                                 }
-                            }
+                                .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+                                .disabled(!viewModel.isComplete)
+                                .padding(.horizontal)
+                                .onTapGesture {
+                                    viewModel.updateMemberProfile { member in
+                                        authManager.currentMember = member
+                                        myPageViewModel.member = member
+                                    }
+                                }
+                        }
+                        
                     }
-                    
                 }
+                .padding(.vertical)
+                .background(
+                    Color.white
+                        .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 0)
+                        .mask(Rectangle().padding(.top, -20))
+                )
             }
             
             if showingNoMbtiAlert {

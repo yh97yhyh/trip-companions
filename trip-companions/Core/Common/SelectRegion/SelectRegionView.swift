@@ -20,11 +20,13 @@ struct SelectRegionView: View {
         VStack(alignment: .leading) {
             NavigationTitleView(title: "지역 선택")
                 .padding(.bottom)
+                .padding(.horizontal)
             
             VStack {
                 HStack {
                     Text("어디로 떠나시나요?")
                         .font(.title3)
+                        .fontWeight(.semibold)
                     
                     Spacer()
                 }
@@ -38,9 +40,11 @@ struct SelectRegionView: View {
                         }
                     }
             }
+            .padding(.horizontal)
             
             if viewModel.filteredRegions.isEmpty {
                 NoSearchResultView()
+                    .padding(.horizontal)
             } else {
                 ScrollView(showsIndicators: false) {
                     ForEach(viewModel.filteredRegions, id: \.id) { region in
@@ -59,6 +63,7 @@ struct SelectRegionView: View {
                     }
                 }
                 .padding(.top, 24)
+                .padding(.horizontal)
             }
             
             Button {
@@ -75,10 +80,15 @@ struct SelectRegionView: View {
             } label: {
                 Text("등록하기")
             }
+            .padding()
             .buttonStyle(CompleButtonStyle(isComplete: viewModel.region != nil))
             .disabled(viewModel.region == nil)
+            .background(
+                Color.white
+                    .shadow(color: .gray.opacity(0.2), radius: 10, x: 0, y: 0)
+                    .mask(Rectangle().padding(.top, -20))
+            )
         }
-        .padding(.horizontal)
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .onAppear {
