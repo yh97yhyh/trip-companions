@@ -7,6 +7,13 @@
 
 import Foundation
 
+
 class API {
-    static let baseUrlString = "http://52.78.245.140:8080"
+    static var baseUrlString: String {
+        #if DEBUG
+        return "http://52.78.245.140:8080"
+        #else
+        return "http://52.78.245.140:8080"
+        #endif
+    }
 }
