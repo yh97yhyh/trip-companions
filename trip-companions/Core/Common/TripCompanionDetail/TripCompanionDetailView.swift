@@ -50,6 +50,7 @@ struct TripCompanionDetailView: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Text("여행 계획이에요")
+                                .fontWeight(.semibold)
                             Spacer()
                         }
                         .padding(.bottom, 8)
@@ -76,6 +77,8 @@ struct TripCompanionDetailView: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Text("이런 분이면 좋겠어요")
+                                .fontWeight(.semibold)
+
                             Spacer()
                         }
                         .padding(.bottom, 8)

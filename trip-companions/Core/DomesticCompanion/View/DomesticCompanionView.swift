@@ -55,7 +55,7 @@ struct DomesticCompanionView: View {
                                 }
                                 .buttonStyle(FilterButtonStyle())
                             }
-                            // 필터 버튼 코드 생략...
+
                             if let startDate = searchViewModel.startDate {
                                 Button {
                                     searchViewModel.startDate = nil
@@ -130,7 +130,17 @@ struct DomesticCompanionView: View {
                     .padding(.horizontal, -16)
                 
                 if viewModel.tripCompanions.isEmpty {
-                    NoSearchResultView()
+                    if viewModel.isFetching {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        Spacer()
+                    } else {
+                        NoSearchResultView()
+                    }
                 } else {
                     VStack(alignment: .leading) {
                         ScrollView(showsIndicators: false) {

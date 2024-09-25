@@ -66,31 +66,38 @@ struct ProfileHeaderView: View {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding(.bottom, 8)
-                    
-                    HStack {
-                        if myPageViewModel.member.isSmoking != nil {
-                            Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
-                                .modifier(ProfileFeatureTextModifier())
-                        }
+                    if AuthManager.shared.isGuestMode {
+                        Text("로그인이 필요합니다")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .padding(.bottom, 8)
+                    } else {
+                        Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .padding(.bottom, 8)
                         
-                        if myPageViewModel.member.isDrinking != nil {
-                            Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
-                                .modifier(ProfileFeatureTextModifier())
-                        }
-                        
-                        
-                        if myPageViewModel.member.mbti != nil {
-                            Text(myPageViewModel.member.mbti!.desc)
-                                .modifier(ProfileFeatureTextModifier())
-                        }
-                        
-                        if let gender = myPageViewModel.member.gender {
-                            Text(gender.desc)
-                                .modifier(ProfileFeatureTextModifier())
+                        HStack {
+                            if myPageViewModel.member.isSmoking != nil {
+                                Text(viewModel.toTextIsSmoking(myPageViewModel.member.isSmoking!))
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                            
+                            if myPageViewModel.member.isDrinking != nil {
+                                Text(viewModel.toTextIsDrinking(myPageViewModel.member.isDrinking!))
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                            
+                            
+                            if myPageViewModel.member.mbti != nil {
+                                Text(myPageViewModel.member.mbti!.desc)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
+                            
+                            if let gender = myPageViewModel.member.gender {
+                                Text(gender.desc)
+                                    .modifier(ProfileFeatureTextModifier())
+                            }
                         }
                     }
                 }

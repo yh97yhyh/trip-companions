@@ -11,8 +11,9 @@ import Combine
 import KakaoSDKCommon
 import KakaoSDKAuth
 import KakaoSDKUser
+import AuthenticationServices
 
-class AuthManager: ObservableObject {
+class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     static let shared = AuthManager()
 
     @Published var isGuestMode: Bool = false {
@@ -26,19 +27,25 @@ class AuthManager: ObservableObject {
         didSet {
             if self.isLoggedIn == true {
                 isGuestMode = false
-//                SearchViewModel.shared.clear()
             }
         }
     }
     @Published var hasUserInfo: Bool? = nil
     @Published var currentMember: Member? = nil
     @Published var token: String? = nil
-//    @Published var token: String? = "."
     
     private var cancellables = Set<AnyCancellable>()
     
     
-    init() {
+//    init() {
+//        let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
+//        KakaoSDK.initSDK(appKey: KakaoApiKey)
+//        checkLoginStatus()
+//    }
+    
+    override init() {
+        super.init()
+        
         let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
         KakaoSDK.initSDK(appKey: KakaoApiKey)
         checkLoginStatus()
@@ -66,7 +73,7 @@ class AuthManager: ObservableObject {
                         let id = String(user.id!)
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
+                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token)
                                 self.saveUserToUserDefaults(userInfo)
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
@@ -109,7 +116,7 @@ class AuthManager: ObservableObject {
                         let id = String(user.id!)
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: oauthToken.accessToken, token: token)
+                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token)
                                 self.saveUserToUserDefaults(userInfo)
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
@@ -166,9 +173,9 @@ class AuthManager: ObservableObject {
                 switch result {
                 case .success(let user):
                     let id = String(user.id!)
-                    self.signIn(userInfo.kakaoAccessToken, id) { success in
+                    self.signIn(userInfo.socialToken, id) { success in
                         if success, let token = self.token {
-                            let userInfo = UserInfo(kakaoSocialId: id, kakaoAccessToken: userInfo.kakaoAccessToken, token: token)
+                            let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token)
                             self.saveUserToUserDefaults(userInfo)
                             self.getMemberInfo(token) { success in
                                 if let curMember = self.currentMember {
@@ -194,6 +201,56 @@ class AuthManager: ObservableObject {
         AuthApi.shared.refreshToken(completion: {_,_ in })
     }
     
+    // MARK: - Apple
+    func loginWithApple() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let authorizationCodeData = appleIDCredential.authorizationCode,
+                  let authorizationCode = String(data: authorizationCodeData, encoding: .utf8),
+                  let identifyTokenData = appleIDCredential.identityToken,
+                  let identifyToken = String(data: identifyTokenData, encoding: .utf8) else {
+                print("Failed to retrieve authorization code.")
+                return
+            }
+            
+            let userID = appleIDCredential.user
+            signInApple(authorizationCode, userID) { success in
+                if success, let token = self.token {
+                    let userInfo = UserInfo(userId: userID, socialToken: authorizationCode, token: token)
+                    self.saveUserToUserDefaults(userInfo)
+                    self.getMemberInfo(token) { success in
+                        if let curMember = self.currentMember {
+                            InfoCollectionViewModel.shared.age = String(curMember.age)
+                            InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+                            self.isLoggedIn = true
+                        }
+                    }
+                    print("Succeed to login with apple!")
+                } else {
+                    print("Failed to login with apple!")
+                }
+            }
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Failed to login with apple.. \(error.localizedDescription)")
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return UIApplication.shared.windows.first { $0.isKeyWindow }!
+    }
+    
     // MARK: - Server
     private func signIn(_ kakaoToken: String, _ id: String, completion: @escaping (Bool) -> Void) {
         let parameters: Parameters = [
@@ -209,6 +266,26 @@ class AuthManager: ObservableObject {
                     completion(true)
                 case .failure(let error):
                     print("Failed to request sign-in.. \(error.localizedDescription)")
+                    completion(false)
+                }
+            } receiveValue: { tokenInfo in
+                self.token = tokenInfo.token
+            }.store(in: &cancellables)
+    }
+    
+    private func signInApple(_ appleAuthCode: String, _ id: String, completion: @escaping (Bool) -> Void) {
+        let parameters: Parameters = [
+            "appleAuthCode": appleAuthCode
+        ]
+        
+        NetworkManager<TokenInfo>.request(route: .postSignInAppleWithApple(parameters))
+            .sink { completionStatus in
+                switch completionStatus {
+                case .finished:
+                    print("Succeed to request sign-in with apple!")
+                    completion(true)
+                case .failure(let error):
+                    print("Failed to request sign-in with apple.. \(error.localizedDescription)")
                     completion(false)
                 }
             } receiveValue: { tokenInfo in
@@ -252,7 +329,7 @@ class AuthManager: ObservableObject {
 }
 
 struct UserInfo: Codable {
-    let kakaoSocialId: String
-    let kakaoAccessToken: String
+    let userId: String
+    let socialToken: String
     let token: String
 }

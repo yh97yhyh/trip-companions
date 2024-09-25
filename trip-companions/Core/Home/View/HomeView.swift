@@ -44,37 +44,57 @@ struct HomeView: View {
                             .fontWeight(.semibold)
                         Spacer()
                         
-                        NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)) {
-                            Text("지역 선택")
-                                .foregroundColor(.grayA2A2A2)
-                                .underline(true, color: .grayA2A2A2)
+                        if AuthManager.shared.isGuestMode {
+                            Button {
+                                showingNoSignInAlert = true
+                            } label: {
+                                Text("지역 선택")
+                                    .foregroundColor(.grayA2A2A2)
+                                    .underline(true, color: .grayA2A2A2)
+                            }
+                        } else {
+                            NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)) {
+                                Text("지역 선택")
+                                    .foregroundColor(.grayA2A2A2)
+                                    .underline(true, color: .grayA2A2A2)
+                            }
                         }
                     }
                 }
                 .padding(.bottom)
                 
-                ScrollView(.horizontal, showsIndicators: false) {
+                if viewModel.isFetching {
+                    Spacer()
                     HStack {
-                        ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
-                            NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
-                                HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
-                                    .padding()
-                                    .background(.white)
-                                    .cornerRadius(10)
-                                    .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
-                                    .padding(.trailing, 2)
-                                    .frame(minWidth: 200)
-                            }
-                        }
-                        
-                        Button {
-                            MainTabViewModel.shared.selectedIndex = 1
-                        } label: {
-                            Image("btn_see_more")
-                        }
-                        
+                        Spacer()
+                        ProgressView()
+                        Spacer()
                     }
-                    .padding(4)
+                    Spacer()
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                                NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion))) {
+                                    HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                        .padding()
+                                        .background(.white)
+                                        .cornerRadius(10)
+                                        .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
+                                        .padding(.trailing, 2)
+                                        .frame(minWidth: 200)
+                                }
+                            }
+                            
+                            Button {
+                                MainTabViewModel.shared.selectedIndex = 1
+                            } label: {
+                                Image("btn_see_more")
+                            }
+                            
+                        }
+                        .padding(4)
+                    }
                 }
                 Spacer()
                 

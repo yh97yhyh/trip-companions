@@ -13,6 +13,8 @@ enum APIRouter: URLRequestConvertible {
     case fetchKakaoOAuthCode(Parameters)
     case postSignIn(Parameters)
     
+    case postSignInAppleWithApple(Parameters)
+    
     case createTripCompanion(Parameters)
     case updateTripCompanion(Parameters)
     case deleteTripCompanion(postId: Int)
@@ -43,7 +45,7 @@ enum APIRouter: URLRequestConvertible {
                 .getTripCompanions,
                 .getMetaData:
             return .get
-        case .postSignIn, .createTripCompanion, .createLikeTripCompanion:
+        case .postSignIn, .postSignInAppleWithApple,  .createTripCompanion, .createLikeTripCompanion:
             return .post
         case .updateTripCompanion, .updateMemberProfile, .updateProfileImage, .updateInterestRegion:
             return .patch
@@ -58,6 +60,8 @@ enum APIRouter: URLRequestConvertible {
             return "/oauth2/code/kakao"
         case .postSignIn:
             return "/oauth2/kakao/sign-in"
+        case .postSignInAppleWithApple:
+            return "/oauth2/apple/sign-in"
         case .createTripCompanion:
             return "/api/v1/trip-companions"
         case .updateTripCompanion:
@@ -95,6 +99,7 @@ enum APIRouter: URLRequestConvertible {
         switch self {
         case .fetchKakaoOAuthCode(let parameters),
                 .postSignIn(let parameters),
+                .postSignInAppleWithApple(let parameters),
                 .getTripCompanions(let parameters),
                 .createTripCompanion(let parameters),
                 .updateTripCompanion(let parameters),
@@ -131,6 +136,8 @@ enum APIRouter: URLRequestConvertible {
         }
         
         if case .postSignIn(_) = self {
+            
+        } else if case .postSignInAppleWithApple(_) = self {
             
         } else if case .getMetaData = self {
             

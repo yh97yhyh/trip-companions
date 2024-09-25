@@ -13,6 +13,8 @@ class HomeViewModel: ObservableObject {
     static let shared = HomeViewModel()
     
     @Published var tripCompanions: [TripCompanion] = []
+    @Published var isFetching = false
+
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -23,6 +25,8 @@ class HomeViewModel: ObservableObject {
     }
     
     func fetchRecommendedTripCompanions() {
+        if isFetching { return }
+        isFetching = true
         var parameters = Parameters()
         if AuthManager.shared.isLoggedIn {
             parameters = [
@@ -33,6 +37,7 @@ class HomeViewModel: ObservableObject {
         
         NetworkManager<[TripCompanion]>.request(route: .getRecommendedTripCompanions(parameters))
             .sink { completion in
+                self.isFetching = false
                 switch completion {
                 case .finished:
                     print("Succeed to request getRecommendedTripCompanions!")

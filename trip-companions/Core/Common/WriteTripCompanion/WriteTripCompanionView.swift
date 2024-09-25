@@ -94,6 +94,8 @@ struct WriteTripCompanionView: View {
                         HStack {
                             Text("동행과 안전하게 소통해요.")
                                 .font(.title3)
+                                .fontWeight(.semibold)
+
                             Spacer()
                         }
                         
@@ -106,6 +108,8 @@ struct WriteTripCompanionView: View {
                         HStack {
                             Text("당신의 동행은?")
                                 .font(.title3)
+                                .fontWeight(.semibold)
+
                             Spacer()
                         }
                         

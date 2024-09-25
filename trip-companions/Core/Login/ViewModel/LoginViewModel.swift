@@ -18,7 +18,7 @@ class LoginViewModel: ObservableObject {
     func kakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             AuthManager.shared.loginWithKakaoTalk()
-                .receive(on: DispatchQueue.main) // UI Update?
+                .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
                     case .finished:
@@ -31,7 +31,7 @@ class LoginViewModel: ObservableObject {
                 }.store(in: &cancellables)
         } else {
             AuthManager.shared.loginWithKakaoAccount()
-                .receive(on: DispatchQueue.main) // UI Update?
+                .receive(on: DispatchQueue.main)
                 .sink { completion in
                     switch completion {
                     case .finished:
@@ -46,7 +46,18 @@ class LoginViewModel: ObservableObject {
     }    
     
     func appleLogin() {
-        
+        AuthManager.shared.loginWithApple()
+//            .receive(on: DispatchQueue.main)
+//            .sink { completion in
+//                switch completion {
+//                case .finished:
+//                    break
+//                case .failure(let error):
+//                    print("로그인 실패: \(error)")
+//                }
+//            } receiveValue: { _ in
+//                
+//            }.store(in: &cancellables)
     }
     
     func guest() {
