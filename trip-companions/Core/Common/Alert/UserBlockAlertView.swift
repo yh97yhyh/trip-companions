@@ -1,5 +1,5 @@
 //
-//  UserBlockAlert.swift
+//  UserBlockAlertView.swift
 //  trip-companions
 //
 //  Created by 영현 on 10/1/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UserBlockAlert: View {
+struct UserBlockAlertView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var showingAlert: Bool
 
@@ -15,6 +15,7 @@ struct UserBlockAlert: View {
         VStack {
             HStack {
                 Text("유저를 차단하시겠습니까?")
+                    .font(.title3)
                     .padding(.bottom)
                     .fontWeight(.bold)
                 Spacer()
@@ -34,7 +35,6 @@ struct UserBlockAlert: View {
             HStack {
                 Button {
                     showingAlert = false
-//                    dismiss()
                 } label: {
                     HStack {
                         Text("아니요")
@@ -45,7 +45,6 @@ struct UserBlockAlert: View {
                 Spacer()
                 Button {
                     showingAlert = false
-//                    dismiss()
                 } label: {
                     Text("네")
                         .foregroundColor(.orangeF49321)
@@ -60,5 +59,5 @@ struct UserBlockAlert: View {
 }
 
 //#Preview {
-//    UserBlockAlert()
+//    UserBlockAlertView()
 //}

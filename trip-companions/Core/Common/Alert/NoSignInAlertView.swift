@@ -15,6 +15,7 @@ struct NoSignInAlertView: View {
         VStack {
             HStack {
                 Text("가입이 필요합니다.")
+                    .font(.title3)
                     .padding(.bottom)
                     .fontWeight(.bold)
                 Spacer()
@@ -34,7 +35,6 @@ struct NoSignInAlertView: View {
             HStack {
                 Button {
                     showingAlert = false
-//                    dismiss()
                 } label: {
                     HStack {
                         Text("다음에 할게요")
@@ -45,7 +45,7 @@ struct NoSignInAlertView: View {
                 Spacer()
                 Button {
                     AuthManager.shared.isGuestMode = false
-//                    dismiss()
+                    showingAlert = false
                 } label: {
                     Text("확인")
                         .foregroundColor(.orangeF49321)

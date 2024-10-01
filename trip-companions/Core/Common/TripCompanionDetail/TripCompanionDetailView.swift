@@ -13,6 +13,9 @@ struct TripCompanionDetailView: View {
     @StateObject var interestHeartViewModel: InterestHeartViewModel
     @Environment(\.dismiss) private var dismiss
     @State var showingNoSignInAlert = false
+    @State var showingBottomSheet = false
+    @State var showingReportAlert = false
+    @State var showingBlockAlert = false
     
     var body: some View {
         ZStack {
@@ -37,6 +40,16 @@ struct TripCompanionDetailView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer()
+                            Button {
+                                showingBottomSheet = true
+                            } label: {
+                                Image(systemName: "ellipsis")
+                                    .foregroundColor(.black)
+                            }
+                            .sheet(isPresented: $showingBottomSheet) {
+                                ReportBottomView(showingBottomSheet: $showingBottomSheet, showingReportAlert: $showingReportAlert)
+                                    .presentationDetents([.fraction(0.4), .height(110), .medium, .large])
+                            }
                         }
                         .padding(.bottom, 8)
                         
@@ -136,6 +149,26 @@ struct TripCompanionDetailView: View {
                     .shadow(radius: 10)
                     .padding()
             }
+            
+            if showingReportAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                ReportAlertView(showingAlert: $showingReportAlert, showingBlockAlert: $showingBlockAlert)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
+            }
+            
+            if showingBlockAlert {
+                Color.black.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                UserBlockAlertView(showingAlert: $showingBlockAlert)
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .padding()
+            }
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
@@ -203,6 +236,35 @@ struct WriterHeaderView: View  {
                 
                 Spacer()
             }
+        }
+    }
+}
+
+struct ReportBottomView: View {
+    @Binding var showingBottomSheet: Bool
+    @Binding var showingReportAlert: Bool
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            Button {
+                showingReportAlert = true
+                showingBottomSheet = false
+            } label: {
+                Text("신고하기")
+                    .foregroundColor(.black)
+            }
+            .padding(.top)
+            .padding(.bottom, 8)
+            Divider()
+                .padding(.bottom, 8)
+            Button {
+                showingBottomSheet = false
+            } label: {
+                Text("닫기")
+                    .foregroundColor(.black)
+            }
+            Spacer()
         }
     }
 }

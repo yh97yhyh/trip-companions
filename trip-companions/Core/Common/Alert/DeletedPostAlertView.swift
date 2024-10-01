@@ -15,6 +15,7 @@ struct DeletedPostAlertView: View {
         VStack {
             HStack {
                 Text("게시물을 찾을 수 없습니다.")
+                    .font(.title3)
                     .padding(.bottom)
                     .fontWeight(.bold)
                 Spacer()
@@ -33,7 +34,6 @@ struct DeletedPostAlertView: View {
             
             Button {
                 showingAlert = false
-//                dismiss()
             } label: {
                 Text("다음에 할게요")
                     .foregroundColor(.orangeF49321)

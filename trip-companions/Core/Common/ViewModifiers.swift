@@ -267,3 +267,37 @@ struct CustomPickerStyle: ViewModifier {
             .cornerRadius(6)
     }
 }
+
+// MARK: - CheckBox
+struct CheckboxToggleStyle: ToggleStyle {
+  @Environment(\.isEnabled) var isEnabled
+  let style: Style // custom param
+
+  func makeBody(configuration: Configuration) -> some View {
+    Button(action: {
+      configuration.isOn.toggle() // toggle the state binding
+    }, label: {
+      HStack {
+        Image(systemName: configuration.isOn ? "checkmark.\(style.sfSymbolName).fill" : style.sfSymbolName)
+          .imageScale(.large)
+          .foregroundColor(configuration.isOn ? .orangeF49321 : .grayEEEEEE) // 색상 변경
+        configuration.label
+      }
+    })
+    .buttonStyle(PlainButtonStyle()) // remove any implicit styling from the button
+    .disabled(!isEnabled)
+  }
+
+  enum Style {
+    case square, circle
+
+    var sfSymbolName: String {
+      switch self {
+      case .square:
+        return "square"
+      case .circle:
+        return "circle"
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ struct WithdrawAlertView: View {
         VStack {
             HStack {
                 Text("정말로 탈퇴하시겠습니까?")
+                    .font(.title3)
                     .padding(.bottom)
                     .fontWeight(.bold)
                 Spacer()
@@ -34,7 +35,6 @@ struct WithdrawAlertView: View {
             HStack {
                 Button {
                     showingAlert = false
-//                    dismiss()
                 } label: {
                     HStack {
                         Text("아니요")
@@ -45,7 +45,6 @@ struct WithdrawAlertView: View {
                 Spacer()
                 Button {
                     showingAlert = false
-//                    dismiss()
                 } label: {
                     Text("네")
                         .foregroundColor(.orangeF49321)

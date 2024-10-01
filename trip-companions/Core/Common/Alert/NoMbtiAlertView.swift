@@ -19,6 +19,7 @@ struct NoMbtiAlertView: View {
         VStack {
             HStack {
                 Text("당신에 대해 더 알려주세요.")
+                    .font(.title3)
                     .padding(.bottom)
                     .fontWeight(.bold)
                 Spacer()

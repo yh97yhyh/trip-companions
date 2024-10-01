@@ -14,10 +14,21 @@ struct SplashView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                Image("splash")
-                    .resizable()
-                    .scaledToFill()
+                HStack {
+                    Spacer()
+                    Image("splash_top")
+                        .padding(.trailing)
+                }
+                .padding(.top, 95)
+                Spacer()
+                HStack {
+                    Image("splash_bottom")
+//                        .resizable()
+//                        .scaledToFill()
+                    Spacer()
+                }
             }
+            .ignoresSafeArea()
         }
     }
 }
