@@ -73,7 +73,7 @@ struct MyAccountView: View {
                             .font(.title3)
                             .fontWeight(.semibold)
                             .padding(.bottom, 8)
-                        Text(viewModel.toNumberFormat(myPageViewModel.member.phoneNumber))
+                        Text(viewModel.toNumberFormat(myPageViewModel.member.phoneNumber ?? ""))
                             .foregroundColor(.grayA2A2A2)
                     }
                     

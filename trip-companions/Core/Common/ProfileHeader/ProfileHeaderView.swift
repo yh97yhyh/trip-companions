@@ -99,16 +99,30 @@ struct ProfileHeaderView: View {
                             }
                             .padding(.bottom, 8)
                             
-                            Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
-                                .font(.title3)
-                                .fontWeight(.semibold)
+                            if let age = myPageViewModel.member.age {
+                                Text("\(myPageViewModel.member.nickName!), \(age)")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                            } else {
+                                Text("\(myPageViewModel.member.nickName!)")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                            }
                         }
                     } else {
                         VStack(alignment: .leading) {
+                            if let age = myPageViewModel.member.age {
+                                Text("\(myPageViewModel.member.nickName!), \(age)")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .padding(.bottom, 8)
+                            } else {
+                                Text("\(myPageViewModel.member.nickName!)")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .padding(.bottom, 8)
+                            }
                             Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .padding(.bottom, 8)
                             
                             HStack {
                                 if myPageViewModel.member.isSmoking != nil {

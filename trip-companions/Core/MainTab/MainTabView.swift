@@ -19,7 +19,7 @@ struct MainTabView: View {
                     .ignoresSafeArea()
                 
                 TabView(selection: $viewModel.selectedIndex) {
-                    HomeView(viewModel: HomeViewModel.shared, showingNoSignInAlert: false)
+                    HomeView(viewModel: HomeViewModel.shared)
                         .tabItem {
                             Image(viewModel.selectedIndex == 0 ? "icn_home_fill" : "icn_home")
                             Text("홈")

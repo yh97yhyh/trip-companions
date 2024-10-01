@@ -24,7 +24,6 @@ struct HomeSearchView: View {
                 HStack {
                     Text("검색어를 입력하세요.")
                         .font(.title3)
-                        .fontWeight(.semibold)
                     
                     Spacer()
                 }
@@ -38,7 +37,6 @@ struct HomeSearchView: View {
                 HStack {
                     Text("날짜 입력")
                         .font(.title3)
-                        .fontWeight(.semibold)
 
                     Spacer()
                 }

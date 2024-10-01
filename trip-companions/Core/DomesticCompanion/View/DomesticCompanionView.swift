@@ -10,7 +10,9 @@ import SwiftUI
 struct DomesticCompanionView: View {
     @StateObject var viewModel: DomesticCompanionViewModel
     @StateObject var searchViewModel: SearchViewModel
-    @State private var showingNoSignInAlert = false // 알림을 관리하는 상태 변수
+    @State var showingNoSignInAlert = false
+    @State var showingDeletedPostAlert = false
+
     
     var body: some View {
         ZStack {

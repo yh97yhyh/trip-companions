@@ -10,6 +10,7 @@ import SwiftUI
 struct MyPageView: View {
 //    @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var myPageViewModel: MyPageViewModel
+    @State var showingDeletedPostAlert = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -28,10 +29,10 @@ struct MyPageView: View {
                 .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
                 .padding(.bottom, 56)
             
-            VStack(alignment: .leading) {
-                Text("계정 설정")
-                    .foregroundColor(.grayA2A2A2)
-                    .padding(.bottom)
+//            VStack(alignment: .leading) {
+//                Text("계정 설정")
+//                    .foregroundColor(.grayA2A2A2)
+//                    .padding(.bottom)
                 
                 
                 NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
@@ -45,7 +46,7 @@ struct MyPageView: View {
 //                        .foregroundColor(.black)
 //                }
 //                .padding(.bottom)
-            }
+//            }
             
             Divider()
                 .padding(.bottom)
@@ -60,7 +61,7 @@ struct MyPageView: View {
                 .padding(.bottom)
             
             NavigationLink(destination: MyInterestingPostsView(viewModel: MyInterestingPostsViewModel.shared)) {
-                Text("관심있는 게시글")
+                Text("관심 있는 게시글")
                     .foregroundColor(.black)
             }
             .padding(.bottom)

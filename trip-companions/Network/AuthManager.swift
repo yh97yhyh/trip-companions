@@ -71,13 +71,15 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                     switch result {
                     case .success(let user):
                         let id = String(user.id!)
+//                        let name = String(user.kakaoAccount?.name ?? "")
+//                        let email = String(user.kakaoAccount?.email ?? "")
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token)
+                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token, socialType: .kakao)
                                 self.saveUserToUserDefaults(userInfo)
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
-                                        InfoCollectionViewModel.shared.age = String(curMember.age)
+                                        InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
                                         InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
                                         self.isLoggedIn = true
                                     }
@@ -114,13 +116,15 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                     switch result {
                     case .success(let user):
                         let id = String(user.id!)
+//                        let name = String(user.kakaoAccount?.name ?? "")
+//                        let email = String(user.kakaoAccount?.email ?? "")
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
-                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token)
+                                let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token, socialType: .kakao)
                                 self.saveUserToUserDefaults(userInfo)
                                 self.getMemberInfo(token) { success in
                                     if let curMember = self.currentMember {
-                                        InfoCollectionViewModel.shared.age = String(curMember.age)
+                                        InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
                                         InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
                                         self.isLoggedIn = true
                                     }
@@ -167,36 +171,6 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
         }
     }
     
-    private func checkLoginStatus() {
-        if let userInfo = loadUserFromUserDefaults() {
-            self.fetchUserInfo { result in
-                switch result {
-                case .success(let user):
-                    let id = String(user.id!)
-                    self.signIn(userInfo.socialToken, id) { success in
-                        if success, let token = self.token {
-                            let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token)
-                            self.saveUserToUserDefaults(userInfo)
-                            self.getMemberInfo(token) { success in
-                                if let curMember = self.currentMember {
-                                    InfoCollectionViewModel.shared.age = String(curMember.age)
-                                    InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
-                                    self.isLoggedIn = true
-                                    print("Succeed to sign-in! \(userInfo)")
-                                }
-                            }
-                           
-                        }
-                    }
-                case .failure(_):
-                    print("Failed to sign-in..")
-                }
-            }
-        } else {
-            self.isLoggedIn = false
-        }
-    }
-    
     private func renewToken() {
         AuthApi.shared.refreshToken(completion: {_,_ in })
     }
@@ -223,14 +197,20 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                 return
             }
             
+            let fullName = appleIDCredential.fullName
+            let givenName = fullName?.givenName ?? ""
+            let familyName = fullName?.familyName ?? ""
+            let name = "\(familyName)\(givenName)"
+            let email = appleIDCredential.email ?? ""
+            
             let userID = appleIDCredential.user
             signInApple(authorizationCode, userID) { success in
                 if success, let token = self.token {
-                    let userInfo = UserInfo(userId: userID, socialToken: authorizationCode, token: token)
+                    let userInfo = UserInfo(userId: userID, socialToken: authorizationCode, token: token, socialType: .apple)
                     self.saveUserToUserDefaults(userInfo)
                     self.getMemberInfo(token) { success in
                         if let curMember = self.currentMember {
-                            InfoCollectionViewModel.shared.age = String(curMember.age)
+                            InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
                             InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
                             self.isLoggedIn = true
                         }
@@ -326,10 +306,111 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
         }
         return nil
     }
+    
+    private func checkLoginStatus() {
+        if let userInfo = loadUserFromUserDefaults() {
+            switch userInfo.socialType {
+            case .kakao:
+                self.fetchUserInfo { result in
+                    switch result {
+                    case .success(let user):
+                        let id = String(user.id!)
+//                        let name = String(user.kakaoAccount?.name ?? "")
+//                        let email = String(user.kakaoAccount?.email ?? "")
+                        self.signIn(userInfo.socialToken, id) { success in
+                            if success, let token = self.token {
+                                let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token, socialType: .kakao)
+                                self.saveUserToUserDefaults(userInfo)
+                                self.getMemberInfo(token) { success in
+                                    if let curMember = self.currentMember {
+                                        InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
+                                        InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+                                        self.isLoggedIn = true
+                                        print("Succeed to sign-in! \(userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                    case .failure(_):
+                        print("Failed to sign-in..")
+                    }
+                }
+            case .apple:
+                let appleIDProvider = ASAuthorizationAppleIDProvider()
+                appleIDProvider.getCredentialState(forUserID: userInfo.userId) { credentialState, error in
+                    switch credentialState {
+                    case .authorized:
+                        self.signInApple(userInfo.socialToken, userInfo.userId) { success in
+                            if success, let token = self.token {
+                                let userInfo = UserInfo(userId: userInfo.userId, socialToken: userInfo.socialToken, token: token, socialType: .apple)
+                                self.saveUserToUserDefaults(userInfo)
+                                self.getMemberInfo(token) { success in
+                                    if let curMember = self.currentMember {
+                                        InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
+                                        InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+                                        self.isLoggedIn = true
+                                        print("Succeed to sign-in! \(userInfo)")
+                                    }
+                                }
+                            }
+                        }
+                    case .revoked, .notFound:
+                        print("Apple ID is not authorized or not found.")
+                        self.isLoggedIn = false
+                    default:
+                        break
+                    }
+                }
+            }
+        } else {
+            print("No user information found.")
+            self.isLoggedIn = false
+        }
+    }
+    
+//    private func checkLoginStatus() {
+//        if let userInfo = loadUserFromUserDefaults() {
+//            self.fetchUserInfo { result in
+//                switch result {
+//                case .success(let user):
+//                    let id = String(user.id!)
+//                    let name = String(user.kakaoAccount?.name ?? "")
+//                    let email = String(user.kakaoAccount?.email ?? "")
+//                    self.signIn(userInfo.socialToken, id) { success in
+//                        if success, let token = self.token {
+//                            let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token, name: name, email: email, socialType: .kakao)
+//                            self.saveUserToUserDefaults(userInfo)
+//                            self.getMemberInfo(token) { success in
+//                                if let curMember = self.currentMember {
+//                                    InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
+//                                    InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+//                                    self.isLoggedIn = true
+//                                    print("Succeed to sign-in! \(userInfo)")
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//                case .failure(_):
+//                    print("Failed to sign-in..")
+//                }
+//            }
+//        } else {
+//            self.isLoggedIn = false
+//        }
+//    }
+}
+
+enum SocialType: String, Codable {
+    case kakao
+    case apple
 }
 
 struct UserInfo: Codable {
     let userId: String
     let socialToken: String
     let token: String
+//    let name: String
+//    let email: String
+    let socialType: SocialType
 }

@@ -8,10 +8,10 @@
 import SwiftUI
 
 // MARK: - Text
-struct Title2TextModifier: ViewModifier {
+struct Title3TextModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.title2)
+            .font(.title3)
 //            .fontWeight(.semibold)
             .padding(.bottom, 5)
     }

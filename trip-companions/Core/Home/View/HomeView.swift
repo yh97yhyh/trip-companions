@@ -11,7 +11,8 @@ struct HomeView: View {
     @EnvironmentObject var myPageViewModel: MyPageViewModel
     @StateObject var viewModel: HomeViewModel
     @State var mockRegion: Region?
-    @State var showingNoSignInAlert: Bool
+    @State var showingNoSignInAlert = false
+    @State var showingDeletedPostAlert = false
     
     var body: some View {
         ZStack {
@@ -35,13 +36,19 @@ struct HomeView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("\(myPageViewModel.member.interestRegion?.regionName ?? "")")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundColor(Color.orangeF49321) +
-                        Text(" 여행 계획중이에요")
-                            .font(.title3)
-                            .fontWeight(.semibold)
+                        if AuthManager.shared.isGuestMode {
+                            Text("어디로 떠나시나요?")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                        } else {
+                            Text("\(myPageViewModel.member.interestRegion?.regionName ?? "")")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.orangeF49321) +
+                            Text(" 여행 계획중이에요")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                        }
                         Spacer()
                         
                         if AuthManager.shared.isGuestMode {

@@ -19,7 +19,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao${KAKAO_API_KEY}://oauth</string>
+				<string>kakao${KAKAO_API_KEY}</string>
 			</array>
 		</dict>
 	</array>

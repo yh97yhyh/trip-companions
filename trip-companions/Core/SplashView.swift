@@ -10,14 +10,13 @@ import SwiftUI
 struct SplashView: View {
     var body: some View {
         ZStack {
-            Color.white
+            Color.orangeF49321
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
-                Image("kakaoLoginLogo")
+                Image("splash")
                     .resizable()
-    //                .scaledToFit()
-                    .frame(width: 180, height: 180)
+                    .scaledToFill()
             }
         }
     }

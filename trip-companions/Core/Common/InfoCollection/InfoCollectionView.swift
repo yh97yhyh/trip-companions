@@ -41,7 +41,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("닉네임")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text ("(필수)")
                                         .modifier(AdditionalEssentialTextModifier())
                                 }
@@ -59,7 +59,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("나이")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text ("(필수)")
                                         .modifier(AdditionalEssentialTextModifier())
                                 }
@@ -102,7 +102,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("성별")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text("필수")
                                         .modifier(AdditionalEssentialTextModifier())
                                 }
@@ -138,7 +138,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("MBTI")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text("(선택)")
                                         .modifier(AdditionalOptionalTextModifier())
                                 }
@@ -174,7 +174,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("흡연 여부")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text("(선택)")
                                         .modifier(AdditionalOptionalTextModifier())
                                 }
@@ -202,7 +202,7 @@ struct InfoCollectionView: View {
                             VStack(alignment: .leading) {
                                 HStack(spacing: 4) {
                                     Text("음주 여부")
-                                        .modifier(Title2TextModifier())
+                                        .modifier(Title3TextModifier())
                                     Text("(선택)")
                                         .modifier(AdditionalOptionalTextModifier())
                                 }
