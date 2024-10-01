@@ -14,7 +14,7 @@ struct Member: Identifiable, Codable, Hashable {
     let name: String
     let nickName: String?
     let phoneNumber: String? //
-    let email: String
+    let email: String? //
     var profileImageUrl: String?
     let tokenKey: String
     let mbti: MBTI?

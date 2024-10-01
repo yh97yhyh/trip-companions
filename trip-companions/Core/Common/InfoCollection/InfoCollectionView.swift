@@ -270,6 +270,7 @@ struct InfoCollectionView: View {
                                 .disabled(!viewModel.isComplete)
                                 .padding(.horizontal)
                                 .onTapGesture {
+                                    print("완료! 다음페이지")
                                     viewModel.updateMemberProfile { member in
                                         authManager.currentMember = member
                                         myPageViewModel.member = member

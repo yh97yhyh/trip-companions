@@ -49,7 +49,7 @@ struct MyAccountView: View {
                             .font(.title3)
                             .fontWeight(.semibold)
                             .padding(.bottom, 8)
-                        Text(myPageViewModel.member.email)
+                        Text(myPageViewModel.member.email ?? "")
                             .foregroundColor(.grayA2A2A2)
                     }
                     

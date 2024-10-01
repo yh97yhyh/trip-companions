@@ -204,7 +204,7 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
             let email = appleIDCredential.email ?? ""
             
             let userID = appleIDCredential.user
-            signInApple(authorizationCode, userID) { success in
+            signInApple(authorizationCode, userID, name) { success in
                 if success, let token = self.token {
                     let userInfo = UserInfo(userId: userID, socialToken: authorizationCode, token: token, socialType: .apple)
                     self.saveUserToUserDefaults(userInfo)
@@ -215,9 +215,9 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                             self.isLoggedIn = true
                         }
                     }
-                    print("Succeed to login with apple!")
+                    print("Succeed to sign-in with apple!")
                 } else {
-                    print("Failed to login with apple!")
+                    print("Failed to sign-in with apple!")
                 }
             }
         }
@@ -253,9 +253,10 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
             }.store(in: &cancellables)
     }
     
-    private func signInApple(_ appleAuthCode: String, _ id: String, completion: @escaping (Bool) -> Void) {
+    private func signInApple(_ appleAuthCode: String, _ id: String, _ name: String, completion: @escaping (Bool) -> Void) {
         let parameters: Parameters = [
-            "appleAuthCode": appleAuthCode
+            "appleAuthCode": appleAuthCode,
+            "name": ""
         ]
         
         NetworkManager<TokenInfo>.request(route: .postSignInAppleWithApple(parameters))
@@ -337,21 +338,16 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                 }
             case .apple:
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
+                self.token = userInfo.token
                 appleIDProvider.getCredentialState(forUserID: userInfo.userId) { credentialState, error in
                     switch credentialState {
                     case .authorized:
-                        self.signInApple(userInfo.socialToken, userInfo.userId) { success in
-                            if success, let token = self.token {
-                                let userInfo = UserInfo(userId: userInfo.userId, socialToken: userInfo.socialToken, token: token, socialType: .apple)
-                                self.saveUserToUserDefaults(userInfo)
-                                self.getMemberInfo(token) { success in
-                                    if let curMember = self.currentMember {
-                                        InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
-                                        InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
-                                        self.isLoggedIn = true
-                                        print("Succeed to sign-in! \(userInfo)")
-                                    }
-                                }
+                        self.getMemberInfo(userInfo.token) { success in
+                            if let curMember = self.currentMember {
+                                InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
+                                InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
+                                self.isLoggedIn = true
+                                print("Succeed to sign-in! \(userInfo)")
                             }
                         }
                     case .revoked, .notFound:
