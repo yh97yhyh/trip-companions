@@ -31,12 +31,12 @@ struct MainTabView: View {
                             Text("국내 동행")
                         }
                         .tag(1)
-                    OverseaCompanionView()
-                        .tabItem {
-                            Image(viewModel.selectedIndex == 2 ? "icn_oversea_fill" : "icn_oversea")
-                            Text("해외 동행")
-                        }
-                        .tag(2)
+//                    OverseaCompanionView()
+//                        .tabItem {
+//                            Image(viewModel.selectedIndex == 2 ? "icn_oversea_fill" : "icn_oversea")
+//                            Text("해외 동행")
+//                        }
+//                        .tag(2)
                     MyPageView()
                         .tabItem {
                             Image(viewModel.selectedIndex == 3 ? "icn_person_fill" : "icn_person")

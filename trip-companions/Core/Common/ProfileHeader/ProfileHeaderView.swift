@@ -122,7 +122,6 @@ struct ProfileHeaderView: View {
                                     .fontWeight(.semibold)
                                     .padding(.bottom, 8)
                             }
-                            Text("\(myPageViewModel.member.nickName!), \(myPageViewModel.member.age)")
                             
                             HStack {
                                 if myPageViewModel.member.isSmoking != nil {

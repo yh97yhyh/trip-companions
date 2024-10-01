@@ -130,6 +130,7 @@ struct HomeView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+
     }
 }
 

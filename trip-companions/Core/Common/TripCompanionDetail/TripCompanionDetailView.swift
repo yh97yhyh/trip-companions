@@ -165,10 +165,17 @@ struct WriterHeaderView: View  {
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("\(viewModel.tripCompanion.member.nickName!), \(viewModel.tripCompanion.member.age)")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding(.bottom, 8)
+                    if let age = viewModel.tripCompanion.member.age {
+                        Text("\(viewModel.tripCompanion.member.nickName!), \(age)")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .padding(.bottom, 8)
+                    } else {
+                        Text("\(viewModel.tripCompanion.member.nickName!)")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .padding(.bottom, 8)
+                    }
                     
                     HStack {
                         if viewModel.tripCompanion.member.isSmoking != nil {
