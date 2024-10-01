@@ -116,6 +116,7 @@ class WriteTripCompanionViewModel: ObservableObject {
                 }
             } receiveValue: { tripCompanion in
                 print("Succeed to create trip companion! \(tripCompanion.id)")
+                DomesticCompanionViewModel.shared.fetchTripCompanions()
             }.store(in: &cancellables)
     }
     
@@ -156,7 +157,7 @@ class WriteTripCompanionViewModel: ObservableObject {
                 }
             } receiveValue: { tripCompanion in
                 print("Succeed to update trip companion! \(tripCompanion.id)")
-                MyPostsViewModel.shared.fetchTripCompanions()
+//                MyPostsViewModel.shared.fetchTripCompanions()
             }.store(in: &cancellables)
     }
     

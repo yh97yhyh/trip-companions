@@ -22,7 +22,7 @@ struct WithdrawAlertView: View {
             .padding(.horizontal)
             
             HStack {
-                Text("탈퇴후 30일 간 재가입이\n불가능합니다")
+                Text("탈퇴후 30일 간 재가입이 불가능합니다")
                     .font(.subheadline)
                 Spacer()
             }

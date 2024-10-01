@@ -74,13 +74,9 @@ struct MyPageView: View {
                     showingWithdrawAlert = true
                 } label: {
                     Text("회원 탈퇴")
-                        .foregroundColor(.black)
-                    
+                        .foregroundColor(.grayA2A2A2)
                 }
                 .padding(.bottom)
-                
-                Divider()
-                    .padding(.bottom)
                 
                 
                 Spacer()

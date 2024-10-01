@@ -22,7 +22,7 @@ struct UserBlockAlert: View {
             .padding(.horizontal)
             
             HStack {
-                Text("신고가 완료되었습니다.\n차단된 유저의 게시글은 더 이상\n볼 수 없습니다.")
+                Text("신고가 완료되었습니다.\n차단된 유저의 게시글은 더 이상 볼 수 없습니다.")
                     .font(.subheadline)
                 Spacer()
             }

@@ -16,7 +16,8 @@ struct InfoCollectionView: View {
     @Environment(\.dismiss) private var dismiss
     @State var mockRegion: Region?
     @State var showingNoMbtiAlert = false
-    @State private var shouldNavigate = false
+//    @State private var shouldNavigate = false
+    @State private var navigate = false
         
     var body: some View {
         ZStack {
@@ -246,37 +247,64 @@ struct InfoCollectionView: View {
                         .disabled(!viewModel.isComplete)
                         .padding(.horizontal)
                     } else {
-                        if viewModel.mbti == nil {
-                            Button {
+                        Button {
+                            if viewModel.mbti == nil {
                                 showingNoMbtiAlert = true
-                            } label: {
-                                Text("완료")
+                            } else {
+                                viewModel.updateMemberProfile { member in
+                                    authManager.currentMember = member
+                                    myPageViewModel.member = member
+                                }
+                                navigate = true
                             }
-                            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
-                            .disabled(!viewModel.isComplete)
-                            .padding(.horizontal)
-                            .background(
-                                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
-                                    .environmentObject(myPageViewModel), isActive: $shouldNavigate) {
-                                        EmptyView()
-                                    }
-                            )
-                        } else {
-                            NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
-                                .environmentObject(myPageViewModel)) {
-                                    Text("완료")
-                                }
-                                .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
-                                .disabled(!viewModel.isComplete)
-                                .padding(.horizontal)
-                                .onTapGesture {
-                                    print("완료! 다음페이지")
-                                    viewModel.updateMemberProfile { member in
-                                        authManager.currentMember = member
-                                        myPageViewModel.member = member
-                                    }
-                                }
+                        } label: {
+                            Text("완료")
                         }
+                        .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+                        .disabled(!viewModel.isComplete)
+                        .padding(.horizontal)
+                        .background(
+                            NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
+                                .environmentObject(myPageViewModel), isActive: $navigate) {
+                                    EmptyView()
+                                }
+                        )
+
+//                        if viewModel.mbti == nil {
+//                            Button {
+//                                showingNoMbtiAlert = true
+//                            } label: {
+//                                Text("완료")
+//                            }
+//                            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+//                            .disabled(!viewModel.isComplete)
+//                            .padding(.horizontal)
+//                            .background(
+//                                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
+//                                    .environmentObject(myPageViewModel), isActive: $shouldNavigate) {
+//                                        EmptyView()
+//                                    }
+//                            )
+//                        } else {
+//                            Button {
+//                                viewModel.updateMemberProfile { member in
+//                                    authManager.currentMember = member
+//                                    myPageViewModel.member = member
+//                                }
+//                                navigate = true
+//                            } label: {
+//                                Text("완료")
+//                            }
+//                            .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+//                            .disabled(!viewModel.isComplete)
+//                            .padding(.horizontal)
+//                            .background(
+//                                NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), bindedRegion: $mockRegion)
+//                                    .environmentObject(myPageViewModel), isActive: $navigate) {
+//                                        EmptyView()
+//                                    }
+//                            )
+//                        }
                         
                     }
                 }
@@ -291,7 +319,7 @@ struct InfoCollectionView: View {
             if showingNoMbtiAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
-                NoMbtiAlertView(showingAlert: $showingNoMbtiAlert, shouldNavigate: $shouldNavigate)
+                NoMbtiAlertView(showingAlert: $showingNoMbtiAlert, shouldNavigate: $navigate)
                     .environmentObject(authManager)
                     .environmentObject(myPageViewModel)
                     .background(Color.white)

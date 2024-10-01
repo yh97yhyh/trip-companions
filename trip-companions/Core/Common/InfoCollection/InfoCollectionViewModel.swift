@@ -59,7 +59,7 @@ class InfoCollectionViewModel: ObservableObject {
         var parameters: Parameters = [
             "nickName": nickname,
             "age": Int(age)!,
-            "gender": gender!.desc,
+            "gender": gender!.code,
             "mbti": mbti?.desc ?? "",
             "isSmoking": isSmoking != nil ? isSmoking! : nil,
             "isDrinking": isDrinking != nil ? isDrinking! : nil

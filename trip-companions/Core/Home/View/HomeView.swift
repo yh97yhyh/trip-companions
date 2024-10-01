@@ -104,9 +104,9 @@ struct HomeView: View {
                         .padding(4)
                         
                     }
-                    .refreshable {
-                        viewModel.fetchRecommendedTripCompanions()
-                    }
+//                    .refreshable {
+//                        viewModel.fetchRecommendedTripCompanions()
+//                    }
                 }
                 Spacer()
                 
