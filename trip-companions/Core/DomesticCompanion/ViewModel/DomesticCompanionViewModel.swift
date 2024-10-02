@@ -104,6 +104,11 @@ class DomesticCompanionViewModel: ObservableObject {
         
         return parameters
     }
+    
+    func hideTripCompanion(_ tripCompanion: TripCompanion) {
+        tripCompanions.removeAll { $0.id == tripCompanion.id }
+    }
+
 }
 
 extension DomesticCompanionViewModel {

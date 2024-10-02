@@ -40,15 +40,17 @@ struct TripCompanionDetailView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer()
-                            Button {
-                                showingBottomSheet = true
-                            } label: {
-                                Image(systemName: "ellipsis")
-                                    .foregroundColor(.black)
-                            }
-                            .sheet(isPresented: $showingBottomSheet) {
-                                ReportBottomView(showingBottomSheet: $showingBottomSheet, showingReportAlert: $showingReportAlert)
-                                    .presentationDetents([.fraction(0.4), .height(110), .medium, .large])
+                            if AuthManager.shared.currentMember!.id != viewModel.tripCompanion.member.id {
+                                Button {
+                                    showingBottomSheet = true
+                                } label: {
+                                    Image(systemName: "ellipsis")
+                                        .foregroundColor(.black)
+                                }
+                                .sheet(isPresented: $showingBottomSheet) {
+                                    ReportBottomView(showingBottomSheet: $showingBottomSheet, showingReportAlert: $showingReportAlert)
+                                        .presentationDetents([.fraction(0.4), .height(110), .medium, .large])
+                                }
                             }
                         }
                         .padding(.bottom, 8)
@@ -153,7 +155,7 @@ struct TripCompanionDetailView: View {
             if showingReportAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
-                ReportAlertView(showingAlert: $showingReportAlert, showingBlockAlert: $showingBlockAlert)
+                ReportAlertView(viewModel: viewModel, showingAlert: $showingReportAlert, showingBlockAlert: $showingBlockAlert)
                     .background(Color.white)
                     .cornerRadius(10)
                     .shadow(radius: 10)
@@ -163,7 +165,7 @@ struct TripCompanionDetailView: View {
             if showingBlockAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
-                UserBlockAlertView(showingAlert: $showingBlockAlert)
+                UserBlockAlertView(viewModel: viewModel, showingAlert: $showingBlockAlert)
                     .background(Color.white)
                     .cornerRadius(10)
                     .shadow(radius: 10)

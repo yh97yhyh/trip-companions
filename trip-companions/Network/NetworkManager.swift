@@ -19,16 +19,20 @@ enum APIRouter: URLRequestConvertible {
     case updateTripCompanion(Parameters)
     case deleteTripCompanion(postId: Int)
     case getMyTripCompanions(Parameters)
+    case reportTripCompanion(postId: Int, Parameters)
     
     case createLikeTripCompanion(Parameters)
     case deleteLikeTripCompanion(postId: Int)
     case getMyLikeTripCompanions(Parameters)
+    
+    case blockUser(Parameters)
     
     case updateMemberProfile(Parameters)
     case updateProfileImage(profileImageFile: UIImage?)
     case getMemberProfile
     case updateInterestRegion(Parameters)
     case getGenderAndMbti
+    case withDraw
     
     case getTripCompanions(Parameters)
     case getRecommendedTripCompanions(Parameters)
@@ -45,11 +49,11 @@ enum APIRouter: URLRequestConvertible {
                 .getTripCompanions,
                 .getMetaData:
             return .get
-        case .postSignIn, .postSignInAppleWithApple,  .createTripCompanion, .createLikeTripCompanion:
+        case .postSignIn, .postSignInAppleWithApple, .createTripCompanion, .reportTripCompanion, .createLikeTripCompanion, .blockUser:
             return .post
         case .updateTripCompanion, .updateMemberProfile, .updateProfileImage, .updateInterestRegion:
             return .patch
-        case .deleteTripCompanion, .deleteLikeTripCompanion:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .withDraw:
             return .delete
         }
     }
@@ -70,12 +74,16 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/trip-companions/\(postId)"
         case .getMyTripCompanions:
             return "/api/v1/trip-companions/my"
+        case .reportTripCompanion(let postId, _):
+            return "/api/v1/trip-companions/\(postId)/report"
         case .createLikeTripCompanion:
             return "/api/v1/interest-trip-companions"
         case .deleteLikeTripCompanion(let postId):
             return "/api/v1/interest-trip-companions/\(postId)"
         case .getMyLikeTripCompanions:
             return "/api/v1/interest-trip-companions/my"
+        case .blockUser:
+            return "/api/v1/block"
         case .updateMemberProfile:
             return "/api/v1/members/profile"
         case .updateProfileImage:
@@ -86,6 +94,8 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/members/my"
         case .getGenderAndMbti:
             return "/api/v1/members/filter-info"
+        case .withDraw:
+            return "/api/v1/members"
         case .getTripCompanions:
             return "/public/v1/trip-companions"
         case .getRecommendedTripCompanions:
@@ -104,13 +114,15 @@ enum APIRouter: URLRequestConvertible {
                 .createTripCompanion(let parameters),
                 .updateTripCompanion(let parameters),
                 .getMyTripCompanions(let parameters),
+                .reportTripCompanion(_, let parameters),
                 .createLikeTripCompanion(let parameters),
                 .getMyLikeTripCompanions(let parameters),
+                .blockUser(let parameters),
                 .updateMemberProfile(let parameters),
                 .updateInterestRegion(let parameters),
                 .getRecommendedTripCompanions(let parameters):
             return parameters
-        case .deleteTripCompanion, .deleteLikeTripCompanion, .updateProfileImage, .getMemberProfile, .getGenderAndMbti, .getMetaData:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .updateProfileImage, .getMemberProfile, .getGenderAndMbti, .withDraw, .getMetaData:
             return Parameters()
         }
     }

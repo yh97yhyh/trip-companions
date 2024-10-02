@@ -36,13 +36,6 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
     
     private var cancellables = Set<AnyCancellable>()
     
-    
-//    init() {
-//        let KakaoApiKey = Bundle.main.infoDictionary?["KakaoApiKey"] as! String
-//        KakaoSDK.initSDK(appKey: KakaoApiKey)
-//        checkLoginStatus()
-//    }
-    
     override init() {
         super.init()
         
@@ -71,8 +64,6 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                     switch result {
                     case .success(let user):
                         let id = String(user.id!)
-//                        let name = String(user.kakaoAccount?.name ?? "")
-//                        let email = String(user.kakaoAccount?.email ?? "")
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
                                 let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token, socialType: .kakao)
@@ -116,8 +107,6 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                     switch result {
                     case .success(let user):
                         let id = String(user.id!)
-//                        let name = String(user.kakaoAccount?.name ?? "")
-//                        let email = String(user.kakaoAccount?.email ?? "")
                         self.signIn(oauthToken.accessToken, id) { success in
                             if success, let token = self.token {
                                 let userInfo = UserInfo(userId: id, socialToken: oauthToken.accessToken, token: token, socialType: .kakao)
@@ -316,8 +305,6 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
                     switch result {
                     case .success(let user):
                         let id = String(user.id!)
-//                        let name = String(user.kakaoAccount?.name ?? "")
-//                        let email = String(user.kakaoAccount?.email ?? "")
                         self.signIn(userInfo.socialToken, id) { success in
                             if success, let token = self.token {
                                 let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token, socialType: .kakao)
@@ -363,38 +350,7 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
             self.isLoggedIn = false
         }
     }
-    
-//    private func checkLoginStatus() {
-//        if let userInfo = loadUserFromUserDefaults() {
-//            self.fetchUserInfo { result in
-//                switch result {
-//                case .success(let user):
-//                    let id = String(user.id!)
-//                    let name = String(user.kakaoAccount?.name ?? "")
-//                    let email = String(user.kakaoAccount?.email ?? "")
-//                    self.signIn(userInfo.socialToken, id) { success in
-//                        if success, let token = self.token {
-//                            let userInfo = UserInfo(userId: id, socialToken: userInfo.socialToken, token: token, name: name, email: email, socialType: .kakao)
-//                            self.saveUserToUserDefaults(userInfo)
-//                            self.getMemberInfo(token) { success in
-//                                if let curMember = self.currentMember {
-//                                    InfoCollectionViewModel.shared.age = curMember.age.map { String($0) } ?? ""
-//                                    InfoCollectionViewModel.shared.gender = curMember.gender ?? Gender.MOCK_GENDERS[0]
-//                                    self.isLoggedIn = true
-//                                    print("Succeed to sign-in! \(userInfo)")
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//                case .failure(_):
-//                    print("Failed to sign-in..")
-//                }
-//            }
-//        } else {
-//            self.isLoggedIn = false
-//        }
-//    }
+
 }
 
 enum SocialType: String, Codable {
@@ -406,7 +362,5 @@ struct UserInfo: Codable {
     let userId: String
     let socialToken: String
     let token: String
-//    let name: String
-//    let email: String
     let socialType: SocialType
 }

@@ -26,13 +26,27 @@ class MyPageViewModel: ObservableObject {
                 case .finished:
                     break
                 case .failure(let error):
-                    print("Error occurred: \(error)")
+                    print("Failed to update profile image.. \(error.localizedDescription)")
                 }
             } receiveValue: { [weak self] updatedMember in
                 print("succeed to updateProfileImage! \(updatedMember.profileImageUrl ?? nil)")
                 AuthManager.shared.currentMember = updatedMember
                 self?.member = updatedMember
                 self?.image = nil
+            }.store(in: &cancellables)
+    }
+    
+    func withDraw() {
+        NetworkManager<Int>.requestWithoutResponse(route: .withDraw)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Failed to withdraw.. \(error.localizedDescription)")
+                }
+            } receiveValue: { _ in
+                
             }.store(in: &cancellables)
     }
 }

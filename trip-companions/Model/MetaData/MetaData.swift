@@ -14,6 +14,7 @@ struct MetaData: Codable, Hashable {
     let ageRange: [AgeRange]
     let gender: [Gender]
     let mbti: [MBTI]
+    let reportType: [ReportType]
 }
 
 struct Category: Codable, Hashable {
@@ -100,3 +101,17 @@ extension MBTI {
     ]
 }
 
+struct ReportType: Codable, Hashable {
+    let code: String
+    let desc: String
+}
+
+extension ReportType {
+    static let MOCK_REPORT_TYPES: [ReportType] = [
+        .init(code: "AD", desc: "광고성 게시물"),
+        .init(code: "VULGARISM", desc: "욕설"),
+        .init(code: "PORNOGRAPHY", desc: "음란물"),
+        .init(code: "SPAM", desc: "스팸/도배"),
+        .init(code: "ILLEGAL", desc: "불법적인 정보 포함"),
+    ]
+}

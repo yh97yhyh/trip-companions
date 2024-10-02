@@ -17,16 +17,18 @@ class MetaDataViewModel: ObservableObject {
     @Published var ageRanges: [AgeRange]
     @Published var genders: [Gender]
     @Published var mbtis: [MBTI]
+    @Published var reportTypes: [ReportType]
     
     var cancellables = Set<AnyCancellable>()
     
-    init(categories: [Category] = [], regions: [Region] = [], tripCompanionStatuses: [TripCompanionStatus] = [], ageRanges: [AgeRange] = [], genders: [Gender] = [], mbtis: [MBTI] = []) {
+    init(categories: [Category] = [], regions: [Region] = [], tripCompanionStatuses: [TripCompanionStatus] = [], ageRanges: [AgeRange] = [], genders: [Gender] = [], mbtis: [MBTI] = [], reportTypes: [ReportType] = []) {
         self.categories = categories
         self.regions = regions
         self.tripCompanionStatuses = tripCompanionStatuses
         self.ageRanges = ageRanges
         self.genders = genders
         self.mbtis = mbtis
+        self.reportTypes = reportTypes
         getMetaData()
     }
     
@@ -46,6 +48,7 @@ class MetaDataViewModel: ObservableObject {
                 self?.ageRanges = metadata.ageRange
                 self?.genders = metadata.gender
                 self?.mbtis = metadata.mbti
+                self?.reportTypes = metadata.reportType
 //                self?.mbtis.insert(MBTI(code: "ETC", desc: "선택안함"), at: 0)
             }
             .store(in: &cancellables)

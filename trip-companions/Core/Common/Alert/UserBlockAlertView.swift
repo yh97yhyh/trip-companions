@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserBlockAlertView: View {
+    @StateObject var viewModel: TripCompanionDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var showingAlert: Bool
 
@@ -23,7 +24,7 @@ struct UserBlockAlertView: View {
             .padding(.horizontal)
             
             HStack {
-                Text("신고가 완료되었습니다.\n차단된 유저의 게시글은 더 이상 볼 수 없습니다.")
+                Text("신고가 완료되었습니다. 신고된 글과\n차단된 유저의 게시글은 더 이상 볼 수 없습니다.")
                     .font(.subheadline)
                 Spacer()
             }
@@ -34,6 +35,7 @@ struct UserBlockAlertView: View {
             
             HStack {
                 Button {
+                    dismiss()
                     showingAlert = false
                 } label: {
                     HStack {
@@ -44,6 +46,8 @@ struct UserBlockAlertView: View {
                 }
                 Spacer()
                 Button {
+                    viewModel.blockUser()
+                    dismiss()
                     showingAlert = false
                 } label: {
                     Text("네")
@@ -55,6 +59,9 @@ struct UserBlockAlertView: View {
             .padding(.horizontal)
         }
         .padding(.vertical)
+        .onDisappear {
+            DomesticCompanionViewModel.shared.fetchTripCompanions()
+        }
     }
 }
 

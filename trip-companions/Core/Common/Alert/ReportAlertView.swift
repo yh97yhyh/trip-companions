@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ReportAlertView: View {
+    @StateObject var viewModel: TripCompanionDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @Binding var showingAlert: Bool
     @Binding var showingBlockAlert: Bool
-    @State private var selectedOption: ToggleOption? = nil
+    @State private var selectedOption: ReportType? = nil
 
     var body: some View {
         VStack {
@@ -25,15 +26,15 @@ struct ReportAlertView: View {
             .padding(.horizontal)
             
             VStack(alignment: .leading) {
-                ForEach(ToggleOption.allCases, id: \.self) { option in
+                ForEach(MetaDataViewModel.shared.reportTypes, id: \.self) { reportType in
                     HStack {
-                        Toggle(option.title, isOn: Binding(
+                        Toggle(reportType.desc, isOn: Binding(
                             get: {
-                                selectedOption == option
+                                selectedOption == reportType
                             },
                             set: { isSelected in
                                 if isSelected {
-                                    selectedOption = option
+                                    selectedOption = reportType
                                 } else {
                                     selectedOption = nil
                                 }
@@ -71,6 +72,10 @@ struct ReportAlertView: View {
                 }
                 Spacer()
                 Button {
+                    if selectedOption == nil {
+                        return
+                    }
+                    viewModel.reportTripCompanion(selectedOption!.code)
                     showingAlert = false
                     showingBlockAlert = true
                 } label: {
@@ -86,19 +91,19 @@ struct ReportAlertView: View {
     }
 }
 
-enum ToggleOption: Int, CaseIterable {
-    case option1, option2, option3, option4, option5
-    
-    var title: String {
-        switch self {
-        case .option1: return "광고성 게시물"
-        case .option2: return "욕설"
-        case .option3: return "음란물"
-        case .option4: return "스팸/도배"
-        case .option5: return "불법적인 정보 포함"
-        }
-    }
-}
+//enum ToggleOption: Int, CaseIterable {
+//    case option1, option2, option3, option4, option5
+//    
+//    var title: String {
+//        switch self {
+//        case .option1: return "광고성 게시물"
+//        case .option2: return "욕설"
+//        case .option3: return "음란물"
+//        case .option4: return "스팸/도배"
+//        case .option5: return "불법적인 정보 포함"
+//        }
+//    }
+//}
 
 //#Preview {
 //    ReportAlertView()
