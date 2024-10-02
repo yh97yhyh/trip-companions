@@ -36,19 +36,19 @@ class MyPageViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
     
-    func withDraw() {
-        NetworkManager<Int>.requestWithoutResponse(route: .withDraw)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("Failed to withdraw.. \(error.localizedDescription)")
-                }
-            } receiveValue: { _ in
-                
-            }.store(in: &cancellables)
-    }
+//    func withDraw() {
+//        NetworkManager<Int>.requestWithoutResponse(route: .withDraw)
+//            .sink { completion in
+//                switch completion {
+//                case .finished:
+//                    break
+//                case .failure(let error):
+//                    print("Failed to withdraw.. \(error.localizedDescription)")
+//                }
+//            } receiveValue: { _ in
+//                
+//            }.store(in: &cancellables)
+//    }
 }
 
 extension MyPageViewModel {

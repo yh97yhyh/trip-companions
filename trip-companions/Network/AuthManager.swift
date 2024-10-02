@@ -160,8 +160,18 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
         }
     }
     
-    private func renewToken() {
+    func renewToken() {
         AuthApi.shared.refreshToken(completion: {_,_ in })
+    }
+    
+    func unlinkKakao() {
+        UserApi.shared.unlink { error in
+            if let error = error {
+                print("Failed to unlik kakao.. \(error)")
+            } else {
+                print("Succeed to unlik kakao!")
+            }
+        }
     }
     
     // MARK: - Apple
@@ -220,6 +230,10 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
         return UIApplication.shared.windows.first { $0.isKeyWindow }!
     }
     
+    func unlilnkApple() {
+        
+    }
+    
     // MARK: - Server
     private func signIn(_ kakaoToken: String, _ id: String, completion: @escaping (Bool) -> Void) {
         let parameters: Parameters = [
@@ -263,6 +277,31 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
             }.store(in: &cancellables)
     }
     
+    func withDraw() {
+        NetworkManager<Int>.requestWithoutResponse(route: .withDraw)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    print("Succeed to withdraw!")
+                    break
+                case .failure(let error):
+                    print("Failed to withdraw.. \(error.localizedDescription)")
+                }
+            } receiveValue: { [weak self] _ in
+                if let userInfo = self?.loadUserFromUserDefaults() {
+                    switch userInfo.socialType {
+                    case .kakao:
+                        self?.unlinkKakao()
+                    case .apple:
+                        self?.unlilnkApple()
+                    }
+                }
+                self?.deleteUserFromUserDefaults()
+                self?.currentMember = nil
+                self?.isLoggedIn = false
+            }.store(in: &cancellables)
+    }
+    
     func getMemberInfo(_ token: String, completion: @escaping (Bool) -> Void) {
         NetworkManager<Member>.request(route: .getMemberProfile)
             .sink { completionStatus in
@@ -295,6 +334,10 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
             }
         }
         return nil
+    }
+    
+    func deleteUserFromUserDefaults() {
+        UserDefaults.standard.removeObject(forKey: "loggedInUser")
     }
     
     private func checkLoginStatus() {

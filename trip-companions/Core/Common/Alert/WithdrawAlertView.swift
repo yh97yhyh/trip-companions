@@ -44,6 +44,7 @@ struct WithdrawAlertView: View {
                 }
                 Spacer()
                 Button {
+                    AuthManager.shared.withDraw()
                     showingAlert = false
                 } label: {
                     Text("네")
