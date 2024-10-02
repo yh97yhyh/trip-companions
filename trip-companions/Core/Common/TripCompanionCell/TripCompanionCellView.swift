@@ -79,6 +79,8 @@ struct TripCompanionCellView: View {
                             .font(.callout)
                             .fontWeight(.semibold)
                             .foregroundColor(.black)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                         Spacer()
                     }
 
@@ -103,7 +105,7 @@ struct TripCompanionCellView: View {
                         
                         Spacer()
                         
-                        InterestHeartView(viewModel: interestHeartViewModel, isDetail: false)
+                        InterestHeartView(viewModel: interestHeartViewModel, viewType: .cell)
                     }
                 }
                 

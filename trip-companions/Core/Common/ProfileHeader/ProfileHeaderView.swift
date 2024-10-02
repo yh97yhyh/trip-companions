@@ -153,12 +153,21 @@ struct ProfileHeaderView: View {
                 Spacer()
                 
                 if viewModel.isHomeView {
-                    NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
-                        Image(systemName: "chevron.forward")
-                            .foregroundColor(.black)
-                            .frame(width: 20, height: 20)
+                    if AuthManager.shared.isLoggedIn {
+                        NavigationLink(destination: InfoCollectionView(isEditMode: true)) {
+                            Image(systemName: "chevron.forward")
+                                .foregroundColor(.black)
+                                .frame(width: 20, height: 20)
+                        }
+                    } else {
+                        Button {
+                            AuthManager.shared.isGuestMode = false
+                        } label: {
+                            Image(systemName: "chevron.forward")
+                                .foregroundColor(.black)
+                                .frame(width: 20, height: 20)
+                        }
                     }
-                    .disabled(AuthManager.shared.isGuestMode)
                 }
             }
         }

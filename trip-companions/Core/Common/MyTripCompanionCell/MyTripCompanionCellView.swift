@@ -10,8 +10,9 @@ import Kingfisher
 
 struct MyTripCompanionCellView: View {
     @StateObject var viewModel: MyTripCompanionCellViewModel
-    @State private var showAlert = false
-    
+    @Binding var showingPostDeleteAlert: Bool
+    @Binding var postId: Int?
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -112,7 +113,8 @@ struct MyTripCompanionCellView: View {
                         .buttonStyle(MyPageButtonStyle())
                         
                         Button {
-                            MyPostsViewModel.shared.deletePost(postId: viewModel.tripCompanion.id)
+                            postId = viewModel.tripCompanion.id
+                            showingPostDeleteAlert = true
                         } label: {
                             Text("삭제")
                                 .font(.subheadline)
@@ -128,6 +130,6 @@ struct MyTripCompanionCellView: View {
     }
 }
 
-#Preview {
-    MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel.MOCK_VIEW_MODEL)
-}
+//#Preview {
+//    MyTripCompanionCellView(viewModel: MyTripCompanionCellViewModel.MOCK_VIEW_MODEL, showingPostDeleteAlert: false)
+//}

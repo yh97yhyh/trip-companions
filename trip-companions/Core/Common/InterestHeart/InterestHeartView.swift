@@ -10,11 +10,12 @@ import SwiftUI
 struct InterestHeartView: View {
     @EnvironmentObject var authManager: AuthManager
     @StateObject var viewModel: InterestHeartViewModel
-    var isDetail: Bool
+    var viewType: InterestHeartViewType
     
     var body: some View {
         VStack {
-            if isDetail {
+            switch viewType {
+            case .detail:
                 VStack {
                     if viewModel.isUpdateHeartLike {
                         Image(systemName: "heart.fill")
@@ -26,7 +27,7 @@ struct InterestHeartView: View {
                                 viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
                             }
                     } else {
-                        Image(systemName: "heart") 
+                        Image(systemName: "heart")
                             .foregroundColor(.gray767676)
                             .onTapGesture {
                                 if authManager.isGuestMode {
@@ -39,7 +40,7 @@ struct InterestHeartView: View {
                         .foregroundColor(.gray767676)
                         .font(.subheadline)
                 }
-            } else {
+            case .cell:
                 HStack {
                     if viewModel.isUpdateHeartLike {
                         Image(systemName: "heart.fill")
@@ -64,12 +65,41 @@ struct InterestHeartView: View {
                         .foregroundColor(.gray767676)
                         .font(.subheadline)
                 }
+            case .mypage:
+                VStack {
+                    if viewModel.isUpdateHeartLike {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
+                            .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: false)
+                            }
+                    } else {
+                        Image(systemName: "heart")
+                            .foregroundColor(.gray767676)
+                            .onTapGesture {
+                                if authManager.isGuestMode {
+                                    return
+                                }
+                                viewModel.toggleLike(writer: authManager.currentMember!, isLike: true)
+                            }
+                    }
+                }
             }
+            
         }
     }
 }
 
+enum InterestHeartViewType {
+    case detail
+    case cell
+    case mypage
+}
+
 #Preview {
-    InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, isDetail: false)
+    InterestHeartView(viewModel: InterestHeartViewModel.MOCK_VIEW_MODEL, viewType: .detail)
         .environmentObject(AuthManager.shared)
 }

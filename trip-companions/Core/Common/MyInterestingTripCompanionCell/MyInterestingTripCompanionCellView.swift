@@ -10,6 +10,7 @@ import Kingfisher
 
 struct MyInterestingTripCompanionCellView: View {
     @StateObject var viewModel: MyInterestingTripCompanionCellViewModel
+    @StateObject var interestHeartViewModel: InterestHeartViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -104,11 +105,7 @@ struct MyInterestingTripCompanionCellView: View {
                 }
                 
                 VStack {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(.red)
-                        .onTapGesture {
-                            viewModel.deleteLike()
-                        }
+                    InterestHeartView(viewModel: interestHeartViewModel, viewType: .mypage)
                 }
             }
         }
@@ -116,5 +113,5 @@ struct MyInterestingTripCompanionCellView: View {
 }
 
 #Preview {
-    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel.MOCK_VIEW_MODEL)
+    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel.MOCK_VIEW_MODEL, interestHeartViewModel: InterestHeartViewModel.MOCK_VIEW_MODEL)
 }

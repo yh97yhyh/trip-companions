@@ -23,10 +23,6 @@ class InterestHeartViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     
     func toggleLike(writer: Member, isLike: Bool) {
-//        if tripCompanion.member == writer {
-//            return
-//        }
-        
         if isLike {
             like()
         } else {
@@ -48,7 +44,6 @@ class InterestHeartViewModel: ObservableObject {
                     print("Failed to request createLikeTripCompanion.. \(error.localizedDescription)")
                 }
             } receiveValue: { [weak self] tripCompanion in
-//                self?.tripCompanion = tripCompanion
                 self?.isUpdateHeartLike = true
                 self?.updateHeartCount += 1
             }.store(in: &cancellables)

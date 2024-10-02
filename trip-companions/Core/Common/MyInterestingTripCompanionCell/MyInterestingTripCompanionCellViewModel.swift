@@ -27,7 +27,7 @@ class MyInterestingTripCompanionCellViewModel: ObservableObject {
                 case .failure(let error):
                     print("Failed to request deleteLikeTripCompanion.. \(error.localizedDescription)")
                 }
-                MyInterestingPostsViewModel.shared.fetchTripCompanions()
+//                MyInterestingPostsViewModel.shared.fetchTripCompanions()
             } receiveValue: { _ in
                 
             }.store(in: &cancellables)

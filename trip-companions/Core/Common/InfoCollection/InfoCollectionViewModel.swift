@@ -29,6 +29,9 @@ class InfoCollectionViewModel: ObservableObject {
     }
     @Published var mbti: MBTI? = nil {
         didSet {
+            if mbti?.code == "ETC" {
+                mbti = nil
+            }
             validateForm()
         }
     }

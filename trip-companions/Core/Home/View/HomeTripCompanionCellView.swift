@@ -89,6 +89,7 @@ struct HomeTripCompanionCellView: View {
                 .foregroundColor(.black)
                 .multilineTextAlignment(.leading)
                 .lineLimit(2)
+                .truncationMode(.tail)
                 .padding(.bottom, 4)
             
             HStack {
@@ -112,7 +113,7 @@ struct HomeTripCompanionCellView: View {
             HStack {
                 Spacer()
                 
-                InterestHeartView(viewModel: interestHeartViewModel, isDetail: false)
+                InterestHeartView(viewModel: interestHeartViewModel, viewType: .cell)
                 .padding(.trailing)
             }
         }

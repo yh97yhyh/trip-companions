@@ -14,6 +14,7 @@ struct NoMbtiAlertView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var showingAlert: Bool
     @Binding var shouldNavigate: Bool
+    var isEditMode: Bool
 
     var body: some View {
         VStack {
@@ -42,8 +43,12 @@ struct NoMbtiAlertView: View {
                         authManager.currentMember = member
                         myPageViewModel.member = member
                     }
-                    shouldNavigate = true
-                    showingAlert = false
+                    if isEditMode {
+                        dismiss()
+                    } else {
+                        shouldNavigate = true
+                        showingAlert = false
+                    }
                 } label: {
                     HStack {
                         Text("다음에 할게요")

@@ -58,6 +58,7 @@ struct CustomDatePickerView: View {
                         DatePicker("날짜를 선택해주세요", selection: $selectDate, displayedComponents: .date)
                             .datePickerStyle(GraphicalDatePickerStyle())
                             .tint(Color.orangeF49321)
+                            .environment(\.locale, Locale(identifier: String(Locale.preferredLanguages[0])))
                     }
                     .padding(.bottom)
                     

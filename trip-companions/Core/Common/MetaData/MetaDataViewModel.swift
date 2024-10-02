@@ -49,7 +49,7 @@ class MetaDataViewModel: ObservableObject {
                 self?.genders = metadata.gender
                 self?.mbtis = metadata.mbti
                 self?.reportTypes = metadata.reportType
-//                self?.mbtis.insert(MBTI(code: "ETC", desc: "선택안함"), at: 0)
+                self?.mbtis.insert(MBTI(code: "ETC", desc: "선택안함"), at: 0)
             }
             .store(in: &cancellables)
 

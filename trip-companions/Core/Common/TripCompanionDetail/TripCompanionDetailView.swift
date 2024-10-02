@@ -40,7 +40,7 @@ struct TripCompanionDetailView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer()
-                            if AuthManager.shared.currentMember!.id != viewModel.tripCompanion.member.id {
+                            if AuthManager.shared.isLoggedIn && AuthManager.shared.currentMember!.id != viewModel.tripCompanion.member.id {
                                 Button {
                                     showingBottomSheet = true
                                 } label: {
@@ -117,7 +117,7 @@ struct TripCompanionDetailView: View {
                 
                 HStack {
                     Spacer()
-                    InterestHeartView(viewModel: interestHeartViewModel, isDetail: true)
+                    InterestHeartView(viewModel: interestHeartViewModel, viewType: .detail)
                         .padding(.trailing, 24)
                     Spacer()
                     Button {

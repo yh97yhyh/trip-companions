@@ -186,6 +186,7 @@ final class NetworkManager<T: Codable> {
                 guard let value = response.value else {
                     if let error = response.error {
                         print("Failed to request \(route).. \(error.localizedDescription)")
+                        print("\(error)")
                         throw NetworkError.error(err: error.localizedDescription)
                     }
                     throw NetworkError.error(err: "Decodin error")
@@ -219,10 +220,6 @@ final class NetworkManager<T: Codable> {
     static func requestFormData(route: APIRouter) -> AnyPublisher<T, NetworkError> {
             return Future<T, NetworkError> { promise in
                 AF.upload(multipartFormData: { multipartFormData in
-//                    if let parameters = route.parameters,
-//                       let jsonData = try? JSONSerialization.data(withJSONObject: parameters, options: []) {
-//                        multipartFormData.append(jsonData, withName: "saveRequest", mimeType: "application/json")
-//                    }
                     
                     if let image = route.image {
                         if let imageData = image.jpegData(compressionQuality: 0.7) {

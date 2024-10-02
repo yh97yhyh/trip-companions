@@ -259,7 +259,7 @@ class AuthManager: NSObject, ObservableObject, ASAuthorizationControllerDelegate
     private func signInApple(_ appleAuthCode: String, _ id: String, _ name: String, completion: @escaping (Bool) -> Void) {
         let parameters: Parameters = [
             "appleAuthCode": appleAuthCode,
-            "name": ""
+            "name": name
         ]
         
         NetworkManager<TokenInfo>.request(route: .postSignInAppleWithApple(parameters))

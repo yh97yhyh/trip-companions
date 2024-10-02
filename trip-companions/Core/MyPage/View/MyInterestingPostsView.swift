@@ -35,9 +35,10 @@ struct MyInterestingPostsView: View {
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
                         ForEach(viewModel.tripCompanions, id: \.self) { tripCompanion in
+                            let interestHeartViewModel = InterestHeartViewModel(tripCompanion: tripCompanion)
                             VStack {
                                 NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: InterestHeartViewModel(tripCompanion: tripCompanion))) {
-                                    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion))
+                                    MyInterestingTripCompanionCellView(viewModel: MyInterestingTripCompanionCellViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)
                                 }
                                 .padding(.vertical, 12)
                             }
@@ -62,6 +63,9 @@ struct MyInterestingPostsView: View {
         .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.fetchTripCompanions()
+        }
+        .onDisappear {
+            DomesticCompanionViewModel.shared.fetchTripCompanions()
         }
     }
 }

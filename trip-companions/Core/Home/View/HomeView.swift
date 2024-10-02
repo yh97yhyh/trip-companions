@@ -85,12 +85,12 @@ struct HomeView: View {
                                 let interestHeartViewModel = InterestHeartViewModel(tripCompanion: tripCompanion)
                                 NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)) {
                                     HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)
+                                        .frame(width: 280, height: 220)
                                         .padding()
                                         .background(.white)
                                         .cornerRadius(10)
                                         .shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
                                         .padding(.trailing, 2)
-                                        .frame(minWidth: 200)
                                 }
                             }
                             
@@ -130,7 +130,6 @@ struct HomeView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-
     }
 }
 
