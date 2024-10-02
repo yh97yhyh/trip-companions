@@ -13,7 +13,7 @@ struct WriteButtonView: View {
     var body: some View {
         VStack {
             if AuthManager.shared.isLoggedIn {
-                NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel.shared)) {
+                NavigationLink(destination: WriteTripCompanionView(isWriteMode: true, viewModel: WriteTripCompanionViewModel())) {
                     Image(systemName: "plus")
                         .imageScale(.large)
                         .foregroundColor(.white)

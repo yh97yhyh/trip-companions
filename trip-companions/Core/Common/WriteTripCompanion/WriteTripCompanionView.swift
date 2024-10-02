@@ -14,11 +14,6 @@ struct WriteTripCompanionView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showingDatePicker = false
     
-//    init(viewModel: WriteTripCompanionViewModel) {
-//        _viewModel = StateObject(wrappedValue: viewModel)
-//        UITextView.appearance().backgroundColor = .clear
-//    }
-    
     var body: some View {
         VStack(alignment: .leading) {
             NavigationTitleView(title: isWriteMode ? "동행등록" : "동행등록 수정")
@@ -37,17 +32,7 @@ struct WriteTripCompanionView: View {
                         Spacer()
                         
                         // MARK: - NavigationLink, SelectRegionView
-                        Menu {
-                            ForEach(MetaDataViewModel.shared.regions, id: \.self) { region in
-                                Button {
-                                    viewModel.region = region
-                                } label: {
-                                    VStack {
-                                        Text(region.regionName)
-                                    }
-                                }
-                            }
-                        } label: {
+                        NavigationLink(destination: SelectRegionView(viewModel: SelectRegionViewModel(), isInterestRegion: false, bindedRegion: $viewModel.region)) {
                             HStack {
                                 if viewModel.region == nil {
                                     Text("지역 선택")
@@ -213,40 +198,42 @@ struct WriteTripCompanionView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .onAppear {
-            if tripCompanion != nil {
-                viewModel.region = tripCompanion!.region
-                viewModel.startDate = tripCompanion!.tripDate.toDate()
-                viewModel.personal = String(tripCompanion!.companionMemberCount)
-                viewModel.title = tripCompanion!.title
-                viewModel.contents = tripCompanion!.contents
-                viewModel.openKakaoUrl = tripCompanion!.openKakaoUrl ?? ""
-                
-                for category in tripCompanion!.categories {
-                    switch category.id {
-                    case 1:
-                        viewModel.isSameMbti = true
-                    case 2:
-                        viewModel.isSameMbti = false
-                    case 3:
-                        viewModel.isMale = true
-                    case 4:
-                        viewModel.isMale = false
-                    case 5:
-                        viewModel.isDrinker = true
-                    case 6:
-                        viewModel.isDrinker = false
-                    case 7:
-                        viewModel.isSmoker = true
-                    case 8:
-                        viewModel.isSmoker = false
-                    default:
-                        continue
+            if !viewModel.hasAppeared {
+                if let tripCompanion = tripCompanion {
+                    viewModel.region = tripCompanion.region
+                    viewModel.startDate = tripCompanion.tripDate.toDate()
+                    viewModel.personal = String(tripCompanion.companionMemberCount)
+                    viewModel.title = tripCompanion.title
+                    viewModel.contents = tripCompanion.contents
+                    viewModel.openKakaoUrl = tripCompanion.openKakaoUrl ?? ""
+                    
+                    for category in tripCompanion.categories {
+                        switch category.id {
+                        case 1:
+                            viewModel.isSameMbti = true
+                        case 2:
+                            viewModel.isSameMbti = false
+                        case 3:
+                            viewModel.isMale = true
+                        case 4:
+                            viewModel.isMale = false
+                        case 5:
+                            viewModel.isDrinker = true
+                        case 6:
+                            viewModel.isDrinker = false
+                        case 7:
+                            viewModel.isSmoker = true
+                        case 8:
+                            viewModel.isSmoker = false
+                        default:
+                            continue
+                        }
                     }
                 }
+            } else {
+                
             }
-        }
-        .onDisappear {
-            viewModel.clear()
+            viewModel.hasAppeared = true
         }
         
     }

@@ -105,29 +105,11 @@ struct MyTripCompanionCellView: View {
                     .padding(.bottom, 8)
                     
                     HStack {
-                        NavigationLink(destination: WriteTripCompanionView(isWriteMode: false, tripCompanion: viewModel.tripCompanion, viewModel: WriteTripCompanionViewModel.shared)) {
+                        NavigationLink(destination: WriteTripCompanionView(isWriteMode: false, tripCompanion: viewModel.tripCompanion, viewModel: WriteTripCompanionViewModel())) {
                             Text("수정")
                                 .font(.subheadline)
                         }
                         .buttonStyle(MyPageButtonStyle())
-                        
-//                        Button {
-//                            
-//                        } label: {
-//                            Text("수정")
-//                                .font(.subheadline)
-//                        }
-//                        .buttonStyle(MyPageButtonStyle())
-                        
-//                        NavigationLink(destination: SearchView(viewModel: SearchViewModel.shared, title: "검색")) {
-//                            HStack {
-//                                Text("어디로 가시나요?")
-//                                Spacer()
-//                                Image(systemName: "magnifyingglass")
-//                            }
-//                        }
-//                        .buttonStyle(TripSearchButtonStyle())
-//                        .padding(.bottom)
                         
                         Button {
                             MyPostsViewModel.shared.deletePost(postId: viewModel.tripCompanion.id)
@@ -136,12 +118,6 @@ struct MyTripCompanionCellView: View {
                                 .font(.subheadline)
                         }
                         .buttonStyle(MyPageButtonStyle())
-//                        .alert("정말 삭제하시겠습니까?", isPresented: $showAlert) {
-//                            Button("삭제", role: .destructive) {
-//                                // 삭제 로직을 여기에 추가
-//                            }
-//                            Button("취소", role: .cancel) { }
-//                        }
                         
                         Spacer()
                     }

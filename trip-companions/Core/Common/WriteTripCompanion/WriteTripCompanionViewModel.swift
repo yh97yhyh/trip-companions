@@ -10,7 +10,9 @@ import Combine
 import Alamofire
 
 class WriteTripCompanionViewModel: ObservableObject {
-    static let shared = WriteTripCompanionViewModel()
+//    static let shared = WriteTripCompanionViewModel()
+    
+    @Published var hasAppeared: Bool = false
     
     @Published var region: Region? = nil {
         didSet {
@@ -44,7 +46,6 @@ class WriteTripCompanionViewModel: ObservableObject {
     }
     @Published var openKakaoUrl: String = "" {
         didSet {
-//            openKakaoUrl = self.openKakaoUrl.trimmingCharacters(in: .whitespacesAndNewlines)
             validateForm()
         }
     }
@@ -144,7 +145,6 @@ class WriteTripCompanionViewModel: ObservableObject {
             "companionMemberCount": personal,
             "contents": contents,
             "categoriesId": categoriesId
-            
         ]
         
         NetworkManager<TripCompanion>.request(route: .updateTripCompanion(parameters))
@@ -157,7 +157,7 @@ class WriteTripCompanionViewModel: ObservableObject {
                 }
             } receiveValue: { tripCompanion in
                 print("Succeed to update trip companion! \(tripCompanion.id)")
-//                MyPostsViewModel.shared.fetchTripCompanions()
+                MyPostsViewModel.shared.fetchTripCompanions()
             }.store(in: &cancellables)
     }
     
@@ -182,8 +182,6 @@ class WriteTripCompanionViewModel: ObservableObject {
         return false
     }
 }
-
-
 
 extension WriteTripCompanionViewModel {
     static let MOCK_VIEW_MODEL = WriteTripCompanionViewModel()
