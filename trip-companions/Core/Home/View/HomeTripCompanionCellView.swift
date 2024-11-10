@@ -110,6 +110,8 @@ struct HomeTripCompanionCellView: View {
                     .foregroundColor(.gray767676)
             }
             
+            Spacer()
+            
             HStack {
                 Spacer()
                 

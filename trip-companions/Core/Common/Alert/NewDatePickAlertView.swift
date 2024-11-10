@@ -1,20 +1,20 @@
 //
-//  CompleteUpdateAlertView.swift
+//  NewDatePickAlertView.swift
 //  trip-companions
 //
-//  Created by 영현 on 10/2/24.
+//  Created by 영현 on 10/3/24.
 //
 
 import SwiftUI
 
-struct CompleteUpdateAlertView: View {
+struct NewDatePickAlertView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var showingAlert: Bool
 
     var body: some View {
         VStack {
             HStack {
-                Text("내 게시글이\n수정되었습니다.")
+                Text("이전 날짜는 선택할 수 없습니다.\n다시 선택해 주세요.")
                 Spacer()
             }
             .padding(.bottom)
@@ -25,7 +25,6 @@ struct CompleteUpdateAlertView: View {
             HStack {
                 Spacer()
                 Button {
-                    dismiss()
                     showingAlert = false
                 } label: {
                     Text("확인")
@@ -41,5 +40,5 @@ struct CompleteUpdateAlertView: View {
 }
 
 //#Preview {
-//    CompleteUpdateAlertView()
+//    NewDatePickAlertView()
 //}

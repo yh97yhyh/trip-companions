@@ -35,6 +35,10 @@ struct ProfileHeaderView: View {
                                 .scaledToFit()
                                 .frame(width: 64, height: 64)
                                 .clipShape(Circle())
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.grayE7E9EE, lineWidth: 1)
+                                )
                                 .padding(.trailing, 12)
                         } else {
                             Image("default_profile")

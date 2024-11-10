@@ -81,6 +81,9 @@ struct MyInterestingTripCompanionCellView: View {
                             .font(.callout)
                             .fontWeight(.semibold)
                             .foregroundColor(.black)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
                         Spacer()
                     }
 

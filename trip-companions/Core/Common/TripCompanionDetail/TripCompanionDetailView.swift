@@ -16,7 +16,8 @@ struct TripCompanionDetailView: View {
     @State var showingBottomSheet = false
     @State var showingReportAlert = false
     @State var showingBlockAlert = false
-    
+    @State private var offset: CGSize = .zero
+
     var body: some View {
         ZStack {
             VStack {
@@ -174,6 +175,26 @@ struct TripCompanionDetailView: View {
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+//        .offset(x: offset.width)
+//        .gesture(
+//            DragGesture()
+//                .onChanged { value in
+//                    // 사용자가 스와이프 하는 동안 뷰의 오프셋을 업데이트
+//                    offset.width = value.translation.width
+//                }
+//                .onEnded { value in
+//                    if value.translation.width > 100 { // 오른쪽으로 스와이프
+//                        withAnimation {
+//                            offset.width = UIScreen.main.bounds.width // 전체 화면만큼 이동
+//                        }
+//                        dismiss() // 뷰를 종료
+//                    } else {
+//                        withAnimation {
+//                            offset = .zero // 원래 위치로 되돌리기
+//                        }
+//                    }
+//                }
+//        )
     }
 }
 

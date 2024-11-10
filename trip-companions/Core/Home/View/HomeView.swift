@@ -85,7 +85,7 @@ struct HomeView: View {
                                 let interestHeartViewModel = InterestHeartViewModel(tripCompanion: tripCompanion)
                                 NavigationLink(destination: TripCompanionDetailView(viewModel: TripCompanionDetailViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)) {
                                     HomeTripCompanionCellView(viewModel: HomeTripCompanionCellViewModel(tripCompanion: tripCompanion), interestHeartViewModel: interestHeartViewModel)
-                                        .frame(width: 280, height: 220)
+                                        .frame(width: 260, height: 220)
                                         .padding()
                                         .background(.white)
                                         .cornerRadius(10)

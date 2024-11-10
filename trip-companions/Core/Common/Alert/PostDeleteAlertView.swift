@@ -16,10 +16,14 @@ struct PostDeleteAlertView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("내 게시글들을 삭제하시겠습니까?")
+                Text("내 게시글을 삭제하시겠습니까?")
+                    .font(.title3)
+                    .fontWeight(.bold)
                 Spacer()
             }
+            .padding(.bottom)
             .padding(.horizontal)
+
             HStack {
                 Text("(삭제하면 다시 되돌릴 수 없습니다.)")
                     .foregroundColor(.gray767676)

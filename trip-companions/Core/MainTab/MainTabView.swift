@@ -46,6 +46,7 @@ struct MainTabView: View {
                         .disabled(authManager.isGuestMode)
                 }
                 .accentColor(.black)
+
             }
         }
     }
