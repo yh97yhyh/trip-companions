@@ -13,7 +13,7 @@ class API {
         #if DEBUG
         return "http://52.78.245.140:8080"
         #else
-        return "https://www.ourtourmate.com/api/v1"
+        return "https://www.ourtourmate.com"
         #endif
     }
 }

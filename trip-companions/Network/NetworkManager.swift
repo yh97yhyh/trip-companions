@@ -189,7 +189,7 @@ final class NetworkManager<T: Codable> {
                         print("\(error)")
                         throw NetworkError.error(err: error.localizedDescription)
                     }
-                    throw NetworkError.error(err: "Decodin error")
+                    throw NetworkError.error(err: "Decoding error")
                 }
                 return value
             }
