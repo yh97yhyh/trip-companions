@@ -26,6 +26,8 @@ enum APIRouter: URLRequestConvertible {
     case getMyLikeTripCompanions(Parameters)
     
     case blockUser(Parameters)
+    case getBlockedUser
+    case unBlockUser(memberId: Int)
     
     case updateMemberProfile(Parameters)
     case updateProfileImage(profileImageFile: UIImage?)
@@ -46,6 +48,7 @@ enum APIRouter: URLRequestConvertible {
                 .getMemberProfile, .getGenderAndMbti,
                 .getRecommendedTripCompanions,
                 .getMyLikeTripCompanions,
+                .getBlockedUser,
                 .getTripCompanions,
                 .getMetaData:
             return .get
@@ -53,7 +56,7 @@ enum APIRouter: URLRequestConvertible {
             return .post
         case .updateTripCompanion, .updateMemberProfile, .updateProfileImage, .updateInterestRegion:
             return .patch
-        case .deleteTripCompanion, .deleteLikeTripCompanion, .withDraw:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .unBlockUser, .withDraw:
             return .delete
         }
     }
@@ -84,6 +87,10 @@ enum APIRouter: URLRequestConvertible {
             return "/api/v1/interest-trip-companions/my"
         case .blockUser:
             return "/api/v1/block"
+        case .getBlockedUser:
+            return "/api/v1/block/my"
+        case .unBlockUser(let memberId):
+            return "/api/v1/block/\(memberId)"
         case .updateMemberProfile:
             return "/api/v1/members/profile"
         case .updateProfileImage:
@@ -122,7 +129,7 @@ enum APIRouter: URLRequestConvertible {
                 .updateInterestRegion(let parameters),
                 .getRecommendedTripCompanions(let parameters):
             return parameters
-        case .deleteTripCompanion, .deleteLikeTripCompanion, .updateProfileImage, .getMemberProfile, .getGenderAndMbti, .withDraw, .getMetaData:
+        case .deleteTripCompanion, .deleteLikeTripCompanion, .updateProfileImage, .getMemberProfile, .getBlockedUser, .unBlockUser, .getGenderAndMbti, .withDraw, .getMetaData:
             return Parameters()
         }
     }

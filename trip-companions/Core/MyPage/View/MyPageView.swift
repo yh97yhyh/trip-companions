@@ -70,6 +70,15 @@ struct MyPageView: View {
                 Divider()
                     .padding(.bottom)
                 
+                NavigationLink(destination: MyBlockedUsersView(viewModel: MyBlockedUsersViewModel.shared)) {
+                    Text("차단 회원 관리")
+                        .foregroundColor(.black)
+                }
+                .padding(.bottom)
+                
+                Divider()
+                    .padding(.bottom)
+                
                 Button {
                     showingWithdrawAlert = true
                 } label: {
