@@ -12,13 +12,13 @@ import Combine
 class MyBlockedUsersViewModel: ObservableObject {
     static let shared = MyBlockedUsersViewModel()
     
-    @Published var blockedUsers: [Member] = []
+    @Published var blockedUsers: [BlockedUser] = []
 
     var cancellables = Set<AnyCancellable>()
     
     @Published var isFetching = false
 
-    init(blockedUsers: [Member] = []) {
+    init(blockedUsers: [BlockedUser] = []) {
         self.blockedUsers = blockedUsers
         
     }
@@ -29,7 +29,7 @@ class MyBlockedUsersViewModel: ObservableObject {
         
         isFetching = true
         
-        NetworkManager<[Member]>.request(route: .getBlockedUser)
+        NetworkManager<[BlockedUser]>.request(route: .getBlockedUser)
             .sink { completion in
                 self.isFetching = false
                 switch completion {
@@ -43,13 +43,13 @@ class MyBlockedUsersViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
     
-    func unBlockUser(_ member: Member) {
-        NetworkManager<Int>.requestWithoutResponse(route: .unBlockUser(memberId: member.id))
+    func unBlockUser(_ blockedUser: BlockedUser) {
+        NetworkManager<Int>.requestWithoutResponse(route: .unBlockUser(memberId: blockedUser.id))
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     self?.fetchBlcokedUsers()
-                    print("Succeed to request unBlockUser! \(member.id)")
+                    print("Succeed to request unBlockUser! \(blockedUser.id)")
                 case .failure(let error):
                     print("Failed to request unBlockUser.. \(error.localizedDescription)")
                 }
@@ -60,5 +60,5 @@ class MyBlockedUsersViewModel: ObservableObject {
 }
 
 extension MyBlockedUsersViewModel {
-    static let MOCK_VIEW_MODEL = MyBlockedUsersViewModel(blockedUsers: [Member.MOCK_MEMBER1, Member.MOCK_MEMBER2])
+    static let MOCK_VIEW_MODEL = MyBlockedUsersViewModel(blockedUsers: [])
 }

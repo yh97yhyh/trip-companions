@@ -14,15 +14,15 @@ struct MyBlockedUsersView: View {
     var body: some View {
            NavigationView {
                List {
-                   ForEach(viewModel.blockedUsers, id: \ .id) { user in
+                   ForEach(viewModel.blockedUsers, id: \ .id) { blockedUser in
                        HStack {
-                           Text(user.nickName ?? "")
+                           Text(blockedUser.blockMember.nickName ?? "")
                                .font(.headline)
 
                            Spacer()
 
                            Button(action: {
-                               viewModel.unBlockUser(user)
+                               viewModel.unBlockUser(blockedUser)
                            }) {
                                Text("차단 해제")
                                    .font(.subheadline)
