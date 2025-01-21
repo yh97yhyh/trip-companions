@@ -31,12 +31,12 @@ struct MyAccountView: View {
                     
                     Spacer()
                     
-                    Button {
-                        
-                    } label: {
-                        Text("연동 해제")
-                    }
-                    .buttonStyle(MyPageButtonStyle())
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("연동 해제")
+//                    }
+//                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()
@@ -55,12 +55,12 @@ struct MyAccountView: View {
                     
                     Spacer()
                     
-                    Button {
-                        
-                    } label: {
-                        Text("변경")
-                    }
-                    .buttonStyle(MyPageButtonStyle())
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("변경")
+//                    }
+//                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()
@@ -79,12 +79,12 @@ struct MyAccountView: View {
                     
                     Spacer()
                     
-                    Button {
-                        
-                    } label: {
-                        Text("변경")
-                    }
-                    .buttonStyle(MyPageButtonStyle())
+//                    Button {
+//                        
+//                    } label: {
+//                        Text("변경")
+//                    }
+//                    .buttonStyle(MyPageButtonStyle())
                 }
                 
                 Divider()

@@ -12,32 +12,46 @@ struct MyBlockedUsersView: View {
     @StateObject var viewModel: MyBlockedUsersViewModel
     
     var body: some View {
-           NavigationView {
-               List {
-                   ForEach(viewModel.blockedUsers, id: \ .id) { blockedUser in
-                       HStack {
-                           Text(blockedUser.blockMember.nickName ?? "")
-                               .font(.headline)
-
-                           Spacer()
-
-                           Button(action: {
-                               viewModel.unBlockUser(blockedUser)
-                           }) {
-                               Text("차단 해제")
-                                   .font(.subheadline)
-                                   .foregroundColor(.blue)
-                           }
-                           .buttonStyle(BorderlessButtonStyle())
-                       }
-                   }
-               }
-               .navigationTitle("차단된 회원")
-               .onAppear {
-                   viewModel.fetchBlcokedUsers()
-               }
-           }
-       }
+        VStack(alignment: .leading) {
+            NavigationTitleView(title: "차단된 회원")
+                .padding(.horizontal)
+                .padding(.bottom)
+            
+            ScrollView(showsIndicators: false)  {
+                LazyVStack {
+                    ForEach(viewModel.blockedUsers, id: \ .id) { blockedUser in
+                        VStack {
+                            HStack {
+                                Text(blockedUser.blockMember.nickName ?? "")
+                                    .font(.headline)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    viewModel.unBlockUser(blockedUser)
+                                } label: {
+                                    Text("차단 해제")
+                                        .font(.subheadline)
+                                }
+                                .buttonStyle(MyPageButtonStyle())
+                                .padding(2)
+                            }
+                            
+                            Divider()
+                            
+                        }
+                        
+                    }
+                }
+            }
+            .padding(.horizontal)
+        }
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewModel.fetchBlcokedUsers()
+        }
+    }
 }
 
 #Preview {
