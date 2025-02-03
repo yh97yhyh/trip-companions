@@ -17,6 +17,10 @@ struct InfoCollectionView: View {
     @State var mockRegion: Region?
     @State var showingNoMbtiAlert = false
     @State private var navigate = false
+    @State var isTermsAccepted = false
+    @State var isPrivacyAccepted = false
+    private let TermsLink = "https://www.ourtourmate.com/service"
+    private let privacyLink = "https://www.ourtourmate.com/term"
         
     var body: some View {
         ZStack {
@@ -228,8 +232,53 @@ struct InfoCollectionView: View {
                             }
                             .padding(.bottom)
                         }
+                        
+                        if !isEditMode {
+                            Divider()
+                                .padding(.bottom)
+                            
+                            HStack {
+                                Toggle(isOn: $isTermsAccepted) {
+                                    Text("")
+                                }
+                                .toggleStyle(CheckboxStyle())
+                                
+                                Text("이용약관 동의 (필수)")
+                                    .foregroundColor(.grayA2A2A2)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    openSafari(TermsLink)
+                                } label: {
+                                    Text("자세히")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.gray767676)
+                                }
+                            }
+                            
+                            HStack {
+                                Toggle(isOn: $isPrivacyAccepted) {
+                                    Text("")
+                                }
+                                .toggleStyle(CheckboxStyle())
+                                
+                                Text("개인정보 수집 및 이용 동의 (필수)")
+                                    .foregroundColor(.grayA2A2A2)
+                                
+                                Spacer()
+                                
+                                Button {
+                                    openSafari(privacyLink)
+                                } label: {
+                                    Text("자세히")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.gray767676)
+                                }
+                            }
+                        }
+                                            
                     }
-                    //            .padding(.top)
                 }
                 .padding(.horizontal)
                 
@@ -265,7 +314,7 @@ struct InfoCollectionView: View {
                         } label: {
                             Text("완료")
                         }
-                        .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete))
+                        .buttonStyle(CompleButtonStyle(isComplete: viewModel.isComplete && isTermsAccepted && isPrivacyAccepted))
                         .disabled(!viewModel.isComplete)
                         .padding(.horizontal)
                         .background(
@@ -306,6 +355,12 @@ struct InfoCollectionView: View {
                 viewModel.isSmoking = myPageViewModel.member.isSmoking ?? nil
                 viewModel.isDrinking = myPageViewModel.member.isDrinking ?? nil
             }
+        }
+    }
+    
+    private func openSafari(_ urlString: String) {
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
         }
     }
 }

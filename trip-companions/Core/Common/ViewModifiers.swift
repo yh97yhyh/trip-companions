@@ -257,6 +257,23 @@ struct FilterButtonStyle: ButtonStyle {
     }
 }
 
+// MARK: - Toggle
+struct CheckboxStyle: ToggleStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+
+        return HStack {
+            Image(systemName: configuration.isOn ? "checkmark.square" : "square")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundColor(configuration.isOn ? Color.orangeF49321 : Color.grayE9E9E9)
+                .font(.system(size: 20, weight: .regular, design: .default))
+                configuration.label
+        }
+        .onTapGesture { configuration.isOn.toggle() }
+
+    }
+}
+
 // MARK: - Picker
 struct CustomPickerStyle: ViewModifier {
     func body(content: Content) -> some View {
